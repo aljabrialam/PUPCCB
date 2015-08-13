@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">CCB</string>
+    <string name="drawer_open">Menu opened</string>
+    <string name="drawer_close">Menu closed</string>
+    <string name="action_settings">Settings</string>
+    <string name="label_your_name">Name</string>
+    <string name="label_your_email">Email</string>
+    <string name="hint_your_name">e.g. Larry</string>
+    <string name="hint_your_email">Optional</string>
+    <string name="menu_item_one">Menu Item</string>
+
+
+    <string name="forgot_my_pwd">I\'ve forgotten my password?</string>
+    <string name="already_have_account">Already have an account? Sign In</string>
+    <string name="client_secret">Client Secret</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password"> Confirm Password</string>
+    <string name="register">Register</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="learn_more">Learn More</string>
+    <string name="log_in">Log In</string>
+    <string name="cancel">Cancel</string>
+    <string name="already_have_an_account">I already have an account</string>
+    <string name="landing_page_details"><a href="http://www.sample.org/">www.sample.org</a> | <a href="http://www.iom.int/">www.iom.int</a> | <a href="https://www.kintera.org/site/c.dnJOKRNkFiG/b.837337/k.F96D/IOM__Make_a_Donation/apps/ka/sd/donor.asp?c=dnJOKRNkFiG&amp;b=837337&amp;en=4dLxFFOfG3KGLPPiH2IDJLMsEnIKKJNpHfLFLIPqFfKLLSOtErG">Donate</a> \n sample</string>
+    <string name="first_name">First Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="details_about_incident">Please provide details about the incident.</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="confirm_email">Confirm Email</string>
+    <string name="secret">Client Secret</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+
+    <string name="what_agency">What agency are you complaining about?</string>
+    <string name="who_to_complaint">who are you complaining about?</string>
+
+    <string name="share_label">Share</string>
+    <string name="comment_label">Comment</string>
+    <string name="like_label">Like</string>
+    <string name="tab">Tab</string>
+    <string name="current_ticket">Current Ticket</string>
+    <string name="past_ticket">Past Ticket</string>
+    <string name="search">Search</string>
+    <string name="title_activity_ticket_info">Ticket Information</string>
+
+    <string-array name="sliding_tab_items">
+        <item>Current Ticket</item>
+        <item>Past Ticket</item>
+    </string-array>
+
+    <string name="profile">Profile - Not implemented</string>
+    <string name="floating_button">Make it to do anything you want!</string>
+</resources>

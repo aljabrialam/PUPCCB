@@ -1,0 +1,61 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
+         https://developer.android.com/design/patterns/navigation-drawer.html -->
+
+
+    <dimen name="step_pager_tab_width">32dp</dimen>
+    <dimen name="step_pager_tab_height">3dp</dimen>
+    <dimen name="step_pager_tab_spacing">4dp</dimen>
+
+
+    <dimen name="pad_5dp">5.0dp</dimen>
+    <dimen name="pad_10dp">10.0dp</dimen>
+    <dimen name="pad_15dp">15.0dp</dimen>
+    <dimen name="pad_20dp">20.0dp</dimen>
+    <dimen name="pad_30dp">30.0dp</dimen>
+    <dimen name="pad_40dp">40.0dp</dimen>
+    <dimen name="pad_100dp">100.0dp</dimen>
+    <dimen name="pad_60dp">60.0dp</dimen>
+    <dimen name="pad_chat_item">45.0dp</dimen>
+    <dimen name="pad_chat_item1">10.0dp</dimen>
+    <dimen name="txt_7sp">7.0sp</dimen>
+    <dimen name="txt_12sp">12.0sp</dimen>
+    <dimen name="txt_13sp">13.0sp</dimen>
+    <dimen name="txt_14sp">14.0sp</dimen>
+    <dimen name="txt_15sp">15.0sp</dimen>
+    <dimen name="txt_16sp">16.0sp</dimen>
+    <dimen name="txt_18sp">18.0sp</dimen>
+    <dimen name="txt_20sp">20.0sp</dimen>
+
+    <dimen name="TEXT_SIZE_MEDIUM">17.0sp</dimen>
+    <dimen name="TEXT_SIZE_SMALL">14.0sp</dimen>
+    <dimen name="TEXT_SIZE_SMALL_MEDIUM">16.0sp</dimen>
+
+    <dimen name="note_spacing">4dp</dimen>
+    <dimen name="note_content_spacing">16dp</dimen>
+    <dimen name="note_corner_radius">2dp</dimen>
+    <dimen name="note_textsize">14sp</dimen>
+    <dimen name="note_title_textsize">24sp</dimen>
+
+    <dimen name="fab_spacing">0dp</dimen>
+    <dimen name="fab_list_spacing">88dp</dimen>
+
+    <dimen name="item_width">192dp</dimen>
+    <dimen name="item_height">192dp</dimen>
+
+
+    <dimen name="toolbar_elevation">4dp</dimen>
+
+    <dimen name="navigation_drawer_width">300dp</dimen>
+
+    <dimen name="top_header_bolder">0dp</dimen>
+
+    <!-- FAB -->
+    <dimen name="spacing_large">16dp</dimen>
+    <dimen name="elevation_low">9dp</dimen>
+    <dimen name="elevation_high">12dp</dimen>
+</resources>

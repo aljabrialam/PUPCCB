@@ -1,0 +1,95 @@
+<resources>
+
+    <!--
+        Check Android Theme colors for color reference:
+        https://developer.android.com/training/material/images/ThemeColors.png
+
+        Refer also to Color palette for the UI colors you should use:
+        http://www.google.com/design/spec/style/color.html#color-ui-color-palette
+    -->
+
+    <color name="myPrimaryColor">#49a3d7</color>
+    <color name="myPrimaryDarkColor">#e5664f</color>
+    <color name="myAccentColor">#E9BC1B</color>
+
+    <color name="myTextPrimaryColor">#313335</color>
+
+    <color name="myDrawerBackground">#fdfdfe</color>
+    <color name="myWindowBackground">#fdfdfe</color>
+
+    <color name="myNavigationColor">#000</color>
+
+
+
+    <color name="primary_light">#CFD8DC</color>
+
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="icons">#FFFFFF</color>
+
+    <color name="colorPrimary">#424242</color>
+    <color name="colorPrimaryDark">#212121</color>
+
+    <color name="colorSecondary">@color/material_deep_teal_200</color>
+    <color name="colorSecondaryDark">@color/material_deep_teal_500</color>
+
+    <drawable name="pressed_gray">#455a64</drawable>
+    <drawable name="selected_gray">#039ae4</drawable>
+    <color name="selected_selected_blue">#039ae4</color>
+    <color name="pressed_blue">#63b1e4</color>
+
+    <color name="dark_gray">#444444</color>
+    <color name="dark_gray_pressed">#1c1c1c</color>
+    <color name="light_gray_pressed">#7b7b7b</color>
+
+    <color name="white_smoke">#fff7f7f7</color>
+
+    <color name="black">#ff000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="main_color_green">#ff00b863</color>
+    <color name="main_color_gray_dk">#ff3b3b3b</color>
+    <color name="main_color_gray_lt">#ffacacac</color>
+    <color name="main_color_gray">#ff7d7d7d</color>
+    <color name="gray_light">#ffe8e8e8</color>
+    <color name="text_white_87">#deFFFFFF</color>
+    <color name="background_card">#fff</color>
+    <color name="txt">#e9e3f1</color>
+    <color name="background">#fdfdcb</color>
+
+    <array name="note_neutral_colors">
+        <item>#9E9E9E</item>
+        <item>#455A64</item>
+        <item>#607D8B</item>
+    </array>
+
+    <array name="note_accent_colors">
+        <item>#039BE5</item>
+        <!--<item>#004687</item>-->
+        <!--<item>#E9BC1B</item>-->
+        <!--<item>#B81D18</item>-->
+        <item>#7b7b7b</item>
+        <item>#a7a7a7</item>
+    </array>
+
+    <color name="selected_gray">#ffdbdbdb</color>
+    <color name="light_gray">#FAFAFA</color>
+    <color name="counter_bg">#E21B45</color>
+
+    <color name="social_button_background">#EEEEEE</color>
+    <color name="social_button_label">#6D6D6D</color>
+    <color name="social_button_count">#bdbdbd</color>
+
+    <color name="tab_color">@color/myPrimaryColor</color>
+    <color name="view_pager_color">#FFE5E5E5</color>
+
+
+
+    <!--theme-->
+    <color name="red">#B81D18</color>
+    <color name="blue">#004687</color>
+    <color name="white">#ffffffff</color>
+    <!-- FAB Color-->
+    <color name="yellow">#E9BC1B</color>
+
+
+</resources>
