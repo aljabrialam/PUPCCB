@@ -10,6 +10,7 @@ import pupccb.solutionsresource.com.helper.communicator.OnlineCommunicator;
 import pupccb.solutionsresource.com.helper.request.SessionRequest;
 import pupccb.solutionsresource.com.model.Login;
 import pupccb.solutionsresource.com.model.Session;
+import pupccb.solutionsresource.com.util.ErrorHandler;
 
 /**
  * Created by User on 7/16/2015.
@@ -42,12 +43,13 @@ public class OnlineHelper extends BaseHelper implements OnlineCommunicator {
         @Override
         public void onRequestFailure(SpiceException spiceException) {
             stopSpiceManager();
+            controller.setError(new ErrorHandler().onRequestFailure(spiceException), methodTypes);
         }
 
         @Override
-        public void onRequestSuccess(Session session)  {
+        public void onRequestSuccess(Session session) {
             stopSpiceManager();
-            controller.loginResult(session,login);
+            controller.loginResult(session, login);
         }
     }
 }
