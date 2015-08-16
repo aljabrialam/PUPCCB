@@ -22,6 +22,7 @@ import pupccb.solutionsresource.com.helper.Controller;
 import pupccb.solutionsresource.com.helper.OnlineHelper;
 import pupccb.solutionsresource.com.model.Login;
 import pupccb.solutionsresource.com.model.Session;
+import pupccb.solutionsresource.com.util.ErrorHandler;
 import pupccb.solutionsresource.com.util.TouchEffect;
 
 public class Main extends AppCompatActivity implements View.OnClickListener, Validator.ValidationListener {
@@ -78,9 +79,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
     }
 
 
-    public void setError(String errorMessage, Controller.MethodTypes methodTypes) {
+    public void setError(ErrorHandler.Error error, Controller.MethodTypes methodTypes) {
         onGoing = false;
-        Toast.makeText(getApplicationContext(), errorMessage.replace("401:", "").replace("showRetry:", "").replace("alertDialog:", ""), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), error.getErrorMessage(), Toast.LENGTH_SHORT).show();
     }
 
     private void TemporatyLogin() {
