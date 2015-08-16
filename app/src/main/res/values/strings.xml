@@ -10,7 +10,7 @@
     <string name="menu_item_one">Menu Item</string>
 
 
-    <string name="forgot_my_pwd">I\'ve forgotten my password?</string>
+    <string name="forgot_my_pwd">Forgot your password?</string>
     <string name="already_have_account">Already have an account? Sign In</string>
     <string name="client_secret">Client Secret</string>
     <string name="username">Username</string>

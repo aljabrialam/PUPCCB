@@ -21,14 +21,10 @@ public class SessionRequest extends RetrofitSpiceRequest<Session, SessionService
     @Override
     public Session loadDataFromNetwork() throws Exception {
         return getService().getAccessToken(login.getUsername(),
-                login.getPassword(),
-                login.getClient_id(),
-                login.getClient_secret(),
-                login.getGrant_type(),
-                login.getScope());
+                login.getPassword());
     }
 
     public String createCacheKey() {
-        return "SessionRequest" + login.getClient_secret();
+        return "SessionRequest" + login.getUsername();
     }
 }

@@ -8,13 +8,13 @@
         http://www.google.com/design/spec/style/color.html#color-ui-color-palette
     -->
 
-    <color name="myPrimaryColor">#49a3d7</color>
-    <color name="myPrimaryDarkColor">#e5664f</color>
-    <color name="myAccentColor">#E9BC1B</color>
+    <color name="myPrimaryColor">#0d509b</color>
+    <color name="myPrimaryDarkColor">#114274</color>
+    <color name="myAccentColor">#ba0015</color>
 
     <color name="myTextPrimaryColor">#313335</color>
 
-    <color name="myDrawerBackground">#fdfdfe</color>
+    <color name="myDrawerBackground">#ffffffff</color>
     <color name="myWindowBackground">#fdfdfe</color>
 
     <color name="myNavigationColor">#000</color>
@@ -54,7 +54,7 @@
     <color name="text_white_87">#deFFFFFF</color>
     <color name="background_card">#fff</color>
     <color name="txt">#e9e3f1</color>
-    <color name="background">#fdfdcb</color>
+    <color name="ticket_info_txt">#d5dee5</color>
 
     <array name="note_neutral_colors">
         <item>#9E9E9E</item>
@@ -79,11 +79,15 @@
     <color name="social_button_label">#6D6D6D</color>
     <color name="social_button_count">#bdbdbd</color>
 
-    <color name="tab_color">@color/myPrimaryColor</color>
+    <color name="tab_color">@color/myPrimaryDarkColor</color>
     <color name="view_pager_color">#FFE5E5E5</color>
 
 
 
+    <!-- Ticket Color Status-->
+    <color name="open">#73d2f0</color>
+    <color name="resolved">#f2d560</color>
+    <color name="ongoing">#83d083</color>
     <!--theme-->
     <color name="red">#B81D18</color>
     <color name="blue">#004687</color>

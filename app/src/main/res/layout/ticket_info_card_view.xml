@@ -9,15 +9,7 @@
 
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ticket_info_card"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dip"
-        android:layout_marginLeft="4.0dip"
-        android:layout_marginRight="4.0dip"
-        android:layout_marginTop="5dip"
-        android:foreground="?selectableItemBackground"
-        card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="4dp"
+        style="@style/Widget.MaterialSheetFab.Ticket"
         android:clickable="true"
         >
 
@@ -27,18 +19,18 @@
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:background="@color/view_pager_color">
+            android:background="@color/white">
 
             <TextView
                 android:id="@+id/ticketDetailStatusTextView"
                 style="@style/TEXT.MEDIUM"
                 android:layout_width="wrap_content"
                 android:layout_height="28.0dip"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="4.0dip"
                 android:layout_marginTop="8.0dip"
-                android:background="#ffff0000"
+                android:background="@color/myAccentColor"
                 android:gravity="left|center"
                 android:maxLines="1"
                 android:paddingLeft="10.0dip"
@@ -53,37 +45,33 @@
                 android:id="@+id/ticketDetailLastRespondedImageView"
                 android:layout_width="14.0dip"
                 android:layout_height="14.0dip"
-                android:layout_alignBottom="@+id/ticketDetailStatusTextView"
-                android:layout_alignParentRight="true"
+                android:src="@drawable/icon_gray_dot"
+                android:visibility="invisible"
                 android:layout_alignTop="@+id/ticketDetailStatusTextView"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="6.0dip"
-                android:layout_marginRight="6.0dip"
-                android:layout_marginTop="4.0dip"
-                android:src="@drawable/icon_gray_dot" />
+                android:layout_toLeftOf="@+id/ticketDetailStatusTextView"
+                android:layout_toStartOf="@+id/ticketDetailStatusTextView"
+                android:layout_alignBottom="@+id/ticketDetailStatusTextView" />
 
             <TextView
                 android:id="@+id/ticketSubjectTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/ticketDetailStatusTextView"
-                android:layout_marginBottom="8.0dip"
-                android:layout_marginLeft="14.0dip"
-                android:layout_marginRight="14.0dip"
-                android:layout_marginTop="8.0dip"
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:text="Title"
-                android:textColor="#ff000000"
-                android:textSize="24.0sp" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/pad_15dp"
+                android:layout_alignTop="@+id/ticketDetailLastRespondedImageView"
+                android:layout_alignLeft="@+id/informationLinearLayout"
+                android:layout_alignStart="@+id/informationLinearLayout" />
 
             <LinearLayout
                 android:id="@+id/informationLinearLayout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ticketSubjectTextView"
-                android:layout_marginBottom="20.0dip"
+                android:layout_marginTop="15.0dip"
+                android:layout_marginBottom="15.0dip"
                 android:layout_marginLeft="16.0dip"
                 android:layout_marginRight="16.0dip"
                 android:orientation="horizontal">
@@ -157,7 +145,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cardDivider"
-                android:background="?selectableItemBackground"
+                android:background="@color/ticket_info_txt"
                 android:orientation="horizontal">
 
                 <TextView
@@ -169,7 +157,7 @@
                     android:layout_marginTop="16.0dip"
                     android:layout_weight="1.0"
                     android:text="@string/title_activity_ticket_info"
-                    android:textColor="@color/myAccentColor"
+                    android:textColor="#273540"
                     android:textSize="14.0sp" />
 
                 <ImageView
@@ -177,7 +165,8 @@
                     android:layout_height="24.0dip"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="4.0dip"
-                    android:src="@drawable/chevron_right" />
+                    android:src="@drawable/chevron_right_black"
+                     />
             </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
