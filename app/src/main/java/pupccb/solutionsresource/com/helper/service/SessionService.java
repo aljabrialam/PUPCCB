@@ -15,9 +15,10 @@ public interface SessionService {
     @POST("/oauth/access_token")
     Session getAccessToken(
             @Field("username") String username,
-            @Field("password") String password,
-            @Field("client_id") String client_id,
-            @Field("client_secret") String client_secret,
-            @Field("grant_type") String grant_type,
-            @Field("scope") String scope);
+            @Field("password") String password
+//            @Field("client_id") String client_id,
+//            @Field("client_secret") String client_secret,
+//            @Field("grant_type") String grant_type,
+//            @Field("scope") String scope
+            );
 }

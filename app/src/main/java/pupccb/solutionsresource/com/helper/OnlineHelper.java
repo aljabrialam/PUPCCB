@@ -7,8 +7,11 @@ import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 import pupccb.solutionsresource.com.helper.communicator.OnlineCommunicator;
+import pupccb.solutionsresource.com.helper.request.RegistrationRequest;
 import pupccb.solutionsresource.com.helper.request.SessionRequest;
 import pupccb.solutionsresource.com.model.Login;
+import pupccb.solutionsresource.com.model.RegistrationDetails;
+import pupccb.solutionsresource.com.model.RegistrationResponse;
 import pupccb.solutionsresource.com.model.Session;
 import pupccb.solutionsresource.com.util.ErrorHandler;
 
@@ -50,6 +53,40 @@ public class OnlineHelper extends BaseHelper implements OnlineCommunicator {
         public void onRequestSuccess(Session session) {
             stopSpiceManager();
             controller.loginResult(session, login);
+        }
+    }
+
+
+    @Override
+    public void register(Controller controller, Activity activity,RegistrationDetails registrationDetails, Controller.MethodTypes methodTypes) {
+        this.controller = controller;
+        performRegistrationRequest(activity, registrationDetails, methodTypes);
+    }
+
+    private void performRegistrationRequest(Activity activity, RegistrationDetails registrationDetails, Controller.MethodTypes methodTypes) {
+        startSpiceManager(activity);
+        RegistrationRequest registrationRequest =  new RegistrationRequest(registrationDetails);
+        spiceManager.execute(registrationRequest, registrationRequest.createCacheKey(), DurationInMillis.ALWAYS_EXPIRED, new registrationListener(registrationDetails, methodTypes));
+    }
+
+    public class registrationListener implements RequestListener<RegistrationResponse> {
+        private RegistrationDetails registrationDetails;
+        private Controller.MethodTypes methodTypes;
+
+        public registrationListener(RegistrationDetails registrationDetails, Controller.MethodTypes methodTypes) {
+            this.registrationDetails = registrationDetails;
+            this.methodTypes = methodTypes;
+        }
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            stopSpiceManager();
+        }
+
+        @Override
+        public void onRequestSuccess(RegistrationResponse registrationResponse)  {
+            stopSpiceManager();
+            controller.registerResult(registrationResponse,registrationDetails);
         }
     }
 }

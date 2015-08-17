@@ -30,7 +30,7 @@ public class MyTicket extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view =  inflater.inflate(R.layout.fragment_my_ticket, container, false);
+        view =  inflater.inflate(R.layout.fragment_my_ticket_tab, container, false);
         return view;
     }
 
@@ -51,25 +51,25 @@ public class MyTicket extends Fragment implements View.OnClickListener {
         viewPager.setAdapter(myTicketTabPagerAdapter);
         PagerSlidingTabStrip pagerSlidingTabStrip = (PagerSlidingTabStrip) view.findViewById(R.id.pagerSlidingTabStrip);
         pagerSlidingTabStrip.setViewPager(viewPager);
-        pagerSlidingTabStrip.setIndicatorColor(getResources().getColor(R.color.main_color_gray_lt));
+        pagerSlidingTabStrip.setIndicatorColor(getResources().getColor(R.color.white));
         pagerSlidingTabStrip.setTextColor(getResources().getColor(R.color.white));
 
-//        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
     @Override
     public void onClick(View v)

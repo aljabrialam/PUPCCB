@@ -2,16 +2,19 @@ package pupccb.solutionsresource.com.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.Password;
-import com.mobsandgeeks.saripaar.annotation.Required;
+
+import java.util.List;
 
 import pupccb.solutionsresource.com.R;
 import pupccb.solutionsresource.com.helper.BaseHelper;
@@ -30,11 +33,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
     private SharedPreferences sharedPreferences;
 
     private boolean onGoing;
-    @Required(order = 1, message = "Client Secret is required")
-    private EditText editTextClientSecret;
-    @Required(order = 2, message = "Username is required")
+    @Email
     private EditText editTextUsername;
-    @Password(order = 3)
+    @Password(message = "Password is required")
     private EditText editTextPassword;
 
 
@@ -42,12 +43,23 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = getLayoutInflater().inflate(R.layout.activity_login, null);
+
+        setScreenOrienttion(view);
         setContentView(view);
-        start();
+        startController();
         findViewById(view);
     }
 
-    private void start() {
+    private void setScreenOrienttion(View view) {
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            view.setBackgroundResource(R.drawable.landscape_bg);
+        } else {
+            view.setBackgroundResource(R.drawable.portrait_bg);
+        }
+    }
+
+    private void startController() {
         controller = new Controller(new OnlineHelper());
     }
 
@@ -60,10 +72,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
         validator = new Validator(this);
         validator.setValidationListener(this);
         sharedPreferences = BaseHelper.getSharedPreference(Main.this);
-
-
-        editTextUsername =(EditText)view.findViewById(R.id.editTextUsername);
-        editTextPassword = (EditText)view.findViewById(R.id.editTextPassword);
+        editTextUsername = (EditText) view.findViewById(R.id.editTextEmail);
+        editTextPassword = (EditText) view.findViewById(R.id.editTextPassword);
         setTouchNClick(R.id.btnLogin);
         setTouchNClick(R.id.btnReg);
     }
@@ -77,20 +87,16 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
     private void TemporatyLogin() {
         editTextUsername.setText("data-collector");
         editTextPassword.setText("data-collector");
-        editTextClientSecret.setText("12345");
     }
 
-    private void clearAlertDialog() {
+    private void clearTextView() {
         editTextUsername.setText("");
         editTextPassword.setText("");
-        editTextClientSecret.setText("");
-        editTextClientSecret.requestFocus();
     }
 
 
     public void login(Login login) {
         onGoing = true;
-
         controller.login(this, login);
     }
 
@@ -100,8 +106,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
         SharedPreferences.Editor editSharedPreference = BaseHelper.getEditSharedPreference(this);
         editSharedPreference.putString("access_token", session.getAccess_token());
         editSharedPreference.putString("username", login.getUsername());
-        editSharedPreference.putString("client_id", login.getClient_id());
-        editSharedPreference.putString("client_secret", login.getClient_secret());
         editSharedPreference.putBoolean("logged_in", true);
         editSharedPreference.apply();
 
@@ -111,54 +115,49 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
 
     @Override
     public void onValidationSucceeded() {
-        if (!onGoing) {
-            login(new Login(
-                    editTextUsername.getText().toString(),
-                    editTextPassword.getText().toString(),
-                    editTextClientSecret.getText().length() > 0 ?
-                            editTextUsername.getText().toString() :
-                            sharedPreferences.getString("client_id", null),
-                    editTextClientSecret.getText().length() > 0 ?
-                            editTextClientSecret.getText().toString() :
-                            sharedPreferences.getString("client_secret", null),
-                    "data_collector",
-                    "password"));
-        }
+        startActivity(new Intent(this, NavigationDrawer.class));
+        this.finish();
+//        if (!onGoing) {
+//            login(new Login(editTextUsername.getText().toString(),
+//                            editTextPassword.getText().toString()));
+//        }
     }
 
     @Override
-    public void onValidationFailed(View failedView, Rule<?> failedRule) {
-        String message = failedRule.getFailureMessage();
-        if (failedView instanceof EditText) {
-            failedView.requestFocus();
-            ((EditText) failedView).setError(message);
-        } else {
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            // Display error messages ;)
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
         }
     }
 
     public void onClick(View view) {
 
-        if(view.getId() == R.id.btnLogin) {
-            startActivity(new Intent(this, NavigationDrawer.class));
-            this.finish();
-        }
-        else if (view.getId() == R.id.btnReg){
+        if (view.getId() == R.id.btnLogin) {
+            validator.validate();
+        } else if (view.getId() == R.id.btnReg) {
             startActivity(new Intent(this, Registration.class));
             this.finish();
         }
     }
 
 
-    public View setClick(int var1) {
-        View var2 = this.findViewById(var1);
-        var2.setOnClickListener(this);
-        return var2;
+    public View setClick(int btn) {
+        View view = this.findViewById(btn);
+        view.setOnClickListener(this);
+        return view;
     }
 
-    public View setTouchNClick(int var1) {
-        View var2 = this.setClick(var1);
-        var2.setOnTouchListener(TOUCH);
-        return var2;
+    public View setTouchNClick(int btn) {
+        View view = this.setClick(btn);
+        view.setOnTouchListener(TOUCH);
+        return view;
     }
 }

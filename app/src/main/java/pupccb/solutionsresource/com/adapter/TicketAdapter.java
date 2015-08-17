@@ -1,5 +1,6 @@
 package pupccb.solutionsresource.com.adapter;
 
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,9 +35,17 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketView
 
     @Override
     public void onBindViewHolder(TicketViewHolder ticketViewHolder, int i) {
+        if(tickets.get(i).status.equalsIgnoreCase("Open")){
+            ticketViewHolder.status.setBackgroundResource(R.color.open);
+        }else if(tickets.get(i).status.equalsIgnoreCase("Resolved")){
+            ticketViewHolder.status.setBackgroundResource(R.color.resolved);
+        }else if(tickets.get(i).status.equalsIgnoreCase("Ongoing")){
+            ticketViewHolder.status.setBackgroundResource(R.color.ongoing);
+        }
         ticketViewHolder.status.setText(tickets.get(i).status);
         ticketViewHolder.title.setText(tickets.get(i).title);
         ticketViewHolder.assignTo.setText(tickets.get(i).assignTo);
+
     }
 
     @Override
@@ -51,16 +60,17 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketView
 
     public static class TicketViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
-        TextView status;
         TextView title;
         TextView assignTo;
+        TextView status;
+
 
         TicketViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.ticket_info_card);
-            status = (TextView)itemView.findViewById(R.id.ticketDetailStatusTextView);
             title = (TextView)itemView.findViewById(R.id.ticketSubjectTextView);
             assignTo = (TextView)itemView.findViewById(R.id.assignedToTextView);
+            status = (TextView)itemView.findViewById(R.id.ticketDetailStatusTextView);
         }
     }
 

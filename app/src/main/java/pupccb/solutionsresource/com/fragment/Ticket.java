@@ -34,7 +34,7 @@ public class Ticket extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_newsfeed,container, false);
+        view = inflater.inflate(R.layout.fragment_my_tickets,container, false);
         recyclerView = (RecyclerView)view.findViewById(R.id.rv);
 
         initializeData();
@@ -54,10 +54,10 @@ public class Ticket extends Fragment {
 
     private void initializeData(){
         tickets = new ArrayList<>();
-        tickets.add(new pupccb.solutionsresource.com.model.Ticket("Open", "Lorem Ipsum", "BIR"));
-        tickets.add(new pupccb.solutionsresource.com.model.Ticket("Resolved", "Lorem Ipsum", "PhilHealth"));
-        tickets.add(new pupccb.solutionsresource.com.model.Ticket("Resolved", "Lorem Ipsum","DOH"));
-        tickets.add(new pupccb.solutionsresource.com.model.Ticket("Resolved", "Lorem Ipsum", "PhilHealth"));
-        tickets.add(new pupccb.solutionsresource.com.model.Ticket("Open", "Lorem Ipsum", "BIR"));
+        tickets.add(new pupccb.solutionsresource.com.model.Ticket("Open", "Lorem Ipsum", "BIR", R.color.open));
+        tickets.add(new pupccb.solutionsresource.com.model.Ticket("Resolved", "Lorem Ipsum", "PhilHealth", R.color.resolved));
+        tickets.add(new pupccb.solutionsresource.com.model.Ticket("Resolved", "Lorem Ipsum","DOH", R.color.resolved));
+        tickets.add(new pupccb.solutionsresource.com.model.Ticket("Ongoing", "Lorem Ipsum", "PhilHealth", R.color.ongoing));
+        tickets.add(new pupccb.solutionsresource.com.model.Ticket("Open", "Lorem Ipsum", "BIR", R.color.open));
     }
 }

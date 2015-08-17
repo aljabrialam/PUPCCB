@@ -60,7 +60,7 @@ public class NavigationDrawer extends AppCompatActivity
             case 1:
                 mTitle = "Home";
                 setTitle(mTitle);
-                fragmentToReplace = new Home();
+                fragmentToReplace = new Home().newInstance();
                 break;
             case 2:
                 mTitle = "My Ticket";
