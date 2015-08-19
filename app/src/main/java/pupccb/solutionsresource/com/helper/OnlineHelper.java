@@ -21,6 +21,7 @@ import pupccb.solutionsresource.com.util.ErrorHandler;
 public class OnlineHelper extends BaseHelper implements OnlineCommunicator {
 
     private Controller controller;
+    private Activity activity;
 
     @Override
     public void login(Controller controller, Activity activity, Login login, Controller.MethodTypes methodTypes) {
@@ -65,6 +66,7 @@ public class OnlineHelper extends BaseHelper implements OnlineCommunicator {
 
     private void performRegistrationRequest(Activity activity, RegistrationDetails registrationDetails, Controller.MethodTypes methodTypes) {
         startSpiceManager(activity);
+        this.activity = activity;
         RegistrationRequest registrationRequest =  new RegistrationRequest(registrationDetails);
         spiceManager.execute(registrationRequest, registrationRequest.createCacheKey(), DurationInMillis.ALWAYS_EXPIRED, new registrationListener(registrationDetails, methodTypes));
     }
@@ -81,6 +83,7 @@ public class OnlineHelper extends BaseHelper implements OnlineCommunicator {
         @Override
         public void onRequestFailure(SpiceException spiceException) {
             stopSpiceManager();
+            controller.setError(new ErrorHandler().onRequestFailure(spiceException), methodTypes);
         }
 
         @Override

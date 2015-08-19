@@ -20,17 +20,16 @@ public class RegistrationRequest extends RetrofitSpiceRequest<RegistrationRespon
 
     @Override
     public RegistrationResponse loadDataFromNetwork() throws Exception {
-        return getService().register(
-                register.getFirstname(),
-                register.getMiddlename(),
-                register.getLasrname(),
-                register.getContactnumber(),
-                register.getEmailaddress(),
-                register.getPassword()
-        );
+            return getService().register(
+                    register.getFirst_name(),
+                    register.getLast_name(),
+                    register.getContact_number(),
+                    register.getEmail(),
+                    register.getPassword()
+            );
     }
 
     public String createCacheKey() {
-        return "SessionRequest" + register.getEmailaddress();
+        return "SessionRequest" + register.getEmail();
     }
 }

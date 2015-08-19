@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -46,9 +46,7 @@
         <item name="android:paddingRight">@dimen/pad_10dp</item>
         <item name="android:ems">10</item>
         <item name="android:drawablePadding">@dimen/pad_10dp</item>
-        <item name="android:inputType">textEmailAddress</item>
     </style>
-
 
     <style name="btn_white_large" parent="@style/btn">
         <item name="android:textSize">@dimen/txt_16sp</item>
@@ -58,6 +56,12 @@
 
     <style name="btn_black_header" parent="@style/btn">
         <item name="android:textSize">@dimen/txt_16sp</item>
+        <item name="android:textColor">@color/myPrimaryColor</item>v
+        <item name="android:background">@drawable/button_use_dark_gray</item>
+    </style>
+
+    <style name="btn_add_attachment" parent="@style/btn">
+        <item name="android:textSize">@dimen/txt_12sp</item>
         <item name="android:textColor">@color/myPrimaryColor</item>v
         <item name="android:background">@drawable/button_use_dark_gray</item>
     </style>
@@ -165,6 +169,47 @@
     <style name="TEXT.MEDIUM" parent="">
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
         <item name="android:textSize">@dimen/TEXT_SIZE_MEDIUM</item>
+    </style>
+
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="button_inner_tab">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/myPrimaryDarkColor</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="label_main_layout">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/txt_12sp</item>
+        <item name="android:textColor">@color/myPrimaryColor</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+    </style>
+
+
+    <style name="text_input_main_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/txt_12sp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
     </style>
 
 </resources>

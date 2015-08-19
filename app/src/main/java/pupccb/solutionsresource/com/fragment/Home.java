@@ -16,57 +16,52 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import pupccb.solutionsresource.com.R;
+import pupccb.solutionsresource.com.adapter.CardAdapter;
 import pupccb.solutionsresource.com.adapter.HomeAdapter;
 import pupccb.solutionsresource.com.model.Note;
+import pupccb.solutionsresource.com.util.Dialog;
 
 /**
  * Created by User on 7/29/2015.
  */
-public class Home extends Fragment implements SearchView.OnQueryTextListener, HomeAdapter.RecyclerCardCallback, SwipeRefreshLayout.OnRefreshListener{
-
+public class Home extends Fragment implements SearchView.OnQueryTextListener,
+        SwipeRefreshLayout.OnRefreshListener, HomeAdapter.Communicator {
 
     public static final String TAG = CardGrid.class.getSimpleName();
-
-
-
+    private static final String[] LIST_TITLES = {"shopping", "to bring", "on sale", "look for",
+            "buy", "get rid of"};
     private AppCompatActivity appCompatActivity;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private HomeAdapter homeAdapter;
     private List<Note> mModels;
-
-    private static final String[] LIST_TITLES = {"shopping", "to bring", "on sale", "look for",
-            "buy", "get rid of"};
-
-
-    @Override
-    public void onAttach(Activity activity)
-    {
-        appCompatActivity = (AppCompatActivity)activity;
-        super.onAttach(activity);
-    }
+    private CardAdapter cardAdapter;
 
     public static Home newInstance() {
         return new Home();
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        appCompatActivity = (AppCompatActivity) activity;
+        super.onAttach(activity);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater,container, savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        if (swipeRefreshLayout == null)
-        {
-            swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeRefreshLayout);
-            swipeRefreshLayout.setColorSchemeResources( R.color.colorPrimary,R.color.colorPrimaryDark,R.color.colorPrimary,R.color.colorPrimaryDark);
-            swipeRefreshLayout.setOnRefreshListener( this );
+        if (swipeRefreshLayout == null) {
+            swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+            swipeRefreshLayout.setColorSchemeResources(R.color.open, R.color.resolved, R.color.ongoing, R.color.myPrimaryColor);
+            swipeRefreshLayout.setOnRefreshListener(this);
 
         }
 
@@ -82,11 +77,11 @@ public class Home extends Fragment implements SearchView.OnQueryTextListener, Ho
 
         mModels = new ArrayList<>();
 
-        for (String search : LIST_TITLES  ) {
-            mModels.add(new Note(search,search,search,0,0));
+        for (String search : LIST_TITLES) {
+            mModels.add(new Note(search, search, search, 0, 0));
         }
 
-        homeAdapter = new HomeAdapter(getAppCompatActivity(),10, mModels);
+        homeAdapter = new HomeAdapter(getAppCompatActivity(), 10, mModels, this);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(homeAdapter);
     }
@@ -97,7 +92,7 @@ public class Home extends Fragment implements SearchView.OnQueryTextListener, Ho
 
         final MenuItem item = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-        searchView.setOnQueryTextListener(this);
+        //searchView.setOnQueryTextListener(this);
     }
 
     @Override
@@ -126,11 +121,8 @@ public class Home extends Fragment implements SearchView.OnQueryTextListener, Ho
         return filteredModelList;
     }
 
-
-
     @Override
-    public void onRefresh()
-    {
+    public void onRefresh() {
         getSwipeRefreshLayout().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -139,39 +131,33 @@ public class Home extends Fragment implements SearchView.OnQueryTextListener, Ho
         }, 2000);
     }
 
-    public AppCompatActivity getAppCompatActivity()
-    {
+    public AppCompatActivity getAppCompatActivity() {
         return appCompatActivity;
     }
-    public SwipeRefreshLayout getSwipeRefreshLayout()
-    {
+
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
         return swipeRefreshLayout;
     }
 
-
     @Override
-    public void onItemImageClick(int position)
-    {
-        //RecyclerItem selectedItem = cardAdapter.getItems().get(position);
-//        DetailActivity.launch(getAppCompatActivity(), selectedItem.getImageView(), selectedItem.getUrl());
+    public void adapterSelectedNote(View view, int position) {
+        dialogNoteDetail("Lorem Ipsum Dolor");
     }
 
-    @Override
-    public void onItemLikeButtonClick(int position)
-    {
-        Toast.makeText(getAppCompatActivity(), getAppCompatActivity().getString(R.string.like_label), Toast.LENGTH_SHORT).show();
-    }
+    private void dialogNoteDetail(String message) {
 
-    @Override
-    public void onItemCommentButtonClick(int position)
-    {
-        Toast.makeText(getAppCompatActivity(), getAppCompatActivity().getString(R.string.comment_label), Toast.LENGTH_SHORT).show();
-    }
+        Dialog.Builder uvaBuilder = new Dialog.Builder(getAppCompatActivity());
+        uvaBuilder.setSecondaryHeaderImageResource(R.mipmap.ic_launcher)
+                .setTitle(message)
+                .setOnPrimaryButtonClickListener(new View.OnClickListener() {
 
-    @Override
-    public void onItemShareButtonClick(int position)
-    {
-        Toast.makeText(getAppCompatActivity(), getAppCompatActivity().getString(R.string.share_label), Toast.LENGTH_SHORT).show();
-    }
+                    @Override
+                    public void onClick(View v) {
 
+                    }
+
+                }, true)
+                .setContentView(R.layout.dialog_content)
+                .create().show();
+    }
 }

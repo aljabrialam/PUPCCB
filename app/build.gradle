@@ -22,9 +22,7 @@ android {
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
-
     }
-
 
 }
 
@@ -38,5 +36,12 @@ dependencies {
     compile 'com.octo.android.robospice:robospice-retrofit:1.4.12'
     compile 'com.squareup.picasso:picasso:2.3.4'
     compile 'com.android.support:design:22.+'
-    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+   // compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.getbase:floatingactionbutton:1.10.0'
+    compile 'me.zhanghai.android.materialprogressbar:library:1.0.2'
+    compile 'com.wdullaer:materialdatetimepicker:1.4.2'
+    compile 'com.afollestad:material-dialogs:0.7.8.1'
+    compile 'de.hdodenhof:circleimageview:1.2.1'
+
+    compile 'com.jpardogo.materialtabstrip:library:1.1.0'
 }

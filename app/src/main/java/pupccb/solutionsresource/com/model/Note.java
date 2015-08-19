@@ -12,32 +12,30 @@ import java.util.Calendar;
 import pupccb.solutionsresource.com.R;
 
 /**
-
  * <p/>
  * Note model.
  */
 public class Note {
 
-    private static final String[] ACTIONS_PEOPLE = {"call", "email", "meet up with",
-            "hang out with"};
-    private static final String[] ACTIONS_OBJECTS = {"clean", "buy", "sell", "fix"};
-    private static final String[] NAMES = {"Sherry", "Gordon", "Tom", "Kevin", "Brian", "Naomi",
+    private static final String[] ACTIONS_PEOPLE = {"call", "email", "meet up with", "lorem"};
+    private static final String[] ACTIONS_OBJECTS = {"clean", "lorem", "lorem", "fix"};
+    private static final String[] NAMES = {"Lorem", "Ipsul", "Dolor", "Kevin", "Brian", "Naomi",
             "Ali", "Jennifer"};
     private static final String[] OBJECTS = {"desk", "car", "motorcycle", "computer", "laptop"};
     private static final String WORDS = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.";
     private static final String[] CITIES = {"San Francisco", "Campbell", "Lincoln", "New York",
             "Silverton", "Scarface", "King Salmon"};
 
-    private static final String[] LIST_TITLES = {"shopping", "to bring", "on sale", "look for",
-            "buy", "get rid of"};
+    private static final String[] LIST_TITLES = {"Lorem Ipsum", "Ipsum", "Dolor", "Lorem Ipsum",
+            "dolor", "Lorem ipsum dolor"};
     private static final String[] LIST_DELIMITERS = {"•", "-"};
-    private static final String[] LIST_GROCERIES = {"almond milk", "coconut water", "cucumber",
-            "green apples"};
-    private static final String[] LIST_CAMPING = {"lantern", "smores", "extra blankets",
-            "warm socks", "first aid kit", "tent"};
+    private static final String[] LIST_GROCERIES = {"lorem Ipsum", "sample", "dolor",
+            "adipiscing elit"};
+    private static final String[] LIST_CAMPING = {"Dolor", "elit", "sample",
+            "lorem", "Lorem Ipsum", "tent"};
 
-    private static final int NUM_WORDS = 4;
-    private static final int DATE_RANGE = 60;
+    private static final int NUM_WORDS = 2;
+    private static final int DATE_RANGE = 3;
 
     private String title;
     private String note;
@@ -53,52 +51,9 @@ public class Note {
         this.infoImage = infoImage;
         this.color = color;
     }
+
     public Note(String title) {
         this.title = title;
-//        this.note = note;
-//        this.info = info;
-//        this.infoImage = infoImage;
-//        this.color = color;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    public int getInfoImage() {
-        return infoImage;
-    }
-
-    public void setInfoImage(int infoImage) {
-        this.infoImage = infoImage;
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
     }
 
     public static Note randomNote(Context context) {
@@ -109,38 +64,40 @@ public class Note {
         int color = getRandomColor(context);
 
         // Title only
-        if (rand >= 0.65) {
-            title = getRandomActivity();
-            if (Math.random() >= 0.7) {
-                info = getRandomDate(context);
-            }
-        }
-        // Title and note
-        else if (rand >= 0.3) {
-            title = getRandomActivity();
-            note = getRandomWords();
-            if (Math.random() >= 0.7) {
-                info = getRandomInfo(context);
-            }
-        }
-        // Lists
-        else {
-            title = getRandomListTitle();
-            note = getRandomList();
-            if (Math.random() >= 0.7) {
-                info = getRandomLocation();
-            }
-        }
+//        if (rand >= 0.65) {
+        title = getRandomActivity();
+        note = getRandomWords();
+//            if (Math.random() >= 0.7) {
+        info = getRandomDate(context);
+//            }
+//        }
+//        // Title and note
+//        else
+//        if (rand >= 0.3) {
+//            title = getRandomActivity();
+//            note = getRandomWords();
+//            if (Math.random() >= 0.7) {
+//                info = getRandomInfo(context);
+//            }
+//        }
+//        // Lists
+//        else {
+//            title = getRandomListTitle();
+//            note = getRandomList();
+//            if (Math.random() >= 0.7) {
+//                info = getRandomLocation();
+//            }
+//        }
 
         return new Note(capitalize(title), note, info.info, info.infoImage, color);
     }
 
     private static String getRandomActivity() {
-        if (Math.random() >= 0.5) {
-            return getRandomString(false, ACTIONS_PEOPLE) + " " + getRandomString(false, NAMES);
-        } else {
-            return getRandomString(false, ACTIONS_OBJECTS) + " " + getRandomString(false, OBJECTS);
-        }
+//        if (Math.random() >= 0.5) {
+            return getRandomString(false, LIST_TITLES) + " " + getRandomString(false, LIST_TITLES);
+//        } else {
+//            return getRandomString(false, LIST_TITLES) + " " + getRandomString(false, LIST_TITLES);
+//        }
     }
 
     private static String getRandomWords() {
@@ -188,7 +145,7 @@ public class Note {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, (int) (Math.random() * DATE_RANGE));
         String date = DateFormat.getMediumDateFormat(context).format(cal.getTime());
-        return new NoteInfo(date, R.drawable.ic_nav1);
+        return new NoteInfo(date, R.drawable.ic_nav2);
     }
 
     private static NoteInfo getRandomLocation() {
@@ -224,6 +181,46 @@ public class Note {
 
     private static Object getRandomItem(Object[] objs) {
         return objs[((int) (Math.random() * objs.length))];
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public int getInfoImage() {
+        return infoImage;
+    }
+
+    public void setInfoImage(int infoImage) {
+        this.infoImage = infoImage;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     private static class NoteInfo {

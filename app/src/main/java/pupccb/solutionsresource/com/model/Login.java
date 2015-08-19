@@ -28,5 +28,4 @@ public class Login {
         this.password = password != null ? password.trim() : "";
     }
 
-
 }

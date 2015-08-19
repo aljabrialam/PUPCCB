@@ -1,6 +1,7 @@
 package pupccb.solutionsresource.com.adapter;
 
-import android.graphics.Color;
+import android.graphics.Typeface;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,40 +12,60 @@ import android.widget.TextView;
 import java.util.List;
 
 import pupccb.solutionsresource.com.R;
-import pupccb.solutionsresource.com.model.Ticket;
+import pupccb.solutionsresource.com.model.TicketInfo;
 
 /**
  * Created by User on 8/5/2015.
  */
 public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketViewHolder> {
 
+    private List<TicketInfo> ticketInfos;
+    private Communicator communicator;
+    private AppCompatActivity appCompatActivity;
 
-    private List<Ticket> tickets;
-
-
-    public TicketAdapter(List<Ticket> tickets){
-        this.tickets = tickets;
+    public TicketAdapter(AppCompatActivity appCompatActivity, List<TicketInfo> ticketInfos, Communicator communicator) {
+        this.appCompatActivity = appCompatActivity;
+        this.ticketInfos = ticketInfos;
+        this.communicator = communicator;
     }
 
     @Override
     public TicketViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ticket_info_card_view, viewGroup, false);
-        TicketViewHolder ticketViewHolder = new TicketViewHolder(v);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_tickets, viewGroup, false);
+        final TicketViewHolder ticketViewHolder = new TicketViewHolder(v);
+
+        ticketViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                communicator.adapterSelectedTicket(view, ticketViewHolder.getAdapterPosition());
+            }
+        });
+
         return ticketViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(TicketViewHolder ticketViewHolder, int i) {
-        if(tickets.get(i).status.equalsIgnoreCase("Open")){
+    public void onBindViewHolder(TicketViewHolder ticketViewHolder, final int i) {
+
+        TicketInfo selectedItem = ticketInfos.get(i);
+        if (ticketInfos.get(i).status.equalsIgnoreCase("Open")) {
             ticketViewHolder.status.setBackgroundResource(R.color.open);
-        }else if(tickets.get(i).status.equalsIgnoreCase("Resolved")){
+        } else if (ticketInfos.get(i).status.equalsIgnoreCase("Resolved")) {
             ticketViewHolder.status.setBackgroundResource(R.color.resolved);
-        }else if(tickets.get(i).status.equalsIgnoreCase("Ongoing")){
+        } else if (ticketInfos.get(i).status.equalsIgnoreCase("Ongoing")) {
             ticketViewHolder.status.setBackgroundResource(R.color.ongoing);
         }
-        ticketViewHolder.status.setText(tickets.get(i).status);
-        ticketViewHolder.title.setText(tickets.get(i).title);
-        ticketViewHolder.assignTo.setText(tickets.get(i).assignTo);
+
+        if (ticketInfos.get(i).date.equalsIgnoreCase("2 hours ago")) {
+            ticketViewHolder.status.setTypeface(null, Typeface.BOLD);
+            ticketViewHolder.title.setTypeface(null, Typeface.BOLD);
+            ticketViewHolder.assignTo.setTypeface(null, Typeface.BOLD);
+            ticketViewHolder.date.setTypeface(null, Typeface.BOLD);
+        }
+        ticketViewHolder.status.setText(selectedItem.getStatus());
+        ticketViewHolder.title.setText(selectedItem.getTitle());
+        ticketViewHolder.assignTo.setText(selectedItem.getAssignTo());
+        ticketViewHolder.date.setText(selectedItem.getDate());
 
     }
 
@@ -55,23 +76,31 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.TicketView
 
     @Override
     public int getItemCount() {
-        return tickets.size();
+        return ticketInfos != null ? ticketInfos.size() : 0;
     }
 
-    public static class TicketViewHolder extends RecyclerView.ViewHolder {
-        CardView cv;
+    public List<TicketInfo> getItems() {
+        return ticketInfos;
+    }
+
+    public interface Communicator {
+        void adapterSelectedTicket(View view, int position);
+    }
+
+    public class TicketViewHolder extends RecyclerView.ViewHolder {
+        CardView cardView;
         TextView title;
         TextView assignTo;
         TextView status;
-
+        TextView date;
 
         TicketViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.ticket_info_card);
-            title = (TextView)itemView.findViewById(R.id.ticketSubjectTextView);
-            assignTo = (TextView)itemView.findViewById(R.id.assignedToTextView);
-            status = (TextView)itemView.findViewById(R.id.ticketDetailStatusTextView);
+            cardView = (CardView) itemView.findViewById(R.id.ticket_info_card);
+            title = (TextView) itemView.findViewById(R.id.ticketSubjectTextView);
+            assignTo = (TextView) itemView.findViewById(R.id.assignedToTextView);
+            status = (TextView) itemView.findViewById(R.id.ticketDetailStatusTextView);
+            date = (TextView) itemView.findViewById(R.id.dateTimeHolder);
         }
     }
-
 }

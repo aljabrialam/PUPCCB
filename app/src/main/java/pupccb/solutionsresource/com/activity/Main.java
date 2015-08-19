@@ -3,10 +3,12 @@ package pupccb.solutionsresource.com.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -16,6 +18,7 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.List;
 
+import me.zhanghai.android.materialprogressbar.IndeterminateProgressDrawable;
 import pupccb.solutionsresource.com.R;
 import pupccb.solutionsresource.com.helper.BaseHelper;
 import pupccb.solutionsresource.com.helper.Controller;
@@ -23,6 +26,7 @@ import pupccb.solutionsresource.com.helper.OnlineHelper;
 import pupccb.solutionsresource.com.model.Login;
 import pupccb.solutionsresource.com.model.Session;
 import pupccb.solutionsresource.com.util.ErrorHandler;
+import pupccb.solutionsresource.com.util.ToastMessage;
 import pupccb.solutionsresource.com.util.TouchEffect;
 
 public class Main extends AppCompatActivity implements View.OnClickListener, Validator.ValidationListener {
@@ -31,23 +35,25 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
     private Controller controller;
     private Validator validator;
     private SharedPreferences sharedPreferences;
+    private ProgressBar progressBar;
+    private ToastMessage toastMessage;
+    private BaseHelper baseHelper;
 
     private boolean onGoing;
-    @Email
+    @Email(message = "Email address is required")
     private EditText editTextUsername;
     @Password(message = "Password is required")
     private EditText editTextPassword;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = getLayoutInflater().inflate(R.layout.activity_login, null);
-
         setScreenOrienttion(view);
         setContentView(view);
         startController();
         findViewById(view);
+        temporatyLogin();
     }
 
     private void setScreenOrienttion(View view) {
@@ -63,30 +69,30 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
         controller = new Controller(new OnlineHelper());
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
     private void findViewById(View view) {
         validator = new Validator(this);
         validator.setValidationListener(this);
         sharedPreferences = BaseHelper.getSharedPreference(Main.this);
+        baseHelper = new BaseHelper();
+
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBarLogin);
+        progressBar.setIndeterminateDrawable(new IndeterminateProgressDrawable(this));
+        progressBar.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.myPrimaryColor), PorterDuff.Mode.SRC_IN);
         editTextUsername = (EditText) view.findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) view.findViewById(R.id.editTextPassword);
         setTouchNClick(R.id.btnLogin);
         setTouchNClick(R.id.btnReg);
     }
 
-
     public void setError(ErrorHandler.Error error, Controller.MethodTypes methodTypes) {
         onGoing = false;
-        Toast.makeText(getApplicationContext(), error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.INVISIBLE);
+        baseHelper.toastMessage(this, 5000, ToastMessage.MessageType.DANGER, error.getErrorMessage());
     }
 
-    private void TemporatyLogin() {
-        editTextUsername.setText("data-collector");
-        editTextPassword.setText("data-collector");
+    private void temporatyLogin() {
+        editTextUsername.setText("juan@gmail.com");
+        editTextPassword.setText("secret");
     }
 
     private void clearTextView() {
@@ -94,33 +100,32 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
         editTextPassword.setText("");
     }
 
-
     public void login(Login login) {
         onGoing = true;
+        progressBar.setVisibility(View.VISIBLE);
         controller.login(this, login);
     }
 
     public void loginResult(Session session, Login login) {
         onGoing = false;
-
+        progressBar.setVisibility(View.INVISIBLE);
         SharedPreferences.Editor editSharedPreference = BaseHelper.getEditSharedPreference(this);
         editSharedPreference.putString("access_token", session.getAccess_token());
+        editSharedPreference.putString("refresh_token", session.getRefresh_token());
         editSharedPreference.putString("username", login.getUsername());
         editSharedPreference.putBoolean("logged_in", true);
         editSharedPreference.apply();
 
-        finish();
         startActivity(new Intent(Main.this, NavigationDrawer.class));
+        finish();
     }
 
     @Override
     public void onValidationSucceeded() {
-        startActivity(new Intent(this, NavigationDrawer.class));
-        this.finish();
-//        if (!onGoing) {
-//            login(new Login(editTextUsername.getText().toString(),
-//                            editTextPassword.getText().toString()));
-//        }
+        if (!onGoing) {
+            login(new Login(editTextUsername.getText().toString(),
+                    editTextPassword.getText().toString()));
+        }
     }
 
     @Override
@@ -128,7 +133,6 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(this);
-
             // Display error messages ;)
             if (view instanceof EditText) {
                 ((EditText) view).setError(message);
@@ -139,15 +143,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
     }
 
     public void onClick(View view) {
-
         if (view.getId() == R.id.btnLogin) {
             validator.validate();
         } else if (view.getId() == R.id.btnReg) {
             startActivity(new Intent(this, Registration.class));
-            this.finish();
         }
     }
-
 
     public View setClick(int btn) {
         View view = this.findViewById(btn);

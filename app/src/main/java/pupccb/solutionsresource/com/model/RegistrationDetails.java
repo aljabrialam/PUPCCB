@@ -5,59 +5,51 @@ package pupccb.solutionsresource.com.model;
  */
 public class RegistrationDetails {
 
-    private String firstname, middlename, lasrname, contactnumber, emailaddress, password;
+    private String first_name, last_name, contact_number, email, password;
 
-    public RegistrationDetails(String firstname, String middlename, String lasrname, String contactnumber, String emailaddress,String password) {
-        setFirstname(firstname);
-        setMiddlename(middlename);
-        setLasrname(lasrname);
-        setContactnumber(contactnumber);
-        setEmailaddress(emailaddress);
+    public RegistrationDetails(String first_name, String last_name, String contact_number, String email, String password) {
+        setFirst_name(first_name);
+        setLast_name(last_name);
+        setContact_number(contact_number);
+        setEmail(email);
         setPassword(password);
     }
 
-    public String getFirstname() {
-        return firstname != null ? firstname.trim() : "";
+    public String getFirst_name() {
+        return first_name != null ? first_name.trim() : "";
     }
 
-    public String getMiddlename() {
-        return middlename != null ? middlename.trim() : "";
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name != null ? first_name.trim() : "";
+        ;
     }
 
-    public String getLasrname() {
-        return lasrname != null ? lasrname.trim() : "";
+    public String getLast_name() {
+        return last_name != null ? last_name.trim() : "";
     }
 
-    public String getContactnumber() {
-        return contactnumber != null ? contactnumber.trim() : "";
+    public void setLast_name(String last_name) {
+        this.last_name = last_name != null ? last_name.trim() : "";
     }
 
-    public String getEmailaddress() {
-        return emailaddress != null ? emailaddress.trim() : "";
+    public String getContact_number() {
+        return contact_number != null ? contact_number.trim() : "";
+    }
+
+    public void setContact_number(String contact_number) {
+        this.contact_number = contact_number != null ? contact_number.trim() : "";
+    }
+
+    public String getEmail() {
+        return email != null ? email.trim() : "";
+    }
+
+    public void setEmail(String email) {
+        this.email = email != null ? email.trim() : "";
     }
 
     public String getPassword() {
         return password != null ? password.trim() : "";
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname != null ? firstname.trim() : "";
-    }
-
-    public void setMiddlename(String middlename) {
-        this.middlename = middlename != null ? middlename.trim() : "";
-    }
-
-    public void setLasrname(String lasrname) {
-        this.lasrname = lasrname != null ? lasrname.trim() : "";
-    }
-
-    public void setContactnumber(String contactnumber) {
-        this.contactnumber = contactnumber != null ? contactnumber.trim() : "";
-    }
-
-    public void setEmailaddress(String emailaddress) {
-        this.emailaddress = emailaddress != null ? emailaddress.trim() : "";
     }
 
     public void setPassword(String password) {

@@ -14,11 +14,13 @@
 
     <color name="myTextPrimaryColor">#313335</color>
 
-    <color name="myDrawerBackground">#ffffffff</color>
+    <color name="myDrawerBackground">#FFFDFDFE</color>
     <color name="myWindowBackground">#fdfdfe</color>
 
     <color name="myNavigationColor">#000</color>
 
+    <color name="mdtp_accent_color">#0d509b</color>
+    <color name="mdtp_accent_color_dark">#114274</color>
 
 
     <color name="primary_light">#CFD8DC</color>
@@ -56,6 +58,9 @@
     <color name="txt">#e9e3f1</color>
     <color name="ticket_info_txt">#d5dee5</color>
 
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="half_black">#808080</color>
+    <color name="white_pressed">#f1f1f1</color>
     <array name="note_neutral_colors">
         <item>#9E9E9E</item>
         <item>#455A64</item>
@@ -64,7 +69,7 @@
 
     <array name="note_accent_colors">
         <item>#039BE5</item>
-        <!--<item>#004687</item>-->
+        <item>#004687</item>
         <!--<item>#E9BC1B</item>-->
         <!--<item>#B81D18</item>-->
         <item>#7b7b7b</item>
@@ -95,5 +100,23 @@
     <!-- FAB Color-->
     <color name="yellow">#E9BC1B</color>
 
+
+    <color name="danger">#F44336</color>
+    <color name="warning">#FF9800</color>
+    <color name="success">#4CAF50</color>
+    <color name="normal">#2196F3</color>
+
+    <!-- Default colors for primary button -->
+    <color name="material_red">#B81D18</color>
+    <color name="material_red_dark">#ba0015</color>
+    <color name="material_red_light">#EC407A</color>
+
+    <!-- Default colors for secondary button -->
+    <color name="material_amber">#FFC107</color>
+    <color name="material_amber_dark">#FF6F00</color>
+    <color name="material_amber_light">#FFCA28</color>
+
+    <!-- Default header color -->
+    <color name="material_blue_grey_dark">#37474F</color>
 
 </resources>

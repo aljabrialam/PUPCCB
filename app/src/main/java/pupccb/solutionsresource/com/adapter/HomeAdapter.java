@@ -20,22 +20,32 @@ import pupccb.solutionsresource.com.model.NotesViewHolder;
  */
 public class HomeAdapter extends RecyclerView.Adapter<NotesViewHolder> {
 
-
     private final Context context;
+    private Communicator communicator;
 
     private Note[] notes;
     private final List<Note> mModels;
 
-    public HomeAdapter(Context context, int numNotes , List<Note> models) {
+    public HomeAdapter(Context context, int numNotes, List<Note> models, Communicator communicator) {
         this.context = context;
         notes = generateNotes(context, numNotes);
         mModels = new ArrayList<>(models);
+        this.communicator = communicator;
     }
 
     @Override
     public NotesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_card, parent, false);
-        return new NotesViewHolder(v);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_card, parent, false);
+
+        final NotesViewHolder notesViewHolder = new NotesViewHolder(view);
+        notesViewHolder.noteCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                communicator.adapterSelectedNote(view, notesViewHolder.getAdapterPosition());
+            }
+        });
+
+        return new NotesViewHolder(view);
     }
 
     @Override
@@ -136,17 +146,8 @@ public class HomeAdapter extends RecyclerView.Adapter<NotesViewHolder> {
         notifyItemMoved(fromPosition, toPosition);
     }
 
-
-
-
-    public interface RecyclerCardCallback
-    {
-        void onItemImageClick(int position);
-
-        void onItemLikeButtonClick(int position);
-
-        void onItemCommentButtonClick(int position);
-
-        void onItemShareButtonClick(int position);
+    public interface Communicator {
+        void adapterSelectedNote(View view, int position);
     }
+
 }

@@ -32,7 +32,7 @@ public class ErrorHandler {
     protected static final String ERROR_MSG = "Error Message";
 
     public Error onRequestFailure(SpiceException spiceException) {
-        Log.e(TAG, spiceException.toString());
+        Log.e(TAG, spiceException.getMessage());
 
         Error error;
         if (spiceException.getCause() instanceof RetrofitError) {
@@ -82,7 +82,9 @@ public class ErrorHandler {
         } else if (errors.getError_message().length() > 0) {
             if (errors.getStatus().equals("401")) {
                 error = new Error(ErrorType.LOGOUT, errors.getError_message());
-            } else {
+            } else if (errors.getStatus().equals("400")) {
+                error = new Error(ErrorType.TOAST, errors.getError_message());
+            }else {
                 error = new Error(ErrorType.TOAST, errors.getError_message());
             }
         } else {
@@ -104,6 +106,8 @@ public class ErrorHandler {
                 error = new Error(ErrorType.RETRY, "Path parameter \"id\" value must not be null");
             } else if (retrofitError.toString().contains("No authentication challenges found")) {
                 error = new Error(ErrorType.LOGOUT, "No authentication challenges found");
+            } else if (retrofitError.toString().contains("The email has already been taken.")) {
+                error = new Error(ErrorType.TOAST, "The email has already been taken.");
             } else {
                 error = new Error(ErrorType.TOAST, "Uncatched Error!\n" + message[--messageLength]);
             }
@@ -112,6 +116,10 @@ public class ErrorHandler {
             error = new Error(ErrorType.TOAST, "Whooops, looks like something went wrong.");
         }
         return error;
+    }
+
+    public enum ErrorType {
+        LOGOUT, RETRY, TOAST, DIALOG
     }
 
     public class Error {
@@ -127,20 +135,16 @@ public class ErrorHandler {
             return errorType;
         }
 
-        public String getErrorMessage() {
-            return errorMessage;
-        }
-
         public void setErrorType(ErrorType errorType) {
             this.errorType = errorType;
         }
 
-        public void setErrorMessage(String errorMessage) {
-            this.errorMessage = errorMessage;
+        public String getErrorMessage() {
+            return errorMessage != null ? errorMessage.trim() : "";
         }
-    }
 
-    public enum ErrorType {
-        LOGOUT, RETRY, TOAST, DIALOG
+        public void setErrorMessage(String errorMessage) {
+            this.errorMessage = errorMessage != null ? errorMessage.trim() : "";
+        }
     }
 }

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.view.View;
@@ -22,12 +24,15 @@ public class CallCCB extends AppCompatActivity {
     private Button callBtn;
     private Button dialBtn;
     private EditText number;
+    private Toolbar toolbar;
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_call_ccb);
-
+        view = getLayoutInflater().inflate(R.layout.activity_call_ccb, null);
+        setContentView(view);
+        toolBar();
         callBtn = (Button) findViewById(R.id.btnCall);
 
         // add PhoneStateListener for monitoring
@@ -55,6 +60,18 @@ public class CallCCB extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void toolBar() {
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar_actionbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     private class MyPhoneListener extends PhoneStateListener {

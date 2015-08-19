@@ -1,49 +1,82 @@
 package pupccb.solutionsresource.com.adapter;
 
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import pupccb.solutionsresource.com.fragment.Home;
-import pupccb.solutionsresource.com.fragment.Ticket;
+import com.astuetz.PagerSlidingTabStrip;
 
+import java.util.ArrayList;
+
+import pupccb.solutionsresource.com.R;
+import pupccb.solutionsresource.com.fragment.CurrentTicket;
+import pupccb.solutionsresource.com.fragment.PastTicket;
+import pupccb.solutionsresource.com.model.ViewPagerTab;
 
 /**
  * Created by User on 7/31/2015.
  */
-public class MyTicketTabPagerAdapter extends FragmentStatePagerAdapter {
+public class MyTicketTabPagerAdapter extends FragmentStatePagerAdapter  implements PagerSlidingTabStrip.CustomTabProvider {
 
-    private final String[] titles = {"Current Ticket", "Past Ticket"};
-    public static final int NUM_ITEMS = 2;
-    public static final int CURRENT_TICKET = 0;
-    public static final int PAST_TICKET = 1;
-    private Home home;
+    ArrayList<ViewPagerTab> viewPagerTabs;
 
-
-    public MyTicketTabPagerAdapter(FragmentManager fragmentManager) {
+    public MyTicketTabPagerAdapter(FragmentManager fragmentManager, ArrayList<ViewPagerTab> viewPagerTabs) {
         super(fragmentManager);
-        //home = Home.newInstance();
+        this.viewPagerTabs = viewPagerTabs;
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
-        return titles[position];
+    public View getCustomTabView(ViewGroup viewGroup, int i) {
+        RelativeLayout tabLayout = (RelativeLayout)
+                LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.tab_layout, null);
+
+        TextView tabTitle = (TextView) tabLayout.findViewById(R.id.tab_title);
+        TextView badge = (TextView) tabLayout.findViewById(R.id.badge);
+
+        ViewPagerTab tab = viewPagerTabs.get(i);
+
+        tabTitle.setText(tab.title.toUpperCase());
+        if (tab.notifications > 0) {
+            badge.setVisibility(View.VISIBLE);
+            badge.setText(String.valueOf(tab.notifications));
+        } else {
+            badge.setVisibility(View.GONE);
+        }
+
+        return tabLayout;
+    }
+
+    @Override
+    public void tabSelected(View view) {
+//        RelativeLayout tabLayout = (RelativeLayout) view;
+//        TextView badge = (TextView) tabLayout.findViewById(R.id.badge);
+//        badge.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void tabUnselected(View view) {
+
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case CURRENT_TICKET:
-                return Ticket.newInstance();
-            case PAST_TICKET:
-                return Ticket.newInstance();
+            case 0:
+                return CurrentTicket.newInstance();
+            case 1:
+                return PastTicket.newInstance();
         }
-        return null;
+        return CurrentTicket.newInstance();
     }
 
     @Override
     public int getCount() {
-        return NUM_ITEMS;
+        return viewPagerTabs.size();
     }
+
 }

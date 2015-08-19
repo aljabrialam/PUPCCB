@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    tools:context="ccb.solutionsresource.com.activity.AddTicket">
+
+    <include
+        android:id="@+id/toolbar_actionbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/toolbar_actionbar"
+        android:fillViewport="true">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/pad_5dp"
+            card_view:cardCornerRadius="0dp"
+            card_view:cardElevation="4dp">
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/pad_10dp"
+                android:paddingLeft="@dimen/pad_10dp"
+                android:paddingRight="@dimen/pad_10dp">
+
+                <LinearLayout
+                    android:id="@+id/informationLinearLayout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editTextDate"
+                        style="@style/editext_graybg"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/pad_40dp"
+                        android:layout_marginBottom="@dimen/pad_5dp"
+                        android:layout_marginRight="@dimen/pad_5dp"
+                        android:clickable="true"
+                        android:editable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="August 20, 2015"
+                        android:inputType="date" />
+
+                    <EditText
+                        android:id="@+id/editTextTime"
+                        style="@style/editext_graybg"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/pad_40dp"
+                        android:clickable="true"
+                        android:editable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="11:31 AM"
+                        android:inputType="time" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/editTextAgency"
+                    style="@style/editext_graybg"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/pad_40dp"
+                    android:layout_marginBottom="@dimen/pad_5dp"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:hint="BIR"
+                    android:inputType="text" />
+
+                <EditText
+                    android:id="@+id/editTextConactNumber"
+                    style="@style/editext_graybg"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/pad_40dp"
+                    android:layout_marginBottom="@dimen/pad_5dp"
+                    android:enabled="false"
+                    android:hint="Juan Dela Cruz"
+                    android:inputType="text" />
+
+                <EditText
+                    android:id="@+id/editTextSubject"
+                    style="@style/editext_graybg"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/pad_40dp"
+                    android:hint="@string/subject"
+                    android:inputType="textCapSentences" />
+
+                <EditText
+                    android:id="@+id/editTextEmail"
+                    style="@style/editext_graybg"
+                    android:layout_width="fill_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="@dimen/pad_5dp"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:gravity="left|top"
+                    android:hint="@string/agency_details"
+                    android:inputType="textMultiLine"
+                    android:padding="@dimen/pad_10dp">
+
+                    <requestFocus />
+                </EditText>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </ScrollView>
+
+</RelativeLayout>
+
