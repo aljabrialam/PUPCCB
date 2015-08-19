@@ -5,9 +5,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activity.NavigationDrawer">
 
-    <item android:id="@+id/send_ticket"
-        android:title="Send"
+
+    <item android:id="@+id/add_attachment"
+        android:title="Attachment"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_send_black_24dp"
-        app:showAsAction="always"/>
+        android:icon="@drawable/ic_action_attachment_white"
+        app:showAsAction="ifRoom|withText"/>
+
+    <item android:id="@+id/action_cancel"
+        android:icon="@drawable/ic_action_cancel"
+        android:title="@string/cancel"
+        app:showAsAction="ifRoom|withText" />
+
+    <item android:id="@+id/send_ticket"
+    android:title="Send"
+    android:orderInCategory="100"
+    android:icon="@drawable/ic_action_send_now"
+    app:showAsAction="ifRoom|withText"/>
+
+
+
 </menu>

@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
     private SharedPreferences sharedPreferences;
 
     private boolean onGoing;
-    @Email
+    @Email(message = "")
     private EditText editTextUsername;
     @Password(message = "Password is required")
     private EditText editTextPassword;
@@ -48,6 +49,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
         setContentView(view);
         startController();
         findViewById(view);
+        temporatyLogin();
     }
 
     private void setScreenOrienttion(View view) {
@@ -84,9 +86,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
         Toast.makeText(getApplicationContext(), error.getErrorMessage(), Toast.LENGTH_SHORT).show();
     }
 
-    private void TemporatyLogin() {
-        editTextUsername.setText("data-collector");
-        editTextPassword.setText("data-collector");
+    private void temporatyLogin() {
+        editTextUsername.setText("loremipsum@gmail.com");
+        editTextPassword.setText("loremipsum09");
     }
 
     private void clearTextView() {

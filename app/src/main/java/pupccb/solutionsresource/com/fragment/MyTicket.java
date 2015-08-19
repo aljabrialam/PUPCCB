@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import pupccb.solutionsresource.com.R;
 import pupccb.solutionsresource.com.adapter.MyTicketTabPagerAdapter;
@@ -42,9 +44,6 @@ public class MyTicket extends Fragment implements View.OnClickListener {
 
     private void findViewById(View view) {
 
-//        floatingActionButton = (ImageButton)view.findViewById(R.id.floatingActionButton);
-//        floatingActionButton.setOnClickListener(this);
-
         myTicketTabPagerAdapter = new MyTicketTabPagerAdapter(getChildFragmentManager());
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         viewPager.setOffscreenPageLimit(2);
@@ -54,31 +53,15 @@ public class MyTicket extends Fragment implements View.OnClickListener {
         pagerSlidingTabStrip.setIndicatorColor(getResources().getColor(R.color.white));
         pagerSlidingTabStrip.setTextColor(getResources().getColor(R.color.white));
 
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
 
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
     @Override
     public void onClick(View v)
     {
         switch (v.getId())
         {
-//            case R.id.floatingActionButton:
-//                Toast.makeText(getActivity(), getString(R.string.floating_button), Toast.LENGTH_SHORT).show();
-//                break;
+
         }
     }
 

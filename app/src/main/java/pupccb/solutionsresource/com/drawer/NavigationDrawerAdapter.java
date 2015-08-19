@@ -16,7 +16,7 @@ import pupccb.solutionsresource.com.model.NavigationItem;
 public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDrawerAdapter.ViewHolder> {
 
     private List<NavigationItem> mData;
-    private NavigationDrawerCallbacks mNavigationDrawerCallbacks;
+    private NavigationDrawerCommunicator navigationDrawerCommunicator;
     private View mSelectedView;
     private int mSelectedPosition;
 
@@ -24,12 +24,12 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         mData = data;
     }
 
-    public NavigationDrawerCallbacks getNavigationDrawerCallbacks() {
-        return mNavigationDrawerCallbacks;
+    public NavigationDrawerCommunicator getNavigationDrawerCommunicator() {
+        return navigationDrawerCommunicator;
     }
 
-    public void setNavigationDrawerCallbacks(NavigationDrawerCallbacks navigationDrawerCallbacks) {
-        mNavigationDrawerCallbacks = navigationDrawerCallbacks;
+    public void setNavigationDrawerCommunicator(NavigationDrawerCommunicator navigationDrawerCommunicator) {
+        this.navigationDrawerCommunicator = navigationDrawerCommunicator;
     }
 
     @Override
@@ -46,8 +46,8 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
                                                        mSelectedPosition = viewHolder.getAdapterPosition();
                                                        v.setSelected(true);
                                                        mSelectedView = v;
-                                                       if (mNavigationDrawerCallbacks != null)
-                                                           mNavigationDrawerCallbacks.onNavigationDrawerItemSelected(viewHolder.getAdapterPosition());
+                                                       if (navigationDrawerCommunicator != null)
+                                                           navigationDrawerCommunicator.onNavigationDrawerItemSelected(viewHolder.getAdapterPosition());
                                                    }
                                                }
         );
@@ -89,7 +89,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         }
     }
 
-    public interface NavigationDrawerCallbacks {
+    public interface NavigationDrawerCommunicator {
         void onNavigationDrawerItemSelected(int position);
     }
 }

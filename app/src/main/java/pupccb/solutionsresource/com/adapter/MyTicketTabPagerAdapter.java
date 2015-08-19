@@ -6,7 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import pupccb.solutionsresource.com.fragment.Home;
-import pupccb.solutionsresource.com.fragment.Ticket;
+import pupccb.solutionsresource.com.fragment.CurrentTicket;
+import pupccb.solutionsresource.com.fragment.PastTicket;
 
 
 /**
@@ -23,7 +24,6 @@ public class MyTicketTabPagerAdapter extends FragmentStatePagerAdapter {
 
     public MyTicketTabPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
-        //home = Home.newInstance();
     }
 
     @Override
@@ -35,9 +35,9 @@ public class MyTicketTabPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case CURRENT_TICKET:
-                return Ticket.newInstance();
+                return CurrentTicket.newInstance();
             case PAST_TICKET:
-                return Ticket.newInstance();
+                return PastTicket.newInstance();
         }
         return null;
     }

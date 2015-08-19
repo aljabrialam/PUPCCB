@@ -157,8 +157,6 @@ public class CardGrid extends Fragment implements CardAdapter.RecyclerCardCallba
     @Override
     public void onItemImageClick(int position)
     {
-        RecyclerItem selectedItem = cardAdapter.getItems().get(position);
-//        DetailActivity.launch(getAppCompatActivity(), selectedItem.getImageView(), selectedItem.getUrl());
     }
 
     @Override

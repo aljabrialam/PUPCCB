@@ -46,7 +46,6 @@
         <item name="android:paddingRight">@dimen/pad_10dp</item>
         <item name="android:ems">10</item>
         <item name="android:drawablePadding">@dimen/pad_10dp</item>
-        <item name="android:inputType">textEmailAddress</item>
     </style>
 
 
@@ -58,6 +57,12 @@
 
     <style name="btn_black_header" parent="@style/btn">
         <item name="android:textSize">@dimen/txt_16sp</item>
+        <item name="android:textColor">@color/myPrimaryColor</item>v
+        <item name="android:background">@drawable/button_use_dark_gray</item>
+    </style>
+
+    <style name="btn_add_attachment" parent="@style/btn">
+        <item name="android:textSize">@dimen/txt_12sp</item>
         <item name="android:textColor">@color/myPrimaryColor</item>v
         <item name="android:background">@drawable/button_use_dark_gray</item>
     </style>
@@ -165,6 +170,11 @@
     <style name="TEXT.MEDIUM" parent="">
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
         <item name="android:textSize">@dimen/TEXT_SIZE_MEDIUM</item>
+    </style>
+
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>

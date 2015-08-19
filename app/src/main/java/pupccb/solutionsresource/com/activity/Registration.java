@@ -65,7 +65,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     }
 
     private void toolBar(View view) {
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar_actionbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

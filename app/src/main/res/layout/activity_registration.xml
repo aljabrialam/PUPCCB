@@ -42,7 +42,7 @@
         android:id="@+id/editTextFname"
         style="@style/editext_graybg"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/pad_40dp"
+        android:layout_height="@dimen/pad_50dp"
         android:hint="@string/first_name"
         android:layout_marginBottom="@dimen/pad_5dp"
         android:layout_marginTop="@dimen/pad_5dp"
@@ -54,7 +54,7 @@
         android:id="@+id/editTextMname"
         style="@style/editext_graybg"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/pad_40dp"
+        android:layout_height="@dimen/pad_50dp"
         android:hint="@string/middle_name"
         android:layout_marginBottom="@dimen/pad_5dp">
     </EditText>
@@ -63,7 +63,7 @@
         android:id="@+id/editTextLname"
         style="@style/editext_graybg"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/pad_40dp"
+        android:layout_height="@dimen/pad_50dp"
         android:hint="@string/last_name"
         android:layout_marginBottom="@dimen/pad_5dp">
     </EditText>
@@ -72,7 +72,7 @@
         android:id="@+id/editTextContactNumber"
         style="@style/editext_graybg"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/pad_40dp"
+        android:layout_height="@dimen/pad_50dp"
         android:hint="@string/contact_number"
         android:layout_marginBottom="@dimen/pad_5dp">
     </EditText>
@@ -82,7 +82,7 @@
         android:id="@+id/editTextEmail"
         style="@style/editext_graybg"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/pad_60dp"
+        android:layout_height="@dimen/pad_50dp"
         android:layout_marginTop="@dimen/pad_5dp"
         android:hint="@string/email">
 
@@ -95,19 +95,23 @@
         android:id="@+id/editTextPassword"
         style="@style/editext_graybg"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/pad_60dp"
+        android:layout_height="@dimen/pad_50dp"
         android:layout_marginBottom="@dimen/pad_5dp"
         android:layout_marginTop="@dimen/pad_5dp"
         android:hint="@string/password"
-        android:inputType="textPassword" />
+        android:fontFamily="sans-serif"
+        android:inputType="textWebPassword"
+        />
     <EditText
         android:id="@+id/editTextConfirmPassword"
         style="@style/editext_graybg"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/pad_60dp"
+        android:layout_height="@dimen/pad_50dp"
         android:layout_marginBottom="@dimen/pad_10dp"
         android:hint="@string/confirm_password"
-        android:inputType="textPassword" />
+        android:inputType="textWebPassword"
+        android:fontFamily="sans-serif"
+        />
 
 
     <Button
