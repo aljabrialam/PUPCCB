@@ -1,11 +1,8 @@
 package pupccb.solutionsresource.com.activity;
 
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -31,13 +28,9 @@ import pupccb.solutionsresource.com.util.TouchEffect;
  */
 public class Registration extends AppCompatActivity implements View.OnClickListener, Validator.ValidationListener {
 
-
     public static final TouchEffect TOUCH = new TouchEffect();
     private Controller controller;
     private Validator validator;
-    private SharedPreferences sharedPreferences;
-    private Toolbar toolbar;
-    private View view;
     @NotEmpty
     private EditText editTextFname;
     @NotEmpty
@@ -53,23 +46,13 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     @ConfirmPassword
     private EditText editTextConfirmPassword;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        view = getLayoutInflater().inflate(R.layout.activity_registration, null);
+        View view = getLayoutInflater().inflate(R.layout.activity_registration, null);
         setContentView(view);
-        toolBar(view);
         findViewById(view);
         startController();
-    }
-
-    private void toolBar(View view) {
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
     }
 
     private void startController() {
@@ -89,7 +72,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         editTextEmail = (EditText) view.findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) view.findViewById(R.id.editTextPassword);
         editTextConfirmPassword = (EditText) view.findViewById(R.id.editTextConfirmPassword);
-
     }
 
     public void register(RegistrationDetails registrationDetails) {
@@ -97,34 +79,28 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     }
 
     public void registerResult(RegistrationResponse registrationResponse, RegistrationDetails registrationDetails) {
-        finish();
-        startActivity(new Intent(Registration.this, Main.class));
+        //todo handle register result
     }
 
     public void onClick(View view) {
         if (view.getId() == R.id.btnHaveAccount) {
-            startActivity(new Intent(getApplicationContext(), Main.class));
             finish();
         } else if (view.getId() == R.id.btnSignUp) {
             validator.validate();
-//            startActivity(new Intent(getApplicationContext(), Main.class));
-//            finish();
         }
     }
 
     @Override
     public void onValidationSucceeded() {
-        register(new RegistrationDetails("", "", "", "", "", ""));
+        finish(); //temporary finish activity, handle register()
     }
-
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(this);
-
-            // Display error messages ;)
+            // Display error messages
             if (view instanceof EditText) {
                 ((EditText) view).setError(message);
             } else {
@@ -132,7 +108,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
 
     public View setClick(int btn) {
         View view = this.findViewById(btn);
@@ -145,12 +120,4 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         view.setOnTouchListener(TOUCH);
         return view;
     }
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(this, Main.class));
-        this.finish();
-        super.onBackPressed();
-    }
-
 }

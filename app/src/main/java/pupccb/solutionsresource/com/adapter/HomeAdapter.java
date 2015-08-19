@@ -20,13 +20,12 @@ import pupccb.solutionsresource.com.model.NotesViewHolder;
  */
 public class HomeAdapter extends RecyclerView.Adapter<NotesViewHolder> {
 
-
     private final Context context;
 
     private Note[] notes;
     private final List<Note> mModels;
 
-    public HomeAdapter(Context context, int numNotes , List<Note> models) {
+    public HomeAdapter(Context context, int numNotes, List<Note> models) {
         this.context = context;
         notes = generateNotes(context, numNotes);
         mModels = new ArrayList<>(models);
@@ -136,11 +135,7 @@ public class HomeAdapter extends RecyclerView.Adapter<NotesViewHolder> {
         notifyItemMoved(fromPosition, toPosition);
     }
 
-
-
-
-    public interface RecyclerCardCallback
-    {
+    public interface RecyclerCardCallback {
         void onItemImageClick(int position);
 
         void onItemLikeButtonClick(int position);

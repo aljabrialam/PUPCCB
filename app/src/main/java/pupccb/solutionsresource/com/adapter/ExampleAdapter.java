@@ -13,9 +13,6 @@ import java.util.List;
 import pupccb.solutionsresource.com.R;
 import pupccb.solutionsresource.com.model.Search;
 
-/**
-
- */
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
 
     private final LayoutInflater mInflater;

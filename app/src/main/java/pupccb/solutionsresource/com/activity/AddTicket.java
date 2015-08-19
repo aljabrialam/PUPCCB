@@ -34,6 +34,7 @@ public class AddTicket extends AppCompatActivity {
         setContentView(view);
         toolbar = (Toolbar)view.findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         findViewById(view);
 

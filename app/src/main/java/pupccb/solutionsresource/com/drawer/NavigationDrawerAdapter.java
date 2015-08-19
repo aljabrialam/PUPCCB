@@ -1,6 +1,5 @@
 package pupccb.solutionsresource.com.drawer;
 
-
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import java.util.List;
 
 import pupccb.solutionsresource.com.R;
 import pupccb.solutionsresource.com.model.NavigationItem;
-
 
 public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDrawerAdapter.ViewHolder> {
 

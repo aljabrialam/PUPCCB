@@ -1,13 +1,10 @@
 package pupccb.solutionsresource.com.adapter;
 
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import pupccb.solutionsresource.com.fragment.Home;
 import pupccb.solutionsresource.com.fragment.Ticket;
-
 
 /**
  * Created by User on 7/31/2015.
@@ -18,12 +15,9 @@ public class MyTicketTabPagerAdapter extends FragmentStatePagerAdapter {
     public static final int NUM_ITEMS = 2;
     public static final int CURRENT_TICKET = 0;
     public static final int PAST_TICKET = 1;
-    private Home home;
-
 
     public MyTicketTabPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
-        //home = Home.newInstance();
     }
 
     @Override

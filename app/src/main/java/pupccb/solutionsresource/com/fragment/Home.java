@@ -28,12 +28,7 @@ import pupccb.solutionsresource.com.model.Note;
 /**
  * Created by User on 7/29/2015.
  */
-public class Home extends Fragment implements SearchView.OnQueryTextListener, HomeAdapter.RecyclerCardCallback, SwipeRefreshLayout.OnRefreshListener{
-
-
-    public static final String TAG = CardGrid.class.getSimpleName();
-
-
+public class Home extends Fragment implements SearchView.OnQueryTextListener, HomeAdapter.RecyclerCardCallback, SwipeRefreshLayout.OnRefreshListener {
 
     private AppCompatActivity appCompatActivity;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -41,32 +36,24 @@ public class Home extends Fragment implements SearchView.OnQueryTextListener, Ho
     private HomeAdapter homeAdapter;
     private List<Note> mModels;
 
-    private static final String[] LIST_TITLES = {"shopping", "to bring", "on sale", "look for",
-            "buy", "get rid of"};
-
+    private static final String[] LIST_TITLES = {"shopping", "to bring", "on sale", "look for", "buy", "get rid of"};
 
     @Override
-    public void onAttach(Activity activity)
-    {
-        appCompatActivity = (AppCompatActivity)activity;
+    public void onAttach(Activity activity) {
         super.onAttach(activity);
-    }
-
-    public static Home newInstance() {
-        return new Home();
+        appCompatActivity = (AppCompatActivity) activity;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater,container, savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        if (swipeRefreshLayout == null)
-        {
-            swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeRefreshLayout);
-            swipeRefreshLayout.setColorSchemeResources( R.color.colorPrimary,R.color.colorPrimaryDark,R.color.colorPrimary,R.color.colorPrimaryDark);
-            swipeRefreshLayout.setOnRefreshListener( this );
+        if (swipeRefreshLayout == null) {
+            swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+            swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorPrimary, R.color.colorPrimaryDark);
+            swipeRefreshLayout.setOnRefreshListener(this);
 
         }
 
@@ -81,12 +68,11 @@ public class Home extends Fragment implements SearchView.OnQueryTextListener, Ho
         setHasOptionsMenu(true);
 
         mModels = new ArrayList<>();
-
-        for (String search : LIST_TITLES  ) {
-            mModels.add(new Note(search,search,search,0,0));
+        for (String search : LIST_TITLES) {
+            mModels.add(new Note(search, search, search, 0, 0));
         }
 
-        homeAdapter = new HomeAdapter(getAppCompatActivity(),10, mModels);
+        homeAdapter = new HomeAdapter(getAppCompatActivity(), 10, mModels);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(homeAdapter);
     }
@@ -94,7 +80,6 @@ public class Home extends Fragment implements SearchView.OnQueryTextListener, Ho
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu, menu);
-
         final MenuItem item = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
         searchView.setOnQueryTextListener(this);
@@ -115,7 +100,6 @@ public class Home extends Fragment implements SearchView.OnQueryTextListener, Ho
 
     private List<Note> filter(List<Note> models, String query) {
         query = query.toLowerCase();
-
         final List<Note> filteredModelList = new ArrayList<>();
         for (Note model : models) {
             final String text = model.getTitle().toLowerCase();
@@ -126,11 +110,8 @@ public class Home extends Fragment implements SearchView.OnQueryTextListener, Ho
         return filteredModelList;
     }
 
-
-
     @Override
-    public void onRefresh()
-    {
+    public void onRefresh() {
         getSwipeRefreshLayout().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -139,39 +120,32 @@ public class Home extends Fragment implements SearchView.OnQueryTextListener, Ho
         }, 2000);
     }
 
-    public AppCompatActivity getAppCompatActivity()
-    {
+    public AppCompatActivity getAppCompatActivity() {
         return appCompatActivity;
     }
-    public SwipeRefreshLayout getSwipeRefreshLayout()
-    {
+
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
         return swipeRefreshLayout;
     }
 
-
     @Override
-    public void onItemImageClick(int position)
-    {
-        //RecyclerItem selectedItem = cardAdapter.getItems().get(position);
+    public void onItemImageClick(int position) {
+//        RecyclerItem selectedItem = cardAdapter.getItems().get(position);
 //        DetailActivity.launch(getAppCompatActivity(), selectedItem.getImageView(), selectedItem.getUrl());
     }
 
     @Override
-    public void onItemLikeButtonClick(int position)
-    {
+    public void onItemLikeButtonClick(int position) {
         Toast.makeText(getAppCompatActivity(), getAppCompatActivity().getString(R.string.like_label), Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onItemCommentButtonClick(int position)
-    {
+    public void onItemCommentButtonClick(int position) {
         Toast.makeText(getAppCompatActivity(), getAppCompatActivity().getString(R.string.comment_label), Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onItemShareButtonClick(int position)
-    {
+    public void onItemShareButtonClick(int position) {
         Toast.makeText(getAppCompatActivity(), getAppCompatActivity().getString(R.string.share_label), Toast.LENGTH_SHORT).show();
     }
-
 }
