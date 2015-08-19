@@ -11,6 +11,9 @@ import pupccb.solutionsresource.com.model.Session;
  */
 public class SessionRequest extends RetrofitSpiceRequest<Session, SessionService> {
 
+    final String GRANT_TYPE = "password";
+    final String CLIENT_SECRET = "Cs123";
+    final String CLIENT_ID = "1";
     private Login login;
 
     public SessionRequest(Login login) {
@@ -20,8 +23,13 @@ public class SessionRequest extends RetrofitSpiceRequest<Session, SessionService
 
     @Override
     public Session loadDataFromNetwork() throws Exception {
-        return getService().getAccessToken(login.getUsername(),
-                login.getPassword());
+        return getService().getAccessToken(
+                login.getUsername(),
+                login.getPassword(),
+                CLIENT_SECRET,
+                CLIENT_ID,
+                GRANT_TYPE
+        );
     }
 
     public String createCacheKey() {

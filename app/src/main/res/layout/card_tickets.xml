@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:id="@+id/ticket"
+    >
+
+    <android.support.v7.widget.CardView
+
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ticket_info_card"
+        style="@style/Widget.MaterialSheetFab.Ticket"
+        android:clickable="true"
+        >
+
+        <RelativeLayout
+            android:id="@+id/ticket_info_holder"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/ticketDetailStatusTextView"
+                style="@style/TEXT.MEDIUM"
+                android:layout_width="wrap_content"
+                android:layout_height="28.0dip"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="4.0dip"
+                android:layout_marginTop="8.0dip"
+                android:background="@color/myAccentColor"
+                android:gravity="left|center"
+                android:maxLines="1"
+                android:paddingLeft="10.0dip"
+                android:paddingRight="10.0dip"
+                android:paddingTop="0.0dip"
+                android:singleLine="true"
+                android:text="Ticket Status"
+                android:textColor="#ffffffff"
+                android:textSize="13.0sp" />
+
+            <ImageView
+                android:id="@+id/ticketDetailLastRespondedImageView"
+                android:layout_width="14.0dip"
+                android:layout_height="14.0dip"
+                android:src="@drawable/icon_gray_dot"
+                android:visibility="invisible"
+                android:layout_alignTop="@+id/ticketDetailStatusTextView"
+                android:layout_toLeftOf="@+id/ticketDetailStatusTextView"
+                android:layout_toStartOf="@+id/ticketDetailStatusTextView"
+                android:layout_alignBottom="@+id/ticketDetailStatusTextView" />
+
+            <TextView
+                android:id="@+id/ticketSubjectTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="Title"
+                android:textColor="@color/black"
+                android:textSize="@dimen/pad_15dp"
+                android:layout_alignTop="@+id/ticketDetailLastRespondedImageView"
+                android:layout_alignLeft="@+id/informationLinearLayout"
+                android:layout_alignStart="@+id/informationLinearLayout" />
+
+            <LinearLayout
+                android:id="@+id/informationLinearLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ticketSubjectTextView"
+                android:layout_marginTop="15.0dip"
+                android:layout_marginBottom="15.0dip"
+                android:layout_marginLeft="16.0dip"
+                android:layout_marginRight="16.0dip"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/assignedToTextHolder"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/assignedToLabelTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="ASSIGNED TO"
+                        android:textColor="#ffcccccc"
+                        android:textSize="12.0sp" />
+
+                    <TextView
+                        android:id="@+id/assignedToTextView"
+                        style="@style/TEXT.SMALL"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="~"
+                        android:textSize="14.0sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/raisedByTextHolder"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/raisedByLabelTextView"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:singleLine="true"-->
+                        <!--android:text="RAISED BY"-->
+                        <!--android:textColor="#ffcccccc"-->
+                        <!--android:textSize="12.0sp" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/raisedByTextView"-->
+                        <!--style="@style/TEXT.SMALL"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:singleLine="true"-->
+                        <!--android:text="~"-->
+                        <!--android:textSize="14.0sp" />-->
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/cardDivider"
+                android:layout_width="fill_parent"
+                android:layout_height="1.0dip"
+                android:layout_below="@id/informationLinearLayout"
+                android:background="#ffeeeeee" />
+
+            <LinearLayout
+                android:id="@+id/ticketInformationLabelLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cardDivider"
+                android:background="@color/ticket_info_txt"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ticketInformationLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16.0dip"
+                    android:layout_marginLeft="16.0dip"
+                    android:layout_marginTop="16.0dip"
+                    android:layout_weight="1.0"
+                    android:text="@string/title_activity_ticket_info"
+                    android:textColor="#273540"
+                    android:textSize="14.0sp" />
+
+                <ImageView
+                    android:layout_width="24.0dip"
+                    android:layout_height="24.0dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="4.0dip"
+                    android:src="@drawable/chevron_right_black"
+                     />
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

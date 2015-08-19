@@ -8,6 +8,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- Camera permission -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
 
     <application
         android:allowBackup="true"
@@ -38,14 +43,17 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
 
-        <activity  android:name=".activity.AddTicket"
-            android:parentActivityName=".activity.NavigationDrawer"
-            android:permission="pupccb.solutionsresource.com.START_ACTIVITY"
-            android:label="New Ticket"
+        <activity  android:name=".activity.NewTicket"
+        android:label="New Ticket"
+        android:windowSoftInputMode="stateHidden">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".activity.NavigationDrawer"/>
+    </activity>
+
+        <activity  android:name=".activity.TicketDetails"
+            android:label="Ticket Details"
             android:windowSoftInputMode="stateHidden">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.NavigationDrawer"/>
         </activity>
 
 

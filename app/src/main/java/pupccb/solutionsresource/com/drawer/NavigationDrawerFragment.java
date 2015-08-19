@@ -19,14 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pupccb.solutionsresource.com.R;
+import pupccb.solutionsresource.com.activity.TicketDetails;
 import pupccb.solutionsresource.com.model.NavigationItem;
 
-public class NavigationDrawerFragment extends Fragment implements NavigationDrawerAdapter.NavigationDrawerCallbacks {
-
+public class NavigationDrawerFragment extends Fragment implements TicketDetails.NavigationDrawerCommunicator, NavigationDrawerAdapter.NavigationDrawerCommunicator {
 
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
-    private NavigationDrawerAdapter.NavigationDrawerCallbacks mCallbacks;
+    private NavigationDrawerAdapter.NavigationDrawerCommunicator communicator;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
 
     private DrawerLayout mDrawerLayout;
@@ -36,15 +36,14 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     private int mCurrentSelectedPosition = 1;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
-    private SharedPreferences sp;
-    private View view;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        mUserLearnedDrawer = sharedPreferences.getBoolean(PREF_USER_LEARNED_DRAWER, false);
 
         if (savedInstanceState != null) {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
@@ -53,9 +52,8 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerList = (RecyclerView) view.findViewById(R.id.drawerList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -64,7 +62,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
         final List<NavigationItem> navigationItems = getMenu();
         NavigationDrawerAdapter adapter = new NavigationDrawerAdapter(navigationItems);
-        adapter.setNavigationDrawerCallbacks(this);
+        adapter.setNavigationDrawerCommunicator(this);
         mDrawerList.setAdapter(adapter);
         selectItem(mCurrentSelectedPosition);
         return view;
@@ -89,11 +87,11 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
     public List<NavigationItem> getMenu() {
         List<NavigationItem> items = new ArrayList<NavigationItem>();
-        items.add(new NavigationItem("Add Ticket", getResources().getDrawable(R.drawable.ic_add_circle_black_36dp)));
-        items.add(new NavigationItem("Home", getResources().getDrawable(R.drawable.ic_home_black_36dp)));
-        items.add(new NavigationItem("My Ticket", getResources().getDrawable(R.drawable.ic_message_black_36dp)));
-//        items.add(new NavigationItem("Call 16565", null));
-        items.add(new NavigationItem("logout", getResources().getDrawable(R.drawable.ic_exit_to_app_black_36dp)));
+
+        items.add(new NavigationItem("ADD TICKET", getResources().getDrawable(R.drawable.ic_add_circle_black_36dp)));
+        items.add(new NavigationItem("HOME", getResources().getDrawable(R.drawable.ic_home_black_36dp)));
+        items.add(new NavigationItem("MY TICKET", getResources().getDrawable(R.drawable.ic_message_black_36dp)));
+        items.add(new NavigationItem("LOGOUT", getResources().getDrawable(R.drawable.ic_exit_to_app_black_36dp)));
         return items;
     }
 
@@ -147,8 +145,8 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
-        if (mCallbacks != null) {
-            mCallbacks.onNavigationDrawerItemSelected(position);
+        if (communicator != null) {
+            communicator.onNavigationDrawerItemSelected(position);
         }
         ((NavigationDrawerAdapter) mDrawerList.getAdapter()).selectPosition(position);
     }
@@ -165,7 +163,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mCallbacks = (NavigationDrawerAdapter.NavigationDrawerCallbacks) activity;
+            communicator = (NavigationDrawerAdapter.NavigationDrawerCommunicator) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException("Activity must implement NavigationDrawerCallbacks.");
         }
@@ -174,7 +172,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     @Override
     public void onDetach() {
         super.onDetach();
-        mCallbacks = null;
+        communicator = null;
     }
 
     @Override
@@ -188,5 +186,4 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         super.onConfigurationChanged(newConfig);
         mActionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
-
 }

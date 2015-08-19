@@ -18,24 +18,25 @@
     <string name="confirm_password"> Confirm Password</string>
     <string name="register">Register</string>
     <string name="sign_up">Sign Up</string>
+    <string name="send">Send</string>
     <string name="learn_more">Learn More</string>
     <string name="log_in">Log In</string>
     <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
     <string name="already_have_an_account">I already have an account</string>
-    <string name="landing_page_details"><a href="http://www.sample.org/">www.sample.org</a> | <a href="http://www.iom.int/">www.iom.int</a> | <a href="https://www.kintera.org/site/c.dnJOKRNkFiG/b.837337/k.F96D/IOM__Make_a_Donation/apps/ka/sd/donor.asp?c=dnJOKRNkFiG&amp;b=837337&amp;en=4dLxFFOfG3KGLPPiH2IDJLMsEnIKKJNpHfLFLIPqFfKLLSOtErG">Donate</a> \n sample</string>
     <string name="first_name">First Name</string>
     <string name="middle_name">Middle Name</string>
     <string name="last_name">Last Name</string>
     <string name="email">Email</string>
-    <string name="details_about_incident">Please provide details about the incident.</string>
     <string name="contact_number">Contact Number</string>
     <string name="confirm_email">Confirm Email</string>
     <string name="secret">Client Secret</string>
+
     <string name="date">Date</string>
     <string name="time">Time</string>
-
+    <string name="details_about_incident">Please provide details about the incident.</string>
     <string name="what_agency">What agency are you complaining about?</string>
-    <string name="who_to_complaint">who are you complaining about?</string>
+    <string name="who_to_complaint">Who are you complaining about?</string>
 
     <string name="share_label">Share</string>
     <string name="comment_label">Comment</string>
@@ -45,6 +46,17 @@
     <string name="past_ticket">Past Ticket</string>
     <string name="search">Search</string>
     <string name="title_activity_ticket_info">Ticket Information</string>
+    <string name="add_attachment">Add Attachment</string>
+
+    <string name="action_cancel">Cancel</string>
+    <string name="action_ok">OK</string>
+    <string name="attachment_title">Complete action using</string>
+
+    <string name="upload">Upload</string>
+    <string name="browse">Choose File</string>
+    <string name="attach_file">Attach File</string>
+    <string name="list_is_empty">List is empty</string>
+    <string name="help">Help</string>
 
     <string-array name="sliding_tab_items">
         <item>Current Ticket</item>
@@ -53,4 +65,5 @@
 
     <string name="profile">Profile - Not implemented</string>
     <string name="floating_button">Make it to do anything you want!</string>
+    <string name="registration">Registration</string>
 </resources>

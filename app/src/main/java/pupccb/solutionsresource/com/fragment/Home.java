@@ -22,24 +22,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pupccb.solutionsresource.com.R;
+import pupccb.solutionsresource.com.adapter.CardAdapter;
 import pupccb.solutionsresource.com.adapter.HomeAdapter;
 import pupccb.solutionsresource.com.model.Note;
+import pupccb.solutionsresource.com.model.RecyclerItem;
 
 /**
  * Created by User on 7/29/2015.
  */
 public class Home extends Fragment implements SearchView.OnQueryTextListener, HomeAdapter.RecyclerCardCallback, SwipeRefreshLayout.OnRefreshListener{
 
-
     public static final String TAG = CardGrid.class.getSimpleName();
-
-
 
     private AppCompatActivity appCompatActivity;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private HomeAdapter homeAdapter;
     private List<Note> mModels;
+    private CardAdapter cardAdapter;
 
     private static final String[] LIST_TITLES = {"shopping", "to bring", "on sale", "look for",
             "buy", "get rid of"};
@@ -65,7 +65,7 @@ public class Home extends Fragment implements SearchView.OnQueryTextListener, Ho
         if (swipeRefreshLayout == null)
         {
             swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeRefreshLayout);
-            swipeRefreshLayout.setColorSchemeResources( R.color.colorPrimary,R.color.colorPrimaryDark,R.color.colorPrimary,R.color.colorPrimaryDark);
+            swipeRefreshLayout.setColorSchemeResources( R.color.open,R.color.resolved,R.color.ongoing,R.color.myPrimaryColor);
             swipeRefreshLayout.setOnRefreshListener( this );
 
         }
@@ -97,7 +97,7 @@ public class Home extends Fragment implements SearchView.OnQueryTextListener, Ho
 
         final MenuItem item = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-        searchView.setOnQueryTextListener(this);
+        //searchView.setOnQueryTextListener(this);
     }
 
     @Override
@@ -152,8 +152,7 @@ public class Home extends Fragment implements SearchView.OnQueryTextListener, Ho
     @Override
     public void onItemImageClick(int position)
     {
-        //RecyclerItem selectedItem = cardAdapter.getItems().get(position);
-//        DetailActivity.launch(getAppCompatActivity(), selectedItem.getImageView(), selectedItem.getUrl());
+        RecyclerItem selectedItem = cardAdapter.getItems().get(position);
     }
 
     @Override

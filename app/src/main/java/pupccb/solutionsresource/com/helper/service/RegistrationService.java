@@ -13,13 +13,12 @@ import retrofit.http.POST;
 public interface RegistrationService {
 
     @FormUrlEncoded
-    @POST("/")
+    @POST("/api/v1/register")
     RegistrationResponse register(
-            @Field("firsname") String firstname,
-            @Field("middlename") String middlename,
-            @Field("lastname") String lastname,
-            @Field("contactnumber") String contactnumber,
-            @Field("emailaddress") String emailaddress,
-            @Field("password") String passsword
+            @Field("first_name") String first_name,
+            @Field("last_name") String last_name,
+            @Field("contact_number") String contact_number,
+            @Field("email") String email,
+            @Field("password") String password
     );
 }

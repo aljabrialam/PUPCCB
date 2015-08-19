@@ -18,23 +18,22 @@ import pupccb.solutionsresource.com.R;
  */
 public class Note {
 
-    private static final String[] ACTIONS_PEOPLE = {"call", "email", "meet up with",
-            "hang out with"};
-    private static final String[] ACTIONS_OBJECTS = {"clean", "buy", "sell", "fix"};
-    private static final String[] NAMES = {"Sherry", "Gordon", "Tom", "Kevin", "Brian", "Naomi",
+    private static final String[] ACTIONS_PEOPLE = {"call", "email", "meet up with","lorem"};
+    private static final String[] ACTIONS_OBJECTS = {"clean", "lorem", "lorem", "fix"};
+    private static final String[] NAMES = {"Lorem", "Ipsul", "Dolor", "Kevin", "Brian", "Naomi",
             "Ali", "Jennifer"};
     private static final String[] OBJECTS = {"desk", "car", "motorcycle", "computer", "laptop"};
     private static final String WORDS = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.";
     private static final String[] CITIES = {"San Francisco", "Campbell", "Lincoln", "New York",
             "Silverton", "Scarface", "King Salmon"};
 
-    private static final String[] LIST_TITLES = {"shopping", "to bring", "on sale", "look for",
-            "buy", "get rid of"};
+    private static final String[] LIST_TITLES = {"Lorem Ipsum", "Ipsum", "Dolor", "look for",
+            "dolor", "Lorem ipsum dolor"};
     private static final String[] LIST_DELIMITERS = {"•", "-"};
-    private static final String[] LIST_GROCERIES = {"almond milk", "coconut water", "cucumber",
-            "green apples"};
-    private static final String[] LIST_CAMPING = {"lantern", "smores", "extra blankets",
-            "warm socks", "first aid kit", "tent"};
+    private static final String[] LIST_GROCERIES = {"lorem Ipsum", "sample", "dolor",
+            "adipiscing elit"};
+    private static final String[] LIST_CAMPING = {"Dolor", "elit", "sample",
+            "lorem", "Lorem Ipsum", "tent"};
 
     private static final int NUM_WORDS = 4;
     private static final int DATE_RANGE = 60;
@@ -55,10 +54,6 @@ public class Note {
     }
     public Note(String title) {
         this.title = title;
-//        this.note = note;
-//        this.info = info;
-//        this.infoImage = infoImage;
-//        this.color = color;
     }
 
     public String getTitle() {
