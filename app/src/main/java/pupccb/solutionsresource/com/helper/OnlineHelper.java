@@ -14,6 +14,7 @@ import pupccb.solutionsresource.com.model.RegistrationDetails;
 import pupccb.solutionsresource.com.model.RegistrationResponse;
 import pupccb.solutionsresource.com.model.Session;
 import pupccb.solutionsresource.com.util.ErrorHandler;
+import pupccb.solutionsresource.com.util.ToastMessage;
 
 /**
  * Created by User on 7/16/2015.
