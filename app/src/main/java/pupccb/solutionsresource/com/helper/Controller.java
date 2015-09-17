@@ -79,9 +79,8 @@ public class Controller {
 
     public void postFileAttachmentResult(Boolean value, FileAttachmentAdapter fileAttachmentAdapter) {
         if (activity instanceof NewTicket) {
-            ((NewTicket) activity).postFileAttachmentResult(value, fileAttachmentAdapter);
+           //((NewTicket) activity).postFileAttachmentResult(value, fileAttachmentAdapter);
         }
-
     }
 
     public enum MethodTypes {
