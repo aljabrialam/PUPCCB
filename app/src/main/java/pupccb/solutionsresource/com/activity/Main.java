@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.List;
@@ -33,19 +34,22 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
     private SharedPreferences sharedPreferences;
 
     private boolean onGoing;
-    @Email
+    @Email(message = "")
     private EditText editTextUsername;
     @Password(message = "Password is required")
     private EditText editTextPassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = getLayoutInflater().inflate(R.layout.activity_login, null);
+
         setScreenOrienttion(view);
         setContentView(view);
         startController();
         findViewById(view);
+        temporatyLogin();
     }
 
     private void setScreenOrienttion(View view) {
@@ -61,6 +65,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
         controller = new Controller(new OnlineHelper());
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     private void findViewById(View view) {
         validator = new Validator(this);
         validator.setValidationListener(this);
@@ -69,21 +78,24 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
         editTextPassword = (EditText) view.findViewById(R.id.editTextPassword);
         setTouchNClick(R.id.btnLogin);
         setTouchNClick(R.id.btnReg);
-
-        //temporary fast login
-        editTextUsername.setText("qwe@qwe.com");
-        editTextPassword.setText("qweqweqwe");
     }
+
 
     public void setError(ErrorHandler.Error error, Controller.MethodTypes methodTypes) {
         onGoing = false;
         Toast.makeText(getApplicationContext(), error.getErrorMessage(), Toast.LENGTH_SHORT).show();
     }
 
+    private void temporatyLogin() {
+        editTextUsername.setText("loremipsum@gmail.com");
+        editTextPassword.setText("loremipsum09");
+    }
+
     private void clearTextView() {
         editTextUsername.setText("");
         editTextPassword.setText("");
     }
+
 
     public void login(Login login) {
         onGoing = true;
@@ -99,15 +111,14 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
         editSharedPreference.putBoolean("logged_in", true);
         editSharedPreference.apply();
 
-        startActivity(new Intent(Main.this, NavigationDrawer.class));
         finish();
+        startActivity(new Intent(Main.this, NavigationDrawer.class));
     }
 
     @Override
     public void onValidationSucceeded() {
         startActivity(new Intent(this, NavigationDrawer.class));
-        finish(); //temporary finish activity, handle login()
-
+        this.finish();
 //        if (!onGoing) {
 //            login(new Login(editTextUsername.getText().toString(),
 //                            editTextPassword.getText().toString()));
@@ -119,6 +130,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(this);
+
             // Display error messages ;)
             if (view instanceof EditText) {
                 ((EditText) view).setError(message);
@@ -129,12 +141,15 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
     }
 
     public void onClick(View view) {
+
         if (view.getId() == R.id.btnLogin) {
             validator.validate();
         } else if (view.getId() == R.id.btnReg) {
             startActivity(new Intent(this, Registration.class));
+            this.finish();
         }
     }
+
 
     public View setClick(int btn) {
         View view = this.findViewById(btn);

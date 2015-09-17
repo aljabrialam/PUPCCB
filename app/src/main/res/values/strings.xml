@@ -18,11 +18,12 @@
     <string name="confirm_password"> Confirm Password</string>
     <string name="register">Register</string>
     <string name="sign_up">Sign Up</string>
+    <string name="send">Send</string>
     <string name="learn_more">Learn More</string>
     <string name="log_in">Log In</string>
     <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
     <string name="already_have_an_account">I already have an account</string>
-    <string name="landing_page_details"><a href="http://www.sample.org/">www.sample.org</a> | <a href="http://www.iom.int/">www.iom.int</a> | <a href="https://www.kintera.org/site/c.dnJOKRNkFiG/b.837337/k.F96D/IOM__Make_a_Donation/apps/ka/sd/donor.asp?c=dnJOKRNkFiG&amp;b=837337&amp;en=4dLxFFOfG3KGLPPiH2IDJLMsEnIKKJNpHfLFLIPqFfKLLSOtErG">Donate</a> \n sample</string>
     <string name="first_name">First Name</string>
     <string name="middle_name">Middle Name</string>
     <string name="last_name">Last Name</string>

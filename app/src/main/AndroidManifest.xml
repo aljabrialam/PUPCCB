@@ -38,14 +38,17 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
 
-        <activity  android:name=".activity.AddTicket"
-            android:parentActivityName=".activity.NavigationDrawer"
-            android:permission="pupccb.solutionsresource.com.START_ACTIVITY"
-            android:label="New Ticket"
+        <activity  android:name=".activity.NewTicket"
+        android:label="New Ticket"
+        android:windowSoftInputMode="stateHidden">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".activity.NavigationDrawer"/>
+    </activity>
+
+        <activity  android:name=".activity.TicketDetails"
+            android:label="Ticket Details"
             android:windowSoftInputMode="stateHidden">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.NavigationDrawer"/>
         </activity>
 
 

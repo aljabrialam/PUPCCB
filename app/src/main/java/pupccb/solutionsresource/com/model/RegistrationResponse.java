@@ -10,11 +10,18 @@ public class RegistrationResponse {
     public String getMessage() {
         return message != null ? message.trim() : "";
     }
+
+    public void setMessage(String message) {
+        this.message = message != null ? message.trim() : "";
+    }
+
     public String getDescription() {
         return description != null ? description.trim() : "";
     }
+
     public void setDescription(String description) {
-        this.description = description != null ? description.trim() : "";;
+        this.description = description != null ? description.trim() : "";
+        ;
     }
 
 }

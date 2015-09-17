@@ -14,7 +14,7 @@
 
     <color name="myTextPrimaryColor">#313335</color>
 
-    <color name="myDrawerBackground">#ffffffff</color>
+    <color name="myDrawerBackground">#FFFDFDFE</color>
     <color name="myWindowBackground">#fdfdfe</color>
 
     <color name="myNavigationColor">#000</color>
@@ -56,6 +56,9 @@
     <color name="txt">#e9e3f1</color>
     <color name="ticket_info_txt">#d5dee5</color>
 
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="half_black">#808080</color>
+    <color name="white_pressed">#f1f1f1</color>
     <array name="note_neutral_colors">
         <item>#9E9E9E</item>
         <item>#455A64</item>

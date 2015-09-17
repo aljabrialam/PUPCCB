@@ -24,7 +24,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/pad_5dp"
-    card_view:cardCornerRadius="4dp"
+    card_view:cardCornerRadius="0dp"
     card_view:cardElevation="4dp"
         >
 
@@ -61,7 +61,7 @@
     android:hint="@string/date"></EditText>
 
 
-    <EditText
+        <EditText
     android:id="@+id/editTextTime"
     style="@style/editext_graybg"
     android:layout_width="fill_parent"
@@ -89,7 +89,7 @@
     android:hint="@string/who_to_complaint"></EditText>
 
 
-    <EditText
+        <EditText
     android:id="@+id/editTextEmail"
     style="@style/editext_graybg"
     android:layout_width="fill_parent"
