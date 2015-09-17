@@ -6,4 +6,7 @@ package pupccb.solutionsresource.com.util;
 public class RequestCodes {
     public static final int REFRESH_PATIENT_LIST = 100;
     public static final int FILE_SELECT = 102;
+    public static final int DELETE_ATTACHMMENT = 103;
+    public static final int CANCEL_TICKET_CREATION = 104;
+
 }

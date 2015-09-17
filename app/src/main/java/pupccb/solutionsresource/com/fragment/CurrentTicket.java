@@ -1,6 +1,7 @@
 package pupccb.solutionsresource.com.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -69,11 +70,10 @@ public class CurrentTicket extends Fragment implements SearchView.OnQueryTextLis
         ticketAdapter = new TicketAdapter(appCompatActivity, ticketInfos, this);
         recyclerView.setAdapter(ticketAdapter);
 
-
         view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewTicket.launch(getAppCompatActivity());
+                newTicket();
             }
         });
     }
@@ -99,6 +99,11 @@ public class CurrentTicket extends Fragment implements SearchView.OnQueryTextLis
         ticketInfos.add(new TicketInfo("Resolved", "Lorem Ipsum", "DOH", "August 28, 2015"));
         ticketInfos.add(new TicketInfo("Ongoing", "Lorem Ipsum", "PhilHealth", "August 23, 2015"));
         ticketInfos.add(new TicketInfo("Open", "Lorem Ipsum", "BIR", "August 13, 2015"));
+    }
+
+    private void newTicket() {
+        Intent intent = new Intent(getActivity(), NewTicket.class);
+        startActivity(intent);
     }
 
     @Override

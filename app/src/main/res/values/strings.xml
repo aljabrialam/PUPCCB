@@ -21,6 +21,8 @@
     <string name="send">Send</string>
     <string name="learn_more">Learn More</string>
     <string name="log_in">Log In</string>
+    <string name="delete">Delete</string>
+    <string name="remove">Remove</string>
     <string name="cancel">Cancel</string>
     <string name="edit">Edit</string>
     <string name="already_have_an_account">I already have an account</string>
@@ -36,7 +38,7 @@
     <string name="time">Time</string>
     <string name="details_about_incident">Please provide details about the incident.</string>
     <string name="agency_details">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
-    <string name="what_agency">What agency are you complaining about?</string>
+    <string name="what_agency">Agency</string>
     <string name="subject">Subject</string>
     <string name="who_to_complaint">Who are you complaining about?</string>
 

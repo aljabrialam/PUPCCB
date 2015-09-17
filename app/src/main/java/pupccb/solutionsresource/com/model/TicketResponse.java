@@ -3,7 +3,7 @@ package pupccb.solutionsresource.com.model;
 /**
  * Created by User on 8/14/2015.
  */
-public class RegistrationResponse {
+public class TicketResponse {
 
     private String msg;
 
@@ -14,5 +14,4 @@ public class RegistrationResponse {
     public void setMsg(String msg) {
         this.msg = msg != null ? msg.trim() : "";
     }
-
 }

@@ -42,10 +42,9 @@
                         android:layout_height="@dimen/pad_40dp"
                         android:layout_marginBottom="@dimen/pad_5dp"
                         android:layout_marginRight="@dimen/pad_5dp"
-                        android:clickable="true"
-                        android:editable="false"
-                        android:focusableInTouchMode="false"
-                        android:hint="August 20, 2015"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:hint="@string/date"
                         android:inputType="date" />
 
                     <EditText
@@ -54,11 +53,10 @@
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/pad_40dp"
-                        android:clickable="true"
-                        android:editable="false"
-                        android:focusableInTouchMode="false"
-                        android:hint="11:31 AM"
-                        android:inputType="time" />
+                        android:enabled="false"
+                        android:hint="@string/time"
+                        android:inputType="time"
+                        android:focusable="false"/>
                 </LinearLayout>
 
                 <TextView
@@ -67,10 +65,9 @@
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/pad_40dp"
                     android:layout_marginBottom="@dimen/pad_5dp"
-                    android:hint="CSC"
-                    android:clickable="true"
-                    android:editable="false"
-                    android:focusable="false"/>
+                    android:hint="@string/what_agency"
+                    android:focusable="false"
+                    android:enabled="false"/>
 
                 <EditText
                     android:id="@+id/editTextComplainee"
@@ -78,8 +75,9 @@
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/pad_40dp"
                     android:layout_marginBottom="@dimen/pad_5dp"
-                    android:hint="Juan Dela Cruz"
+                    android:hint="@string/who_to_complaint"
                     android:inputType="textCapSentences"
+                    android:focusable="false"
                     android:enabled="false"/>
 
                 <EditText
@@ -87,8 +85,10 @@
                     style="@style/editext_graybg"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/pad_40dp"
-                    android:hint="Lorem Ipsum"
-                    android:inputType="textCapSentences" />
+                    android:hint="@string/subject"
+                    android:inputType="textCapSentences"
+                    android:focusable="false"
+                    android:enabled="false"/>
 
 
                 <EditText
@@ -99,9 +99,10 @@
                     android:layout_marginTop="@dimen/pad_5dp"
                     android:ems="10"
                     android:gravity="left|top"
-                    android:hint="@string/agency_details"
+                    android:hint="@string/details_about_incident"
                     android:inputType="textMultiLine"
                     android:maxLength="255"
+                    android:focusable="false"
                     android:padding="@dimen/pad_10dp"
                     android:enabled="false"/>
 

@@ -13,26 +13,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pupccb.solutionsresource.com.R;
-import pupccb.solutionsresource.com.model.Agency;
+import pupccb.solutionsresource.com.model.Agencies;
 
 /**
  * Created by User on 9/2/2015.
  */
-public class AgencyAdapter extends ArrayAdapter<Agency> {
+public class AgencyAdapter extends ArrayAdapter<Agencies> {
 
     private Communicator communicator;
     private int layoutResourceId;
-    private ArrayList<Agency> agencies;
-    private ArrayList<Agency> originalList;
+    private ArrayList<Agencies> agencies;
+    private ArrayList<Agencies> originalList;
     private MethodTypes methodTypes;
     private ItemFilter filter;
 
-    public void updateOriginalDataSet(List<Agency> list) {
+    public void updateOriginalDataSet(List<Agencies> list) {
         this.originalList.clear();
         this.originalList.addAll(list);
     }
 
-    public void removeFromOriginalList(Agency agency) {
+    public void removeFromOriginalList(Agencies agency) {
         this.agencies.remove(agency);
         this.originalList.remove(agency);
     }
@@ -42,8 +42,8 @@ public class AgencyAdapter extends ArrayAdapter<Agency> {
         this.originalList.clear();
     }
 
-    public Agency getAgency(String agency_id) {
-        for (Agency item : originalList) {
+    public Agencies getAgency(String agency_id) {
+        for (Agencies item : originalList) {
             if (item.getId().equals(agency_id)) {
                 return item;
             }
@@ -60,16 +60,16 @@ public class AgencyAdapter extends ArrayAdapter<Agency> {
         ImageView image1;
     }
 
-    public AgencyAdapter(Context context, int layoutResourceId, ArrayList<Agency> onlineList, ArrayList<Agency> offlineList, MethodTypes methodTypes) {
+    public AgencyAdapter(Context context, int layoutResourceId, ArrayList<Agencies> onlineList, ArrayList<Agencies> offlineList, MethodTypes methodTypes) {
         super(context, layoutResourceId, onlineList != null ? onlineList : offlineList);
         this.communicator = (Communicator) context;
         this.layoutResourceId = layoutResourceId;
-        this.agencies = new ArrayList<Agency>();
-        this.originalList = new ArrayList<Agency>();
+        this.agencies = new ArrayList<Agencies>();
+        this.originalList = new ArrayList<Agencies>();
         this.methodTypes = methodTypes;
         if (MethodTypes.READ == methodTypes && onlineList != null) {
-            for (Agency offline : offlineList) {
-                for (Agency online : onlineList) {
+            for (Agencies offline : offlineList) {
+                for (Agencies online : onlineList) {
                     if (offline.getId().equals(online.getId())) {
                         onlineList.remove(online);
                         break;
@@ -86,7 +86,7 @@ public class AgencyAdapter extends ArrayAdapter<Agency> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final Agency child = getItem(position);
+        final Agencies child = getItem(position);
         final ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -99,7 +99,7 @@ public class AgencyAdapter extends ArrayAdapter<Agency> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.textAgencyName.setText(child.getAgencyname());
+        viewHolder.textAgencyName.setText(child.getName());
 
         if(MethodTypes.READ == methodTypes) {
             viewHolder.image1.setVisibility(View.VISIBLE);
@@ -129,9 +129,9 @@ public class AgencyAdapter extends ArrayAdapter<Agency> {
             constraint = constraint.toString().toLowerCase();
             FilterResults result = new FilterResults();
             if (constraint.toString().length() > 0) {
-                ArrayList<Agency> filteredItems = new ArrayList<Agency>();
-                for (Agency item : originalList) {
-                    if (item.getAgencyname().toUpperCase().startsWith(constraint.toString().toUpperCase())) {
+                ArrayList<Agencies> filteredItems = new ArrayList<Agencies>();
+                for (Agencies item : originalList) {
+                    if (item.getName().toUpperCase().startsWith(constraint.toString().toUpperCase())) {
                         filteredItems.add(item);
                     }
                 }
@@ -149,10 +149,10 @@ public class AgencyAdapter extends ArrayAdapter<Agency> {
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            agencies = (ArrayList<Agency>) results.values;
+            agencies = (ArrayList<Agencies>) results.values;
             notifyDataSetChanged();
             clear();
-            for (Agency item : agencies) {
+            for (Agencies item : agencies) {
                 add(item);
             }
             notifyDataSetInvalidated();
@@ -160,6 +160,6 @@ public class AgencyAdapter extends ArrayAdapter<Agency> {
     }
 
     public interface Communicator {
-        void adapterSelectedAgency(Agency agency);
+        void adapterSelectedAgency(Agencies agency);
     }
 }

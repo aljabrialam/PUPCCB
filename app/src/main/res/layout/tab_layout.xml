@@ -15,8 +15,8 @@
 
     <TextView
         android:id="@+id/badge"
-        android:layout_width="@dimen/pad_15dp"
-        android:layout_height="@dimen/pad_15dp"
+        android:layout_width="@dimen/pad_10dp"
+        android:layout_height="@dimen/pad_10dp"
         android:layout_toRightOf="@+id/tab_title"
         android:textSize="@dimen/txt_8sp"
         android:gravity="center"

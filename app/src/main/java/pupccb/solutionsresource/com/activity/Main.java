@@ -1,5 +1,6 @@
 package pupccb.solutionsresource.com.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -25,6 +26,9 @@ import pupccb.solutionsresource.com.helper.Controller;
 import pupccb.solutionsresource.com.helper.OnlineHelper;
 import pupccb.solutionsresource.com.model.Login;
 import pupccb.solutionsresource.com.model.Session;
+import pupccb.solutionsresource.com.model.UserInfo;
+import pupccb.solutionsresource.com.model.UserInfoResponse;
+import pupccb.solutionsresource.com.util.CreateAlertDialog;
 import pupccb.solutionsresource.com.util.ErrorHandler;
 import pupccb.solutionsresource.com.util.ToastMessage;
 import pupccb.solutionsresource.com.util.TouchEffect;
@@ -48,15 +52,27 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View view = getLayoutInflater().inflate(R.layout.activity_login, null);
-        setScreenOrienttion(view);
-        setContentView(view);
-        startController();
-        findViewById(view);
-        temporatyLogin();
+        sharedPreferences = getSharedPreferences(BaseHelper.getSharedPreference(), Activity.MODE_PRIVATE);
+        if (sharedPreferences.getBoolean("logged_in", false)) {
+            overridePendingTransition(0, 0);
+            startNavigationDrawer();
+        } else {
+            View view = getLayoutInflater().inflate(R.layout.activity_login, null);
+            setScreenOrientation(view);
+            setContentView(view);
+            startController();
+            findViewById(view);
+           // temporatyLogin();
+        }
+
     }
 
-    private void setScreenOrienttion(View view) {
+    public void startNavigationDrawer() {
+        finish();
+        startActivity(new Intent(Main.this, NavigationDrawer.class));
+    }
+
+    private void setScreenOrientation(View view) {
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             view.setBackgroundResource(R.drawable.landscape_bg);
@@ -67,6 +83,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
 
     private void startController() {
         controller = new Controller(new OnlineHelper());
+
+        if (Main.this.getIntent().getBooleanExtra("sessionTimeout", false)) {
+            new CreateAlertDialog(Main.this, "Session", "Your Session Has Timed Out", true);
+        }
     }
 
     private void findViewById(View view) {
@@ -95,9 +115,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
         editTextPassword.setText("secret");
     }
 
-    private void clearTextView() {
-        editTextUsername.setText("");
-        editTextPassword.setText("");
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     public void login(Login login) {
@@ -116,8 +137,23 @@ public class Main extends AppCompatActivity implements View.OnClickListener, Val
         editSharedPreference.putBoolean("logged_in", true);
         editSharedPreference.apply();
 
+        userInfo(new UserInfo(session.getAccess_token()));
         startActivity(new Intent(Main.this, NavigationDrawer.class));
         finish();
+
+
+    }
+
+    public void userInfo(UserInfo userInfo) {
+        controller.userInfo(this, userInfo);
+    }
+
+    public void userInfoResult(UserInfoResponse userInfoResponse, UserInfo userInfo) {
+
+        SharedPreferences.Editor editSharedPreference = BaseHelper.getEditSharedPreference(this);
+        editSharedPreference.putString("user_id", userInfoResponse.getId());
+        editSharedPreference.apply();
+
     }
 
     @Override

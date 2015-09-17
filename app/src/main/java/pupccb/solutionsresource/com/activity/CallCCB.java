@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -98,13 +99,13 @@ public class CallCCB extends AppCompatActivity {
                     // in initialization of the class and at the end of phone call
                     // detect flag from CALL_STATE_OFFHOOK
                     if (onCall == true) {
-                        Toast.makeText(CallCCB.this, "restart app after call", Toast.LENGTH_LONG).show();
-                        // restart our application
-                        Intent restart = getBaseContext().getPackageManager().
-                                getLaunchIntentForPackage(getBaseContext().getPackageName());
-                        restart.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(restart);
-
+                        try {
+                            // stop listening
+                            TelephonyManager mTM = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                            mTM.listen(this, PhoneStateListener.LISTEN_NONE);
+                        } catch (Exception e) {
+                            Log.e("callMonitor: ", e.toString());
+                        }
                         onCall = false;
                     }
                     break;

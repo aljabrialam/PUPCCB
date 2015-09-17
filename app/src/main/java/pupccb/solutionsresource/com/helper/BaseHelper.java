@@ -12,6 +12,7 @@ import com.octo.android.robospice.SpiceManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import pupccb.solutionsresource.com.activity.Main;
 import pupccb.solutionsresource.com.helper.service.RetrofitSpiceService;
@@ -35,6 +36,8 @@ public class BaseHelper {
     // < -- OFFLINE DATABASE HELPER -- >
     protected OfflineDatabaseHelper offlineDatabaseHelper;
 
+    private static AtomicInteger nextId = new AtomicInteger(0);
+
     public static String getBaseUrl() {
         return BaseUrl;
     }
@@ -45,6 +48,13 @@ public class BaseHelper {
 
     public static SharedPreferences.Editor getEditSharedPreference(Context context) {
         return getSharedPreference(context).edit();
+    }
+
+    // < -- SHARED PREFERENCE -- >
+    protected static final String sharedPreference = "ehatidpreference";
+
+    public static String getSharedPreference() {
+        return sharedPreference;
     }
 
     // < -- INTERNET CHECKER -- >
@@ -71,6 +81,29 @@ public class BaseHelper {
         }
 
         return mm + "/" + dd + "/" + year;
+    }
+
+    // < -- DATE YEAR MONTH -- >
+    public static String getDateYearMonth() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        String mm = String.valueOf((month + 1));
+        String dd = String.valueOf(day);
+        if (month <= 8) {
+            mm = "0" + mm;
+        }
+        if (day < 10) {
+            dd = "0" + dd;
+        }
+
+        return  year + mm ;
+    }
+
+    public static String getTicketNumber() {
+        return "M" +  getDateYearMonth() + "-" + String.format("%05d", nextId.incrementAndGet());
     }
 
     public static String getLongDateNow() {
