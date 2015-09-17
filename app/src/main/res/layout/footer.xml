@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/pad_5dp"
+    android:paddingLeft="@dimen/pad_5dp"
+    android:paddingRight="@dimen/pad_5dp"
+    android:paddingTop="@dimen/pad_5dp">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/footer_sample"
+        android:textColor="@color/myPrimaryDarkColor"
+        android:textSize="@dimen/txt_12sp"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/footer_close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/pad_50dp"
+        android:text="@string/footer_button_close"
+        android:textColor="@color/myPrimaryColor"
+        android:textSize="@dimen/txt_15sp" />
+
+    <Button
+        android:id="@+id/footer_confirm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/pad_50dp"
+        android:text="@string/footer_button_confirm"
+        android:textColor="@color/myPrimaryColor"
+        android:textSize="@dimen/txt_15sp" />
+
+</LinearLayout>
+

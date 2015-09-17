@@ -98,7 +98,7 @@ public class ErrorHandler {
         try {
             String[] message = retrofitError.getMessage().split(":");
             int messageLength = message.length;
-            if (retrofitError.toString().contains("SocketTimeoutException") || retrofitError.toString().contains("ConnectionTimeoutException")) {
+            if (retrofitError.toString().contains("SocketTimeoutException") || retrofitError.toString().contains("ConnectionTimeoutException") || retrofitError.toString().contains("UnknownHostException")) {
                 error = new Error(ErrorType.RETRY, "There seems to be a problem with your internet connection.");
             } else if (retrofitError.toString().contains("No address associated with hostname")) {
                 error = new Error(ErrorType.RETRY, "No address associated with hostname");

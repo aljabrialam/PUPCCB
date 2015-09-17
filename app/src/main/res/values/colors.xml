@@ -54,7 +54,7 @@
     <color name="main_color_gray">#ff7d7d7d</color>
     <color name="gray_light">#ffe8e8e8</color>
     <color name="text_white_87">#deFFFFFF</color>
-    <color name="background_card">#fff</color>
+    <color name="background_card">#039BE5</color>
     <color name="txt">#e9e3f1</color>
     <color name="ticket_info_txt">#d5dee5</color>
 
@@ -88,11 +88,13 @@
     <color name="view_pager_color">#FFE5E5E5</color>
 
 
-
     <!-- Ticket Color Status-->
     <color name="open">#73d2f0</color>
-    <color name="resolved">#f2d560</color>
-    <color name="ongoing">#83d083</color>
+    <color name="in_progress">#f2d560</color>
+    <color name="pending">#83d083</color>
+    <color name="cancelled">#EC407A</color>
+    <color name="closed">#6D6D6D</color>
+
     <!--theme-->
     <color name="red">#B81D18</color>
     <color name="blue">#004687</color>
@@ -116,7 +118,20 @@
     <color name="material_amber_dark">#FF6F00</color>
     <color name="material_amber_light">#FFCA28</color>
 
+    <color name="background_tab_pressed">#2196F3</color>
+
     <!-- Default header color -->
     <color name="material_blue_grey_dark">#37474F</color>
+
+    <item name="purple" type="color">#FFAA66CC</item>
+    <item name="green" type="color">#FF99CC00</item>
+    <item name="orange" type="color">#FFFFBB33</item>
+
+    <item name="darkblue" type="color">#FF33B5E5</item>
+    <item name="darkpurple" type="color">#FF9933CC</item>
+    <item name="darkgreen" type="color">#FF669900</item>
+    <item name="darkorange" type="color">#FFFF8800</item>
+    <item name="darkred" type="color">#FFCC0000</item>
+
 
 </resources>

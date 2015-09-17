@@ -1,0 +1,2700 @@
+Index: app/src/main/java/pupccb/solutionsresource/com/model/Agency.java
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/model/Agency.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/model/Agency.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
+@@ -1,30 +0,0 @@
+-package pupccb.solutionsresource.com.model;
+-
+-/**
+- * Created by User on 8/27/2015.
+- */
+-public class Agency {
+-
+-    String id, agencyname;
+-
+-    public Agency(String id, String agencyname){
+-        setId(id);
+-        setAgencyname(agencyname);
+-    }
+-
+-    public String getId() {
+-        return id != null ? id.trim() : "";
+-    }
+-
+-    public void setId(String id) {
+-        this.id = id != null ? id.trim() : "";
+-    }
+-
+-    public String getAgencyname() {
+-        return agencyname != null ? agencyname.trim() : "";
+-    }
+-
+-    public void setAgencyname(String agencyname) {
+-        this.agencyname = agencyname != null ? agencyname.trim() : "";
+-    }
+-}
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/service/AgenciesService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/service/AgenciesService.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/helper/service/AgenciesService.java	(revision )
+@@ -0,0 +1,16 @@
++package pupccb.solutionsresource.com.helper.service;
++
++import pupccb.solutionsresource.com.model.Agencies;
++import pupccb.solutionsresource.com.model.AgencyList;
++import pupccb.solutionsresource.com.model.UserInfoResponse;
++import retrofit.http.GET;
++import retrofit.http.Query;
++
++/**
++ * Created by User on 9/14/2015.
++ */
++public interface AgenciesService {
++
++    @GET("/api/v1/agencies")
++    AgencyList agencies();
++}
+Index: app/src/main/java/pupccb/solutionsresource/com/util/CreateYesNoDialog.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/util/CreateYesNoDialog.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/util/CreateYesNoDialog.java	(revision )
+@@ -0,0 +1,57 @@
++package pupccb.solutionsresource.com.util;
++
++import android.app.Activity;
++import android.app.AlertDialog;
++import android.app.Dialog;
++import android.content.Context;
++import android.content.DialogInterface;
++
++/**
++ * Created by Richard on 21/02/2015.
++ */
++public class CreateYesNoDialog {
++    private Activity activity;
++    private Dialog dialog;
++    private Boolean dismissOnCancel;
++    private int requestCode;
++    private Communicator communicator;
++    public CreateYesNoDialog(Activity activity, Dialog dialog, String title, String message, Boolean cancelable, Boolean dismissOnCancel, String positive, String negative, int requestCode){
++        this.activity = activity;
++        this.dialog = dialog;
++        this.dismissOnCancel = dismissOnCancel;
++        this.requestCode = requestCode;
++        this.communicator = (Communicator) activity;
++
++        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
++        builder.setTitle(title)
++                .setMessage(message)
++                .setCancelable(cancelable)
++                .setPositiveButton(positive, dialogClickListener)
++                .setNegativeButton(negative, dialogClickListener);
++        builder.show();
++    }
++
++    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
++        @Override
++        public void onClick(DialogInterface dialogInterface, int which) {
++            switch (which){
++                case DialogInterface.BUTTON_POSITIVE:
++                    if(dialog != null){
++                        dialog.dismiss();
++                    }
++                    communicator.yesNoDialogPositiveResponse(requestCode);
++                    break;
++                case DialogInterface.BUTTON_NEGATIVE:
++                    dialogInterface.dismiss();
++                    if(dismissOnCancel){
++                        activity.finish();
++                    }
++                    break;
++            }
++        }
++    };
++
++    public interface Communicator {
++        void yesNoDialogPositiveResponse(int requestCode);
++    }
++}
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/request/CreateTicketRequest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/request/CreateTicketRequest.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/helper/request/CreateTicketRequest.java	(revision )
+@@ -0,0 +1,39 @@
++package pupccb.solutionsresource.com.helper.request;
++
++import com.octo.android.robospice.request.retrofit.RetrofitSpiceRequest;
++
++import pupccb.solutionsresource.com.helper.service.RegistrationService;
++import pupccb.solutionsresource.com.helper.service.TicketService;
++import pupccb.solutionsresource.com.model.RegistrationDetails;
++import pupccb.solutionsresource.com.model.RegistrationResponse;
++import pupccb.solutionsresource.com.model.Ticket;
++import pupccb.solutionsresource.com.model.TicketResponse;
++
++/**
++ * Created by User on 7/16/2015.
++ */
++public class CreateTicketRequest extends RetrofitSpiceRequest<TicketResponse, TicketService> {
++
++    private Ticket ticket;
++
++    public CreateTicketRequest(Ticket ticket) {
++        super(TicketResponse.class, TicketService.class);
++        this.ticket = ticket;
++    }
++
++    @Override
++    public TicketResponse loadDataFromNetwork() throws Exception {
++            return getService().createTicket(
++                    ticket.getDate_time(),
++                    ticket.getSubject(),
++                    ticket.getAgency(),
++                    ticket.getIncident_details(),
++                    ticket.getComplainee(),
++                    ticket.getUser_id()
++            );
++    }
++
++    public String createCacheKey() {
++        return "TicketRequest" + ticket.getUser_id();
++    }
++}
+Index: app/src/main/java/pupccb/solutionsresource/com/fragment/CurrentTicket.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/fragment/CurrentTicket.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/fragment/CurrentTicket.java	(revision )
+@@ -1,6 +1,7 @@
+ package pupccb.solutionsresource.com.fragment;
+ 
+ import android.app.Activity;
++import android.content.Intent;
+ import android.os.Bundle;
+ import android.support.annotation.Nullable;
+ import android.support.v4.app.Fragment;
+@@ -69,11 +70,10 @@
+         ticketAdapter = new TicketAdapter(appCompatActivity, ticketInfos, this);
+         recyclerView.setAdapter(ticketAdapter);
+ 
+-
+         view.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+-                NewTicket.launch(getAppCompatActivity());
++                newTicket();
+             }
+         });
+     }
+@@ -99,6 +99,11 @@
+         ticketInfos.add(new TicketInfo("Resolved", "Lorem Ipsum", "DOH", "August 28, 2015"));
+         ticketInfos.add(new TicketInfo("Ongoing", "Lorem Ipsum", "PhilHealth", "August 23, 2015"));
+         ticketInfos.add(new TicketInfo("Open", "Lorem Ipsum", "BIR", "August 13, 2015"));
++    }
++
++    private void newTicket() {
++        Intent intent = new Intent(getActivity(), NewTicket.class);
++        startActivity(intent);
+     }
+ 
+     @Override
+Index: app/src/main/res/layout/fragment_file_attachment.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_file_attachment.xml	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/res/layout/fragment_file_attachment.xml	(revision )
+@@ -1,13 +1,15 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:layout_marginTop="5dp"
+-    android:padding="5dp">
++    android:padding="5dp"
++    >
+ 
+     <android.support.v7.widget.RecyclerView
+         android:id="@+id/recyclerViewAttachment"
+         android:layout_width="match_parent"
+         android:layout_height="130dp">
+     </android.support.v7.widget.RecyclerView>
+-</LinearLayout>
+\ No newline at end of file
++
++</RelativeLayout>
+\ No newline at end of file
+Index: app/src/main/java/pupccb/solutionsresource/com/util/RequestCodes.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/util/RequestCodes.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/util/RequestCodes.java	(revision )
+@@ -6,4 +6,7 @@
+ public class RequestCodes {
+     public static final int REFRESH_PATIENT_LIST = 100;
+     public static final int FILE_SELECT = 102;
++    public static final int DELETE_ATTACHMMENT = 103;
++    public static final int CANCEL_TICKET_CREATION = 104;
++
+ }
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/OfflineDatabaseHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/OfflineDatabaseHelper.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/helper/OfflineDatabaseHelper.java	(revision )
+@@ -29,16 +29,33 @@
+     //common field
+     private static final String id = "_id";
+     private static final String user_id = "user_id";
+-    private static final String ticket_id = "ticket_id";
+     private static final String created_date = "created_date";
+     private static final String modified_date = "modified_date";
+-    //consultation documents table
++    //attachment documents table
+     private static final String file_name = "file_name";
+     private static final String file_type = "file_type";
+     private static final String file_size = "file_size";
+     private static final String file_attachment_path = "file_attachment_path";
+     private static final String sync = "sync";
++    //ticket table
++    private static final String ticket_id = "ticket_id";
++    private static final String incident_date = "incident_date";
++    private static final String incident_time = "incident_time";
++    private static final String agency = "agency";
++    private static final String complainee = "complainee";
++    private static final String ticket_subject = "ticket_subject";
++    private static final String incident_detail = "incident_detail";
+ 
++    private static final String status = "status";
++    private static final String assignee = "assignee";
++    private static final String dept_id = "dept_id";
++    private static final String message = "message";
++
++    //comment table
++    private static final String comment = "comment";
++    private static final String commented_at = "commented_at";
++
++
+     public OfflineDatabaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+         super(context, name, factory, version);
+         this.version = version;
+@@ -46,7 +63,7 @@
+ 
+     @Override
+     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+-        //file attachment
++        //File attachment
+         sqLiteDatabase.execSQL("CREATE TABLE " + ticket_documents_table + " (" +
+                         id + " integer primary key, " +
+                         ticket_id + " integer, " +
+@@ -57,6 +74,19 @@
+                         file_attachment_path + " text, " +
+                         sync + " text)"
+         );
++        //Ticket
++        sqLiteDatabase.execSQL("CREATE TABLE " + ticket_table + " (" +
++                        id + " integer primary key, " +
++                        user_id + " integer, " +
++                        incident_date + " text, " +
++                        incident_time + " text, " +
++                        agency + " text, " +
++                        complainee + " text, " +
++                        ticket_subject + " text, " +
++                        incident_detail + " text, " +
++                        created_date + " text, " +
++                        sync + " text)"
++        );
+ 
+     }
+ 
+@@ -87,9 +117,9 @@
+     public List<FileAttachment> getAllDocuments(String ticket_id, String user_id) throws Exception {
+         List<FileAttachment> list = new ArrayList<FileAttachment>();
+         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + ticket_documents_table +
+-                " WHERE " + OfflineDatabaseHelper.ticket_id + " = '" + ticket_id + "'" +
+-                " AND " + OfflineDatabaseHelper.user_id + " = '" + user_id + "'", null);
++        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + ticket_documents_table
++                + " WHERE " + OfflineDatabaseHelper.ticket_id + " = '" + ticket_id + "'"
++                + " AND " + OfflineDatabaseHelper.user_id + " = '" + user_id + "'", null);
+         cursor.moveToFirst();
+         while (!cursor.isAfterLast()) {
+             list.add(newFileAttachment(cursor));
+@@ -108,6 +138,12 @@
+                 cursor.getString(cursor.getColumnIndex(sync)),
+                 new TypedFile(cursor.getString(cursor.getColumnIndex(file_type)),
+                         new File(cursor.getString(cursor.getColumnIndex(file_attachment_path)))));
++    }
++
++    public Integer deleteDocuments(FileAttachment fileAttachment) throws Exception {
++        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
++        return sqLiteDatabase.delete(ticket_documents_table,
++                OfflineDatabaseHelper.id + " = " + fileAttachment.getId(), null);
+     }
+ 
+     public void dropTables() {
+Index: app/src/main/res/layout/activity_registration.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_registration.xml	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/res/layout/activity_registration.xml	(revision )
+@@ -6,12 +6,11 @@
+     android:fillViewport="true">
+ 
+     <android.support.v7.widget.CardView
+-
+         android:id="@+id/card_view"
+         android:layout_width="match_parent"
+-        android:layout_height="match_parent"
+-        card_view:cardCornerRadius="4dp"
+-        card_view:cardElevation="4dp">
++        android:layout_height="wrap_content"
++        card_view:cardElevation="4dp"
++        >
+ 
+         <LinearLayout
+             android:layout_width="fill_parent"
+\ No newline at end of file
+Index: app/src/main/java/pupccb/solutionsresource/com/model/UserInfoResponse.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/model/UserInfoResponse.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/model/UserInfoResponse.java	(revision )
+@@ -0,0 +1,21 @@
++package pupccb.solutionsresource.com.model;
++
++/**
++ * Created by User on 9/15/2015.
++ */
++public class UserInfoResponse {
++
++    private String id;
++
++    UserInfoResponse(String id){
++        setId(id);
++    }
++
++    public String getId() {
++        return id != null ? id.trim() : "";
++    }
++
++    public void setId(String id) {
++        this.id = id != null ? id.trim() : "";
++    }
++}
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/BaseHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/BaseHelper.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/helper/BaseHelper.java	(revision )
+@@ -12,6 +12,7 @@
+ 
+ import java.text.SimpleDateFormat;
+ import java.util.Calendar;
++import java.util.concurrent.atomic.AtomicInteger;
+ 
+ import pupccb.solutionsresource.com.activity.Main;
+ import pupccb.solutionsresource.com.helper.service.RetrofitSpiceService;
+@@ -35,6 +36,8 @@
+     // < -- OFFLINE DATABASE HELPER -- >
+     protected OfflineDatabaseHelper offlineDatabaseHelper;
+ 
++    private static AtomicInteger nextId = new AtomicInteger(0);
++
+     public static String getBaseUrl() {
+         return BaseUrl;
+     }
+@@ -47,6 +50,13 @@
+         return getSharedPreference(context).edit();
+     }
+ 
++    // < -- SHARED PREFERENCE -- >
++    protected static final String sharedPreference = "ehatidpreference";
++
++    public static String getSharedPreference() {
++        return sharedPreference;
++    }
++
+     // < -- INTERNET CHECKER -- >
+     public static boolean isOnline(Context context) {
+         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+@@ -71,6 +81,29 @@
+         }
+ 
+         return mm + "/" + dd + "/" + year;
++    }
++
++    // < -- DATE YEAR MONTH -- >
++    public static String getDateYearMonth() {
++        final Calendar calendar = Calendar.getInstance();
++        int year = calendar.get(Calendar.YEAR);
++        int month = calendar.get(Calendar.MONTH);
++        int day = calendar.get(Calendar.DAY_OF_MONTH);
++
++        String mm = String.valueOf((month + 1));
++        String dd = String.valueOf(day);
++        if (month <= 8) {
++            mm = "0" + mm;
++        }
++        if (day < 10) {
++            dd = "0" + dd;
++        }
++
++        return  year + mm ;
++    }
++
++    public static String getTicketNumber() {
++        return "M" +  getDateYearMonth() + "-" + String.format("%05d", nextId.incrementAndGet());
+     }
+ 
+     public static String getLongDateNow() {
+Index: .idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/encodings.xml	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ .idea/encodings.xml	(revision )
+@@ -1,6 +1,8 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="Encoding">
++    <file url="file://$PROJECT_DIR$/app/src/main/java/pupccb/solutionsresource/com/model/FileAttachmentList.java" charset="windows-1252" />
++    <file url="file://$PROJECT_DIR$/app/src/main/java/pupccb/solutionsresource/com/util/CreateAlertDialog.java" charset="windows-1252" />
+     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/badge_background.xml" charset="windows-1252" />
+     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/tab_layout.xml" charset="windows-1252" />
+     <file url="PROJECT" charset="UTF-8" />
+\ No newline at end of file
+Index: app/src/main/res/layout/dialog_preview_ticket.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/dialog_preview_ticket.xml	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/res/layout/dialog_preview_ticket.xml	(revision )
+@@ -42,10 +42,9 @@
+                         android:layout_height="@dimen/pad_40dp"
+                         android:layout_marginBottom="@dimen/pad_5dp"
+                         android:layout_marginRight="@dimen/pad_5dp"
+-                        android:clickable="true"
+-                        android:editable="false"
+-                        android:focusableInTouchMode="false"
+-                        android:hint="August 20, 2015"
++                        android:enabled="false"
++                        android:focusable="false"
++                        android:hint="@string/date"
+                         android:inputType="date" />
+ 
+                     <EditText
+@@ -54,11 +53,10 @@
+                         android:layout_weight="1"
+                         android:layout_width="wrap_content"
+                         android:layout_height="@dimen/pad_40dp"
+-                        android:clickable="true"
+-                        android:editable="false"
+-                        android:focusableInTouchMode="false"
+-                        android:hint="11:31 AM"
+-                        android:inputType="time" />
++                        android:enabled="false"
++                        android:hint="@string/time"
++                        android:inputType="time"
++                        android:focusable="false"/>
+                 </LinearLayout>
+ 
+                 <TextView
+@@ -67,10 +65,9 @@
+                     android:layout_width="fill_parent"
+                     android:layout_height="@dimen/pad_40dp"
+                     android:layout_marginBottom="@dimen/pad_5dp"
+-                    android:hint="CSC"
+-                    android:clickable="true"
+-                    android:editable="false"
+-                    android:focusable="false"/>
++                    android:hint="@string/what_agency"
++                    android:focusable="false"
++                    android:enabled="false"/>
+ 
+                 <EditText
+                     android:id="@+id/editTextComplainee"
+@@ -78,8 +75,9 @@
+                     android:layout_width="fill_parent"
+                     android:layout_height="@dimen/pad_40dp"
+                     android:layout_marginBottom="@dimen/pad_5dp"
+-                    android:hint="Juan Dela Cruz"
++                    android:hint="@string/who_to_complaint"
+                     android:inputType="textCapSentences"
++                    android:focusable="false"
+                     android:enabled="false"/>
+ 
+                 <EditText
+@@ -87,8 +85,10 @@
+                     style="@style/editext_graybg"
+                     android:layout_width="fill_parent"
+                     android:layout_height="@dimen/pad_40dp"
+-                    android:hint="Lorem Ipsum"
+-                    android:inputType="textCapSentences" />
++                    android:hint="@string/subject"
++                    android:inputType="textCapSentences"
++                    android:focusable="false"
++                    android:enabled="false"/>
+ 
+ 
+                 <EditText
+@@ -99,9 +99,10 @@
+                     android:layout_marginTop="@dimen/pad_5dp"
+                     android:ems="10"
+                     android:gravity="left|top"
+-                    android:hint="@string/agency_details"
++                    android:hint="@string/details_about_incident"
+                     android:inputType="textMultiLine"
+                     android:maxLength="255"
++                    android:focusable="false"
+                     android:padding="@dimen/pad_10dp"
+                     android:enabled="false"/>
+ 
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/colors.xml	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/res/values/colors.xml	(revision )
+@@ -88,7 +88,6 @@
+     <color name="view_pager_color">#FFE5E5E5</color>
+ 
+ 
+-
+     <!-- Ticket Color Status-->
+     <color name="open">#73d2f0</color>
+     <color name="resolved">#f2d560</color>
+@@ -115,6 +114,8 @@
+     <color name="material_amber">#FFC107</color>
+     <color name="material_amber_dark">#FF6F00</color>
+     <color name="material_amber_light">#FFCA28</color>
++
++    <color name="background_tab_pressed">#2196F3</color>
+ 
+     <!-- Default header color -->
+     <color name="material_blue_grey_dark">#37474F</color>
+\ No newline at end of file
+Index: app/src/main/java/pupccb/solutionsresource/com/adapter/AgencyAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/adapter/AgencyAdapter.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/adapter/AgencyAdapter.java	(revision )
+@@ -13,26 +13,26 @@
+ import java.util.List;
+ 
+ import pupccb.solutionsresource.com.R;
+-import pupccb.solutionsresource.com.model.Agency;
++import pupccb.solutionsresource.com.model.Agencies;
+ 
+ /**
+  * Created by User on 9/2/2015.
+  */
+-public class AgencyAdapter extends ArrayAdapter<Agency> {
++public class AgencyAdapter extends ArrayAdapter<Agencies> {
+ 
+     private Communicator communicator;
+     private int layoutResourceId;
+-    private ArrayList<Agency> agencies;
+-    private ArrayList<Agency> originalList;
++    private ArrayList<Agencies> agencies;
++    private ArrayList<Agencies> originalList;
+     private MethodTypes methodTypes;
+     private ItemFilter filter;
+ 
+-    public void updateOriginalDataSet(List<Agency> list) {
++    public void updateOriginalDataSet(List<Agencies> list) {
+         this.originalList.clear();
+         this.originalList.addAll(list);
+     }
+ 
+-    public void removeFromOriginalList(Agency agency) {
++    public void removeFromOriginalList(Agencies agency) {
+         this.agencies.remove(agency);
+         this.originalList.remove(agency);
+     }
+@@ -42,8 +42,8 @@
+         this.originalList.clear();
+     }
+ 
+-    public Agency getAgency(String agency_id) {
+-        for (Agency item : originalList) {
++    public Agencies getAgency(String agency_id) {
++        for (Agencies item : originalList) {
+             if (item.getId().equals(agency_id)) {
+                 return item;
+             }
+@@ -60,16 +60,16 @@
+         ImageView image1;
+     }
+ 
+-    public AgencyAdapter(Context context, int layoutResourceId, ArrayList<Agency> onlineList, ArrayList<Agency> offlineList, MethodTypes methodTypes) {
++    public AgencyAdapter(Context context, int layoutResourceId, ArrayList<Agencies> onlineList, ArrayList<Agencies> offlineList, MethodTypes methodTypes) {
+         super(context, layoutResourceId, onlineList != null ? onlineList : offlineList);
+         this.communicator = (Communicator) context;
+         this.layoutResourceId = layoutResourceId;
+-        this.agencies = new ArrayList<Agency>();
+-        this.originalList = new ArrayList<Agency>();
++        this.agencies = new ArrayList<Agencies>();
++        this.originalList = new ArrayList<Agencies>();
+         this.methodTypes = methodTypes;
+         if (MethodTypes.READ == methodTypes && onlineList != null) {
+-            for (Agency offline : offlineList) {
+-                for (Agency online : onlineList) {
++            for (Agencies offline : offlineList) {
++                for (Agencies online : onlineList) {
+                     if (offline.getId().equals(online.getId())) {
+                         onlineList.remove(online);
+                         break;
+@@ -86,7 +86,7 @@
+ 
+     @Override
+     public View getView(int position, View convertView, ViewGroup parent) {
+-        final Agency child = getItem(position);
++        final Agencies child = getItem(position);
+         final ViewHolder viewHolder;
+         if (convertView == null) {
+             viewHolder = new ViewHolder();
+@@ -99,7 +99,7 @@
+             viewHolder = (ViewHolder) convertView.getTag();
+         }
+ 
+-        viewHolder.textAgencyName.setText(child.getAgencyname());
++        viewHolder.textAgencyName.setText(child.getName());
+ 
+         if(MethodTypes.READ == methodTypes) {
+             viewHolder.image1.setVisibility(View.VISIBLE);
+@@ -129,9 +129,9 @@
+             constraint = constraint.toString().toLowerCase();
+             FilterResults result = new FilterResults();
+             if (constraint.toString().length() > 0) {
+-                ArrayList<Agency> filteredItems = new ArrayList<Agency>();
+-                for (Agency item : originalList) {
+-                    if (item.getAgencyname().toUpperCase().startsWith(constraint.toString().toUpperCase())) {
++                ArrayList<Agencies> filteredItems = new ArrayList<Agencies>();
++                for (Agencies item : originalList) {
++                    if (item.getName().toUpperCase().startsWith(constraint.toString().toUpperCase())) {
+                         filteredItems.add(item);
+                     }
+                 }
+@@ -149,10 +149,10 @@
+         @SuppressWarnings("unchecked")
+         @Override
+         protected void publishResults(CharSequence constraint, FilterResults results) {
+-            agencies = (ArrayList<Agency>) results.values;
++            agencies = (ArrayList<Agencies>) results.values;
+             notifyDataSetChanged();
+             clear();
+-            for (Agency item : agencies) {
++            for (Agencies item : agencies) {
+                 add(item);
+             }
+             notifyDataSetInvalidated();
+@@ -160,6 +160,6 @@
+     }
+ 
+     public interface Communicator {
+-        void adapterSelectedAgency(Agency agency);
++        void adapterSelectedAgency(Agencies agency);
+     }
+ }
+Index: app/src/main/java/pupccb/solutionsresource/com/activity/CallCCB.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/activity/CallCCB.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/activity/CallCCB.java	(revision )
+@@ -9,6 +9,7 @@
+ import android.support.v7.widget.Toolbar;
+ import android.telephony.PhoneStateListener;
+ import android.telephony.TelephonyManager;
++import android.util.Log;
+ import android.view.View;
+ import android.widget.Button;
+ import android.widget.EditText;
+@@ -98,13 +99,13 @@
+                     // in initialization of the class and at the end of phone call
+                     // detect flag from CALL_STATE_OFFHOOK
+                     if (onCall == true) {
+-                        Toast.makeText(CallCCB.this, "restart app after call", Toast.LENGTH_LONG).show();
+-                        // restart our application
+-                        Intent restart = getBaseContext().getPackageManager().
+-                                getLaunchIntentForPackage(getBaseContext().getPackageName());
+-                        restart.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+-                        startActivity(restart);
+-
++                        try {
++                            // stop listening
++                            TelephonyManager mTM = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
++                            mTM.listen(this, PhoneStateListener.LISTEN_NONE);
++                        } catch (Exception e) {
++                            Log.e("callMonitor: ", e.toString());
++                        }
+                         onCall = false;
+                     }
+                     break;
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/communicator/OnlineCommunicator.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/communicator/OnlineCommunicator.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/helper/communicator/OnlineCommunicator.java	(revision )
+@@ -5,6 +5,8 @@
+ import pupccb.solutionsresource.com.helper.Controller;
+ import pupccb.solutionsresource.com.model.Login;
+ import pupccb.solutionsresource.com.model.RegistrationDetails;
++import pupccb.solutionsresource.com.model.Ticket;
++import pupccb.solutionsresource.com.model.UserInfo;
+ 
+ /**
+  * Created by User on 7/16/2015.
+@@ -13,4 +15,7 @@
+ 
+     void login(Controller controller, Activity activity, Login login, Controller.MethodTypes methodTypes);
+     void register(Controller controller, Activity activity, RegistrationDetails registrationDetails, Controller.MethodTypes methodTypes);
++    void createTicket(Controller controller, Activity activity, Ticket ticket, Controller.MethodTypes methodTypes);
++    void userInfo(Controller controller, Activity activity,UserInfo userInfo, Controller.MethodTypes methodTypes);
++    void agencies(Controller controller, Activity activity, Controller.MethodTypes methodTypes);
+ }
+Index: app/src/main/res/layout/card_attachment.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/card_attachment.xml	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/res/layout/card_attachment.xml	(revision )
+@@ -49,7 +49,7 @@
+                     android:orientation="horizontal">
+ 
+                     <ImageView
+-                        android:id="@+id/share"
++                        android:id="@+id/imageViewDelete"
+                         android:layout_width="25dp"
+                         android:layout_height="25dp"
+                         android:background="@drawable/social_button_selector"
+@@ -61,8 +61,8 @@
+         </FrameLayout>
+ 
+         <LinearLayout
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
++            android:layout_width="fill_parent"
++            android:layout_height="wrap_content"
+             android:padding="@dimen/pad_5dp"
+             android:orientation="horizontal">
+ 
+@@ -81,14 +81,14 @@
+                 >
+             <TextView
+                 android:id="@+id/filename"
+-                android:layout_width="match_parent"
++                android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:padding="@dimen/pad_5dp"
+                 android:text="File Name" />
+ 
+             <TextView
+                 android:id="@+id/filesize"
+-                android:layout_width="290dp"
++                android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentEnd="true"
+                 android:layout_alignParentRight="true"
+Index: app/app.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/app.iml	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/app.iml	(revision )
+@@ -116,8 +116,8 @@
+     <orderEntry type="library" exported="" name="support-v4-22.2.1" level="project" />
+     <orderEntry type="library" exported="" name="circleimageview-1.2.1" level="project" />
+     <orderEntry type="library" exported="" name="floatingactionbutton-1.10.0" level="project" />
+-    <orderEntry type="library" exported="" name="commons-io-1.3.2" level="project" />
+     <orderEntry type="library" exported="" name="retrofit-1.5.0" level="project" />
++    <orderEntry type="library" exported="" name="commons-io-1.3.2" level="project" />
+     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
+     <orderEntry type="library" exported="" name="robospice-1.4.12" level="project" />
+   </component>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_connection_problem.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_connection_problem.xml	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/res/layout/activity_connection_problem.xml	(revision )
+@@ -3,7 +3,8 @@
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:orientation="vertical" android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:gravity="center">
++    android:gravity="center"
++    android:id="@+id/errorPage">
+ 
+     <ImageView
+         android:layout_width="wrap_content"
+\ No newline at end of file
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/communicator/AttachmentCommunicator.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/communicator/AttachmentCommunicator.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/helper/communicator/AttachmentCommunicator.java	(revision )
+@@ -1,6 +1,7 @@
+ package pupccb.solutionsresource.com.helper.communicator;
+ 
+ import android.app.Activity;
++import android.content.Context;
+ 
+ import pupccb.solutionsresource.com.helper.Controller;
+ import pupccb.solutionsresource.com.model.FileAttachment;
+@@ -10,4 +11,6 @@
+  */
+ public interface AttachmentCommunicator {
+     void postFileAttachment(Controller controller, Activity activity, String ticket_id, String user_id, FileAttachment fileAttachment, Controller.MethodTypes methodTypes);
++    void getFileAttachmentList(Controller controller, Activity activity, String ticket_id, String user_id, Controller.MethodTypes methodTypes);
++    void deleteFile(Controller controller, Activity activity, FileAttachment fileAttachment, Controller.MethodTypes methodTypes);
+ }
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/request/UserInfoRequest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/request/UserInfoRequest.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/helper/request/UserInfoRequest.java	(revision )
+@@ -0,0 +1,29 @@
++package pupccb.solutionsresource.com.helper.request;
++
++import com.octo.android.robospice.request.retrofit.RetrofitSpiceRequest;
++
++import pupccb.solutionsresource.com.helper.service.UserInfoService;
++import pupccb.solutionsresource.com.model.UserInfo;
++import pupccb.solutionsresource.com.model.UserInfoResponse;
++
++/**
++ * Created by User on 9/14/2015.
++ */
++public class UserInfoRequest extends RetrofitSpiceRequest<UserInfoResponse, UserInfoService> {
++
++    private UserInfo userInfo;
++    public UserInfoRequest(UserInfo userInfo) {
++        super(UserInfoResponse.class, UserInfoService.class);
++        this.userInfo = userInfo;
++    }
++
++    @Override
++    public UserInfoResponse loadDataFromNetwork() throws Exception {
++        return getService().userInfo(userInfo.getToken());
++    }
++
++    public String createCacheKey() {
++        return "UserInfoRequest" + userInfo.getToken();
++    }
++
++}
+Index: app/src/main/java/pupccb/solutionsresource/com/model/UserInfo.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/model/UserInfo.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/model/UserInfo.java	(revision )
+@@ -0,0 +1,21 @@
++package pupccb.solutionsresource.com.model;
++
++/**
++ * Created by User on 9/14/2015.
++ */
++public class UserInfo {
++
++    String token;
++
++    public UserInfo(String token) {
++       setToken(token);
++    }
++
++    public String getToken() {
++        return token != null ? token.trim() : "";
++    }
++
++    public void setToken(String token) {
++        this.token = token != null ? token.trim() : "";
++    }
++}
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/res/values/strings.xml	(revision )
+@@ -21,6 +21,8 @@
+     <string name="send">Send</string>
+     <string name="learn_more">Learn More</string>
+     <string name="log_in">Log In</string>
++    <string name="delete">Delete</string>
++    <string name="remove">Remove</string>
+     <string name="cancel">Cancel</string>
+     <string name="edit">Edit</string>
+     <string name="already_have_an_account">I already have an account</string>
+@@ -36,7 +38,7 @@
+     <string name="time">Time</string>
+     <string name="details_about_incident">Please provide details about the incident.</string>
+     <string name="agency_details">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+-    <string name="what_agency">What agency are you complaining about?</string>
++    <string name="what_agency">Agency</string>
+     <string name="subject">Subject</string>
+     <string name="who_to_complaint">Who are you complaining about?</string>
+ 
+Index: app/src/main/java/pupccb/solutionsresource/com/model/RegistrationResponse.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/model/RegistrationResponse.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/model/RegistrationResponse.java	(revision )
+@@ -10,6 +10,7 @@
+     public String getMsg() {
+         return msg != null ? msg.trim() : "";
+     }
++
+     public void setMsg(String msg) {
+         this.msg = msg != null ? msg.trim() : "";
+     }
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/service/TicketService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/service/TicketService.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/helper/service/TicketService.java	(revision )
+@@ -0,0 +1,26 @@
++package pupccb.solutionsresource.com.helper.service;
++
++
++import pupccb.solutionsresource.com.model.RegistrationResponse;
++import pupccb.solutionsresource.com.model.TicketResponse;
++import retrofit.http.Field;
++import retrofit.http.FormUrlEncoded;
++import retrofit.http.POST;
++
++/**
++ * Created by User on 7/16/2015.
++ */
++public interface TicketService {
++
++    @FormUrlEncoded
++    @POST("/api/v1/new-ticket")
++    TicketResponse createTicket(
++            @Field("date_time") String date_time,
++            @Field("subject") String subject,
++            @Field("agency") String agency,
++            @Field("complainee") String complainee,
++            @Field("incident_details") String incident_details,
++            @Field("user_id") String user_id
++    );
++}
++
+Index: app/src/main/java/pupccb/solutionsresource/com/model/FileAttachmentList.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/model/FileAttachmentList.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/model/FileAttachmentList.java	(revision )
+@@ -0,0 +1,44 @@
++package pupccb.solutionsresource.com.model;
++
++import java.util.ArrayList;
++import java.util.List;
++
++/**
++ * Created by User on 9/9/2015.
++ */
++public class FileAttachmentList {
++    private String total_count, total_pages, current_page, limit;
++    private List<FileAttachment> data;
++
++    public FileAttachmentList() {
++
++    }
++
++    public FileAttachmentList(String total_count, String total_pages, String current_page, String limit, List<FileAttachment> data) {
++        this.total_count = total_count;
++        this.total_pages = total_pages;
++        this.current_page = current_page;
++        this.limit = limit;
++        this.data = data;
++    }
++
++    public String getTotal_count() {
++        return total_count != null ? total_count : "";
++    }
++
++    public String getTotal_pages() {
++        return total_pages != null ? total_pages : "";
++    }
++
++    public String getCurrent_page() {
++        return current_page != null ? current_page : "";
++    }
++
++    public String getLimit() {
++        return limit != null ? limit : "";
++    }
++
++    public List<FileAttachment> getData() {
++        return data != null ? data : new ArrayList<FileAttachment>();
++    }
++}
+Index: app/src/main/res/layout/tab_layout.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/tab_layout.xml	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/res/layout/tab_layout.xml	(revision )
+@@ -15,8 +15,8 @@
+ 
+     <TextView
+         android:id="@+id/badge"
+-        android:layout_width="@dimen/pad_15dp"
+-        android:layout_height="@dimen/pad_15dp"
++        android:layout_width="@dimen/pad_10dp"
++        android:layout_height="@dimen/pad_10dp"
+         android:layout_toRightOf="@+id/tab_title"
+         android:textSize="@dimen/txt_8sp"
+         android:gravity="center"
+\ No newline at end of file
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/OnlineHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/OnlineHelper.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/helper/OnlineHelper.java	(revision )
+@@ -6,15 +6,29 @@
+ import com.octo.android.robospice.persistence.exception.SpiceException;
+ import com.octo.android.robospice.request.listener.RequestListener;
+ 
++import java.util.ArrayList;
++import java.util.Collection;
++import java.util.Collections;
++import java.util.Comparator;
++import java.util.List;
++
+ import pupccb.solutionsresource.com.helper.communicator.OnlineCommunicator;
++import pupccb.solutionsresource.com.helper.request.AgenciesRequest;
++import pupccb.solutionsresource.com.helper.request.CreateTicketRequest;
+ import pupccb.solutionsresource.com.helper.request.RegistrationRequest;
+ import pupccb.solutionsresource.com.helper.request.SessionRequest;
++import pupccb.solutionsresource.com.helper.request.UserInfoRequest;
++import pupccb.solutionsresource.com.model.Agencies;
++import pupccb.solutionsresource.com.model.AgencyList;
+ import pupccb.solutionsresource.com.model.Login;
+ import pupccb.solutionsresource.com.model.RegistrationDetails;
+ import pupccb.solutionsresource.com.model.RegistrationResponse;
+ import pupccb.solutionsresource.com.model.Session;
++import pupccb.solutionsresource.com.model.Ticket;
++import pupccb.solutionsresource.com.model.TicketResponse;
++import pupccb.solutionsresource.com.model.UserInfo;
++import pupccb.solutionsresource.com.model.UserInfoResponse;
+ import pupccb.solutionsresource.com.util.ErrorHandler;
+-import pupccb.solutionsresource.com.util.ToastMessage;
+ 
+ /**
+  * Created by User on 7/16/2015.
+@@ -36,6 +50,78 @@
+         spiceManager.execute(sessionRequest, sessionRequest.createCacheKey(), DurationInMillis.ALWAYS_EXPIRED, new sessionListener(login, methodTypes));
+     }
+ 
++    @Override
++    public void userInfo(Controller controller, Activity activity, UserInfo userInfo, Controller.MethodTypes methodTypes) {
++        this.controller = controller;
++        performUserInfoRequest(activity, userInfo, methodTypes);
++    }
++
++    @Override
++    public void agencies(Controller controller, Activity activity, Controller.MethodTypes methodTypes) {
++        this.controller = controller;
++        performAgenciesRequest(activity, methodTypes);
++    }
++
++    private void performAgenciesRequest(Activity activity, Controller.MethodTypes methodTypes) {
++        startSpiceManager(activity);
++        AgenciesRequest agenciesRequest = new AgenciesRequest();
++        spiceManager.execute(agenciesRequest, agenciesRequest.createCacheKey(), DurationInMillis.ALWAYS_EXPIRED, new agenciesListener(methodTypes));
++    }
++
++    private void performUserInfoRequest(Activity activity, UserInfo userInfo, Controller.MethodTypes methodTypes) {
++        startSpiceManager(activity);
++        UserInfoRequest userInfoRequest = new UserInfoRequest(userInfo);
++        spiceManager.execute(userInfoRequest, userInfoRequest.createCacheKey(), DurationInMillis.ALWAYS_EXPIRED, new userInfoListener(userInfo, methodTypes));
++    }
++
++    @Override
++    public void register(Controller controller, Activity activity, RegistrationDetails registrationDetails, Controller.MethodTypes methodTypes) {
++        this.controller = controller;
++        performRegistrationRequest(activity, registrationDetails, methodTypes);
++    }
++
++    private void performRegistrationRequest(Activity activity, RegistrationDetails registrationDetails, Controller.MethodTypes methodTypes) {
++        startSpiceManager(activity);
++        this.activity = activity;
++        RegistrationRequest registrationRequest = new RegistrationRequest(registrationDetails);
++        spiceManager.execute(registrationRequest, registrationRequest.createCacheKey(), DurationInMillis.ALWAYS_EXPIRED, new registrationListener(registrationDetails, methodTypes));
++    }
++
++    //@Override
++    public void createTicket(Controller controller, Activity activity, Ticket ticket, Controller.MethodTypes methodTypes) {
++        this.controller = controller;
++        performNewTicketRequest(activity, ticket, methodTypes);
++    }
++
++    private void performNewTicketRequest(Activity activity, Ticket ticket, Controller.MethodTypes methodTypes) {
++        startSpiceManager(activity);
++        this.activity = activity;
++        CreateTicketRequest createTicketRequest = new CreateTicketRequest(ticket);
++        spiceManager.execute(createTicketRequest, createTicketRequest.createCacheKey(), DurationInMillis.ALWAYS_EXPIRED, new newTicketListener(ticket, methodTypes));
++    }
++
++    public class agenciesListener implements RequestListener<AgencyList> {
++        private Controller.MethodTypes methodTypes;
++        private ArrayList<Agencies> list;
++
++        public agenciesListener(Controller.MethodTypes methodTypes) {
++            this.methodTypes = methodTypes;
++        }
++
++        @Override
++        public void onRequestFailure(SpiceException spiceException) {
++            stopSpiceManager();
++            controller.setError(new ErrorHandler().onRequestFailure(spiceException), methodTypes);
++        }
++
++        @Override
++        public void onRequestSuccess(AgencyList agencyList) {
++            list = (ArrayList<Agencies>) agencyList.getData();
++            stopSpiceManager();
++            controller.agenciesResult(list);
++        }
++    }
++
+     public class sessionListener implements RequestListener<Session> {
+         private Login login;
+         private Controller.MethodTypes methodTypes;
+@@ -58,19 +144,27 @@
+         }
+     }
+ 
++    public class userInfoListener implements RequestListener<UserInfoResponse> {
++        private Controller.MethodTypes methodTypes;
++        private UserInfo userInfo;
+ 
++        public userInfoListener(UserInfo userInfo, Controller.MethodTypes methodTypes) {
++            this.userInfo = userInfo;
++            this.methodTypes = methodTypes;
++        }
++
+-    @Override
++        @Override
+-    public void register(Controller controller, Activity activity,RegistrationDetails registrationDetails, Controller.MethodTypes methodTypes) {
+-        this.controller = controller;
+-        performRegistrationRequest(activity, registrationDetails, methodTypes);
++        public void onRequestFailure(SpiceException spiceException) {
++            stopSpiceManager();
++            controller.setError(new ErrorHandler().onRequestFailure(spiceException), methodTypes);
+-    }
++        }
+ 
+-    private void performRegistrationRequest(Activity activity, RegistrationDetails registrationDetails, Controller.MethodTypes methodTypes) {
+-        startSpiceManager(activity);
+-        this.activity = activity;
+-        RegistrationRequest registrationRequest =  new RegistrationRequest(registrationDetails);
+-        spiceManager.execute(registrationRequest, registrationRequest.createCacheKey(), DurationInMillis.ALWAYS_EXPIRED, new registrationListener(registrationDetails, methodTypes));
++        @Override
++        public void onRequestSuccess(UserInfoResponse userInfoResponse) {
++            stopSpiceManager();
++            controller.UserInfoResult(userInfoResponse, userInfo);
+-    }
++        }
++    }
+ 
+     public class registrationListener implements RequestListener<RegistrationResponse> {
+         private RegistrationDetails registrationDetails;
+@@ -88,9 +182,32 @@
+         }
+ 
+         @Override
+-        public void onRequestSuccess(RegistrationResponse registrationResponse)  {
++        public void onRequestSuccess(RegistrationResponse registrationResponse) {
+             stopSpiceManager();
+-            controller.registerResult(registrationResponse,registrationDetails);
++            controller.registerResult(registrationResponse, registrationDetails);
+         }
+     }
++
++    public class newTicketListener implements RequestListener<TicketResponse> {
++        private Ticket ticket;
++        private Controller.MethodTypes methodTypes;
++
++        public newTicketListener(Ticket ticket, Controller.MethodTypes methodTypes) {
++            this.ticket = ticket;
++            this.methodTypes = methodTypes;
++        }
++
++        @Override
++        public void onRequestFailure(SpiceException spiceException) {
++            stopSpiceManager();
++            controller.setError(new ErrorHandler().onRequestFailure(spiceException), methodTypes);
++        }
++
++        @Override
++        public void onRequestSuccess(TicketResponse ticketResponse) {
++            stopSpiceManager();
++            controller.createTicketResult(ticketResponse, ticket);
++        }
++    }
++
+ }
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/request/AgenciesRequest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/request/AgenciesRequest.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/helper/request/AgenciesRequest.java	(revision )
+@@ -0,0 +1,30 @@
++package pupccb.solutionsresource.com.helper.request;
++
++import com.octo.android.robospice.request.retrofit.RetrofitSpiceRequest;
++
++import pupccb.solutionsresource.com.helper.service.AgenciesService;
++import pupccb.solutionsresource.com.helper.service.UserInfoService;
++import pupccb.solutionsresource.com.model.Agencies;
++import pupccb.solutionsresource.com.model.AgencyList;
++import pupccb.solutionsresource.com.model.UserInfo;
++import pupccb.solutionsresource.com.model.UserInfoResponse;
++
++/**
++ * Created by User on 9/14/2015.
++ */
++public class AgenciesRequest extends RetrofitSpiceRequest<AgencyList, AgenciesService> {
++
++    public AgenciesRequest( ) {
++        super(AgencyList.class, AgenciesService.class);
++    }
++
++    @Override
++    public AgencyList loadDataFromNetwork() throws Exception {
++        return getService().agencies();
++    }
++
++    public String createCacheKey() {
++        return "AgenciesRequest";
++    }
++
++}
+Index: app/src/main/java/pupccb/solutionsresource/com/model/AgencyList.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/model/AgencyList.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/model/AgencyList.java	(revision )
+@@ -0,0 +1,18 @@
++package pupccb.solutionsresource.com.model;
++
++import java.util.ArrayList;
++import java.util.List;
++
++/**
++ * Created by User on 9/16/2015.
++ */
++public class AgencyList {
++    private List<Agencies> data;
++
++    public List<Agencies> getData() {
++        return data != null ? data : new ArrayList<Agencies>();
++    }
++    public void setData(List<Agencies> data) {
++        this.data = data != null ? data : new ArrayList<Agencies>();
++    }
++}
+Index: app/src/main/java/pupccb/solutionsresource/com/model/TicketResponse.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/model/TicketResponse.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/model/TicketResponse.java	(revision )
+@@ -0,0 +1,17 @@
++package pupccb.solutionsresource.com.model;
++
++/**
++ * Created by User on 8/14/2015.
++ */
++public class TicketResponse {
++
++    private String msg;
++
++    public String getMsg() {
++        return msg != null ? msg.trim() : "";
++    }
++
++    public void setMsg(String msg) {
++        this.msg = msg != null ? msg.trim() : "";
++    }
++}
+Index: app/src/main/java/pupccb/solutionsresource/com/fragment/AgencyDialogFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/fragment/AgencyDialogFragment.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/fragment/AgencyDialogFragment.java	(revision )
+@@ -15,7 +15,7 @@
+ 
+ import pupccb.solutionsresource.com.R;
+ import pupccb.solutionsresource.com.adapter.AgencyAdapter;
+-import pupccb.solutionsresource.com.model.Agency;
++import pupccb.solutionsresource.com.model.Agencies;
+ 
+ /**
+  * Created by User on 8/27/2015.
+@@ -99,6 +99,6 @@
+     };
+ 
+     public interface Communicator{
+-        void dialogSelectedAgency(Agency agency, int requestCode);
++        void dialogSelectedAgency(Agencies agency, int requestCode);
+     }
+ }
+Index: app/src/main/java/pupccb/solutionsresource/com/activity/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/activity/Main.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/activity/Main.java	(revision )
+@@ -1,5 +1,6 @@
+ package pupccb.solutionsresource.com.activity;
+ 
++import android.app.Activity;
+ import android.content.Intent;
+ import android.content.SharedPreferences;
+ import android.content.res.Configuration;
+@@ -25,6 +26,9 @@
+ import pupccb.solutionsresource.com.helper.OnlineHelper;
+ import pupccb.solutionsresource.com.model.Login;
+ import pupccb.solutionsresource.com.model.Session;
++import pupccb.solutionsresource.com.model.UserInfo;
++import pupccb.solutionsresource.com.model.UserInfoResponse;
++import pupccb.solutionsresource.com.util.CreateAlertDialog;
+ import pupccb.solutionsresource.com.util.ErrorHandler;
+ import pupccb.solutionsresource.com.util.ToastMessage;
+ import pupccb.solutionsresource.com.util.TouchEffect;
+@@ -48,15 +52,27 @@
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
++        sharedPreferences = getSharedPreferences(BaseHelper.getSharedPreference(), Activity.MODE_PRIVATE);
++        if (sharedPreferences.getBoolean("logged_in", false)) {
++            overridePendingTransition(0, 0);
++            startNavigationDrawer();
++        } else {
+-        View view = getLayoutInflater().inflate(R.layout.activity_login, null);
++            View view = getLayoutInflater().inflate(R.layout.activity_login, null);
+-        setScreenOrienttion(view);
++            setScreenOrientation(view);
+-        setContentView(view);
+-        startController();
+-        findViewById(view);
++            setContentView(view);
++            startController();
++            findViewById(view);
+-        temporatyLogin();
++           // temporatyLogin();
+-    }
++        }
+ 
+-    private void setScreenOrienttion(View view) {
++    }
++
++    public void startNavigationDrawer() {
++        finish();
++        startActivity(new Intent(Main.this, NavigationDrawer.class));
++    }
++
++    private void setScreenOrientation(View view) {
+         int orientation = getResources().getConfiguration().orientation;
+         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+             view.setBackgroundResource(R.drawable.landscape_bg);
+@@ -67,7 +83,11 @@
+ 
+     private void startController() {
+         controller = new Controller(new OnlineHelper());
++
++        if (Main.this.getIntent().getBooleanExtra("sessionTimeout", false)) {
++            new CreateAlertDialog(Main.this, "Session", "Your Session Has Timed Out", true);
+-    }
++        }
++    }
+ 
+     private void findViewById(View view) {
+         validator = new Validator(this);
+@@ -95,9 +115,10 @@
+         editTextPassword.setText("secret");
+     }
+ 
+-    private void clearTextView() {
+-        editTextUsername.setText("");
+-        editTextPassword.setText("");
++    @Override
++    protected void onStart() {
++        super.onStart();
++
+     }
+ 
+     public void login(Login login) {
+@@ -116,8 +137,23 @@
+         editSharedPreference.putBoolean("logged_in", true);
+         editSharedPreference.apply();
+ 
++        userInfo(new UserInfo(session.getAccess_token()));
+         startActivity(new Intent(Main.this, NavigationDrawer.class));
+         finish();
++
++
++    }
++
++    public void userInfo(UserInfo userInfo) {
++        controller.userInfo(this, userInfo);
++    }
++
++    public void userInfoResult(UserInfoResponse userInfoResponse, UserInfo userInfo) {
++
++        SharedPreferences.Editor editSharedPreference = BaseHelper.getEditSharedPreference(this);
++        editSharedPreference.putString("user_id", userInfoResponse.getId());
++        editSharedPreference.apply();
++
+     }
+ 
+     @Override
+Index: app/src/main/java/pupccb/solutionsresource/com/model/Ticket.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/model/Ticket.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/model/Ticket.java	(revision )
+@@ -0,0 +1,66 @@
++package pupccb.solutionsresource.com.model;
++
++/**
++ * Created by User on 9/8/2015.
++ */
++public class Ticket {
++
++    public String user_id, date_time, agency, complainee, subject, incident_details;
++
++    public Ticket(String user_id, String date_time, String agency, String complainee, String subject, String incident_details) {
++        setDate_time(date_time);
++        setSubject(subject);
++        setAgency(agency);
++        setIncident_details(incident_details);
++        setComplainee(complainee);
++        setUser_id(user_id);
++    }
++
++    public String getUser_id() {
++        return user_id != null ? user_id.trim() : "";
++    }
++
++    public void setUser_id(String user_id) {
++        this.user_id = user_id != null ? user_id.trim() : "";
++    }
++
++    public String getDate_time() {
++        return date_time != null ? date_time.trim() : "";
++    }
++
++    public void setDate_time(String date_time) {
++        this.date_time = date_time != null ? date_time.trim() : "";
++    }
++
++    public String getAgency() {
++        return agency != null ? agency.trim() : "";
++    }
++
++    public void setAgency(String agency) {
++        this.agency = agency != null ? agency.trim() : "";
++    }
++
++    public String getComplainee() {
++        return complainee != null ? complainee.trim() : "";
++    }
++
++    public void setComplainee(String complainee) {
++        this.complainee = complainee != null ? complainee.trim() : "";
++    }
++
++    public String getSubject() {
++        return subject != null ? subject.trim() : "";
++    }
++
++    public void setSubject(String subject) {
++        this.subject = subject != null ? subject.trim() : "";
++    }
++
++    public String getIncident_details() {
++        return incident_details;
++    }
++
++    public void setIncident_details(String incident_details) {
++        this.incident_details = incident_details;
++    }
++}
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/communicator/OfflineCommunicator.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/communicator/OfflineCommunicator.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/helper/communicator/OfflineCommunicator.java	(revision )
+@@ -8,4 +8,5 @@
+ public interface OfflineCommunicator {
+     void showBrowseFileDialog();
+     void showBrowseFileDialogResult(FileAttachment fileAttachment);
++    void deleteFile(FileAttachment fileAttachment);
+ }
+Index: app/src/main/java/pupccb/solutionsresource/com/util/CreateAlertDialog.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/util/CreateAlertDialog.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/util/CreateAlertDialog.java	(revision )
+@@ -0,0 +1,30 @@
++package pupccb.solutionsresource.com.util;
++
++import android.app.AlertDialog;
++import android.content.Context;
++import android.content.DialogInterface;
++import android.view.Gravity;
++import android.widget.TextView;
++
++import pupccb.solutionsresource.com.R;
++
++
++public class CreateAlertDialog {
++    public CreateAlertDialog(Context context, String title, String message, Boolean cancelable){
++        AlertDialog.Builder builder = new AlertDialog.Builder(context);
++        builder.setTitle(title)
++                .setMessage(message)
++                .setCancelable(cancelable)
++                .setPositiveButton(context.getResources().getString(R.string.action_ok), new DialogInterface.OnClickListener() {
++                    @Override
++                    public void onClick(DialogInterface dialog, int which) {
++                        dialog.dismiss();
++                    }
++                });
++
++        AlertDialog dialog = builder.show();
++        TextView messageView = (TextView)dialog.findViewById(android.R.id.message);
++        messageView.setGravity(Gravity.CENTER);
++        messageView.setPadding(20, 20, 20, 20);
++    }
++}
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/Controller.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/Controller.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/helper/Controller.java	(revision )
+@@ -2,17 +2,25 @@
+ 
+ import android.app.Activity;
+ 
++import java.util.ArrayList;
++
+ import pupccb.solutionsresource.com.activity.Main;
+ import pupccb.solutionsresource.com.activity.NewTicket;
+ import pupccb.solutionsresource.com.activity.Registration;
+ import pupccb.solutionsresource.com.adapter.FileAttachmentAdapter;
+ import pupccb.solutionsresource.com.helper.communicator.AttachmentCommunicator;
+ import pupccb.solutionsresource.com.helper.communicator.OnlineCommunicator;
++import pupccb.solutionsresource.com.model.Agencies;
++import pupccb.solutionsresource.com.model.AgencyList;
+ import pupccb.solutionsresource.com.model.FileAttachment;
+ import pupccb.solutionsresource.com.model.Login;
+ import pupccb.solutionsresource.com.model.RegistrationDetails;
+ import pupccb.solutionsresource.com.model.RegistrationResponse;
+ import pupccb.solutionsresource.com.model.Session;
++import pupccb.solutionsresource.com.model.Ticket;
++import pupccb.solutionsresource.com.model.TicketResponse;
++import pupccb.solutionsresource.com.model.UserInfo;
++import pupccb.solutionsresource.com.model.UserInfoResponse;
+ import pupccb.solutionsresource.com.util.ErrorHandler;
+ 
+ /**
+@@ -25,11 +33,12 @@
+     private Activity activity;
+     private Login login;
+     private RegistrationDetails registrationDetails;
++    private Ticket ticket;
+ 
+-
+     public Controller(OnlineCommunicator onlineCommunicator) {
+         this.onlineCommunicator = onlineCommunicator;
+     }
++
+     public Controller(AttachmentCommunicator attachmentCommunicator) {
+         this.attachmentCommunicator = attachmentCommunicator;
+     }
+@@ -44,6 +53,8 @@
+                 ((Main) activity).setError(error, methodTypes);
+             } else if (activity instanceof Registration) {
+                 ((Registration) activity).setError(error, methodTypes);
++            } else if (activity instanceof NewTicket) {
++                ((NewTicket) activity).setError(error, methodTypes);
+             }
+         }
+     }
+@@ -60,6 +71,28 @@
+         }
+     }
+ 
++    public void userInfo(Activity activity, UserInfo userInfo) {
++        this.activity = activity;
++        onlineCommunicator.userInfo(this, activity, userInfo, MethodTypes.USER_INFO);
++    }
++
++    public void UserInfoResult(UserInfoResponse userInfoResponse, UserInfo userInfo) {
++        if (activity instanceof Main) {
++            ((Main) activity).userInfoResult(userInfoResponse, userInfo);
++        }
++    }
++
++    public void agencies(Activity activity) {
++        this.activity = activity;
++        onlineCommunicator.agencies(this, activity, MethodTypes.AGENCIES);
++    }
++
++    public void agenciesResult(ArrayList<Agencies> agencyList) {
++        if (activity instanceof NewTicket) {
++            ((NewTicket) activity).agenciesResult(false, agencyList);
++        }
++    }
++
+     public void register(Activity activity, RegistrationDetails registrationDetails) {
+         this.activity = activity;
+         this.registrationDetails = registrationDetails;
+@@ -72,6 +105,18 @@
+         }
+     }
+ 
++    public void createTicket(Activity activity, Ticket ticket) {
++        this.activity = activity;
++        this.ticket = ticket;
++        onlineCommunicator.createTicket(this, activity, ticket, MethodTypes.CREATE_TICKET);
++    }
++
++    public void createTicketResult(TicketResponse ticketResponse, Ticket ticket) {
++        if (activity instanceof NewTicket) {
++            ((NewTicket) activity).createTicketResult(ticketResponse, ticket);
++        }
++    }
++
+     public void postFileAttachment(Activity activity, String ticket_id, String user_id, FileAttachment fileAttachment) {
+         this.activity = activity;
+         attachmentCommunicator.postFileAttachment(this, activity, ticket_id, user_id, fileAttachment, MethodTypes.POST_FILE_ATTACHMENT);
+@@ -81,11 +126,33 @@
+         if (activity instanceof NewTicket) {
+             ((NewTicket) activity).postFileAttachmentResult(value, fileAttachmentAdapter);
+         }
++    }
+ 
++    //< -- FILE ATTACHMENT -->
++    public void getFileAttachmentList(Activity activity, String consultation_id, String patient_id) {
++        this.activity = activity;
++        attachmentCommunicator.getFileAttachmentList(this, activity, consultation_id, patient_id, MethodTypes.GET_FILE_ATTACHMENT_LIST);
+     }
+ 
++    public void getFileAttachmentListResult(Boolean value, FileAttachmentAdapter fileAttachmentAdapter) {
++        if (activity instanceof NewTicket) {
++            ((NewTicket) activity).getFileAttachmentListResult(value, fileAttachmentAdapter);
++        }
++    }
++
++    public void deleteFile(Activity activity, FileAttachment fileAttachment) {
++        this.activity = activity;
++        attachmentCommunicator.deleteFile(this, activity, fileAttachment, MethodTypes.DELETE_FILE_ATTACHMENT);
++    }
++
++    public void deleteFileResult() {
++        if (activity instanceof NewTicket) {
++            ((NewTicket) activity).deleteFileResult();
++        }
++    }
++
+     public enum MethodTypes {
+-        LOGIN, REGISTER, POST_FILE_ATTACHMENT
++        LOGIN, REGISTER, CREATE_TICKET, POST_FILE_ATTACHMENT, GET_FILE_ATTACHMENT_LIST, DELETE_FILE_ATTACHMENT, USER_INFO, AGENCIES
+     }
+ }
+ 
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/service/FileAttachmentService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/service/FileAttachmentService.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/helper/service/FileAttachmentService.java	(revision )
+@@ -0,0 +1,26 @@
++package pupccb.solutionsresource.com.helper.service;
++
++import pupccb.solutionsresource.com.model.FileAttachmentList;
++import retrofit.http.GET;
++import retrofit.http.Multipart;
++import retrofit.http.POST;
++import retrofit.http.Part;
++import retrofit.http.Path;
++import retrofit.http.Query;
++import retrofit.mime.TypedFile;
++
++/**
++ * Created by User on 9/9/2015.
++ */
++public interface FileAttachmentService {
++
++    @GET("/api/v1/ticket/{id}/attachment")
++    FileAttachmentList getAttachment(@Path("id") String id,
++                                     @Query("limit") String limit,
++                                     @Query("page") String page);
++
++    @Multipart
++    @POST("/api/v1/ticket/{id}/attachment")
++    FileAttachmentList postAttachment(@Path("id") String id,
++                                      @Part("file")TypedFile file);
++}
+Index: app/src/main/java/pupccb/solutionsresource/com/model/Agencies.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/model/Agencies.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/model/Agencies.java	(revision )
+@@ -0,0 +1,48 @@
++package pupccb.solutionsresource.com.model;
++
++/**
++ * Created by User on 8/27/2015.
++ */
++public class Agencies {
++
++    String id, name, description, is_member;
++
++    public Agencies(String id, String name, String description, String is_member) {
++        setId(id);
++        setName(name);
++        setDescription(description);
++        setId(is_member);
++    }
++
++    public String getId() {
++        return id != null ? id.trim() : "";
++    }
++
++    public void setId(String id) {
++        this.id = id != null ? id.trim() : "";
++    }
++
++    public String getName() {
++        return name != null ? name.trim() : "";
++    }
++
++    public void setName(String name) {
++        this.name = name != null ? name.trim() : "";
++    }
++
++    public String getDescription() {
++        return description != null ? description.trim() : "";
++    }
++
++    public void setDescription(String description) {
++        this.description = description != null ? description.trim() : "";
++    }
++
++    public String getIs_member() {
++        return is_member != null ? is_member.trim() : "";
++    }
++
++    public void setIs_member(String is_member) {
++        this.is_member = is_member != null ? is_member.trim() : "";
++    }
++}
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/service/UserInfoService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/service/UserInfoService.java	(revision )
++++ app/src/main/java/pupccb/solutionsresource/com/helper/service/UserInfoService.java	(revision )
+@@ -0,0 +1,14 @@
++package pupccb.solutionsresource.com.helper.service;
++
++import pupccb.solutionsresource.com.model.UserInfoResponse;
++import retrofit.http.GET;
++import retrofit.http.Query;
++
++/**
++ * Created by User on 9/14/2015.
++ */
++public interface UserInfoService {
++
++    @GET("/api/v1/userinfo")
++    UserInfoResponse userInfo(@Query("token") String token);
++}
+Index: app/src/main/java/pupccb/solutionsresource/com/helper/OfflineHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/helper/OfflineHelper.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/helper/OfflineHelper.java	(revision )
+@@ -1,10 +1,12 @@
+ package pupccb.solutionsresource.com.helper;
+ 
+ import android.app.Activity;
++import android.content.Context;
+ import android.os.AsyncTask;
+ import android.util.Log;
+ 
+ import java.util.ArrayList;
++import java.util.List;
+ 
+ import pupccb.solutionsresource.com.adapter.FileAttachmentAdapter;
+ import pupccb.solutionsresource.com.helper.communicator.AttachmentCommunicator;
+@@ -24,7 +26,18 @@
+         new processTicket(activity, ticket_id, user_id, fileAttachment, methodTypes).execute();
+     }
+ 
++    @Override
++    public void getFileAttachmentList(Controller controller, Activity activity, String ticket_id, String user_id, Controller.MethodTypes methodTypes) {
++        this.controller = controller;
++        new processTicket(activity,ticket_id, user_id, null,  methodTypes).execute();
++    }
+ 
++    @Override
++    public void deleteFile(Controller controller, Activity activity, FileAttachment fileAttachment, Controller.MethodTypes methodTypes) {
++        this.controller = controller;
++        new processTicket(activity, null, null, fileAttachment, methodTypes).execute();
++    }
++
+     protected class processTicket extends AsyncTask<String, Void, String> {
+         private Activity activity;
+         private String ticket_id;
+@@ -36,6 +49,7 @@
+ 
+         public processTicket(Activity activity, String ticket_id, String user_id, FileAttachment fileAttachment, Controller.MethodTypes methodTypes) {
+             this.activity = activity;
++            this.user_id = user_id;
+             this.ticket_id = ticket_id;
+             this.fileAttachment = fileAttachment;
+             this.methodTypes = methodTypes;
+@@ -52,12 +66,19 @@
+             switch (methodTypes) {
+                 case POST_FILE_ATTACHMENT: {
+                     try {
+-                        result = offlineDatabaseHelper.insertDocument(fileAttachment, ticket_id, user_id);
++                        //result = offlineDatabaseHelper.insertDocument(fileAttachment, ticket_id, user_id);
++
+                     } catch (Exception e) {
+                         Log.e("POST_FILE_ATTACHMENT", e.toString());
+                     }
++                } case GET_FILE_ATTACHMENT_LIST:{
++                    try {fileAttachmentAdapter = new FileAttachmentAdapter(activity, (ArrayList<FileAttachment>) offlineDatabaseHelper.getAllDocuments(ticket_id, user_id));
++                    } catch (Exception e) {Log.e("performConsultation GET_FILE_ATTACHMENT_LIST Exception", e.toString());}
++                    break;
++                } case DELETE_FILE_ATTACHMENT:{
++                    try {result = offlineDatabaseHelper.deleteDocuments(fileAttachment);}
++                    catch (Exception e) {Log.e("performConsultation DELETE_FILE_ATTACHMENT Exception", e.toString());}
+                 }
+-
+             }
+             return null;
+         }
+@@ -69,15 +90,26 @@
+ 
+                 case POST_FILE_ATTACHMENT: {
+                     try {
+-                        fileAttachmentAdapter = new FileAttachmentAdapter(activity,
+-                                (ArrayList<FileAttachment>) offlineDatabaseHelper.getAllDocuments(ticket_id, user_id));
++//                        fileAttachmentAdapter = new FileAttachmentAdapter(activity,
++//                                (List<FileAttachment>) offlineDatabaseHelper.getAllDocuments(ticket_id, user_id));
++                        //fileAttachmentAdapter = new FileAttachmentAdapter(activity, (ArrayList<FileAttachment>) fileAttachment);
+                     } catch (Exception e) {
+                         Log.e("GET_FILE_ATTACHMENT_LIST", e.toString());
+                     }
+-                    if (result != -1 && fileAttachmentAdapter != null) {
++                    //if (result != -1 && fileAttachmentAdapter != null) {
+                         controller.postFileAttachmentResult(false, null);
++//                    } else {
++//                        new BaseHelper().toastMessage(activity, 2000, ToastMessage.MessageType.DANGER, "Insert Documents failed");
++//                        controller.setError(null, methodTypes);
++//                    }
++                } case GET_FILE_ATTACHMENT_LIST:{
++                    controller.getFileAttachmentListResult(false, fileAttachmentAdapter);
++                    break;
++                } case DELETE_FILE_ATTACHMENT:{
++                    if(result != -1){
++                        controller.deleteFileResult();
+                     } else {
+-                        new BaseHelper().toastMessage(activity, 2000, ToastMessage.MessageType.DANGER, "Insert Documents failed");
++                        new BaseHelper().toastMessage(activity, 2000, ToastMessage.MessageType.DANGER, "Delete Document failed");
+                         controller.setError(null, methodTypes);
+                     }
+                 }
+Index: app/src/main/res/layout/dialog_content.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/dialog_content.xml	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/res/layout/dialog_content.xml	(revision )
+@@ -12,10 +12,10 @@
+         <!--android:layout_height="wrap_content" />-->
+ 
+     <EditText
+-        android:id="@+id/editTextIncidentDetails"
++        android:id="@+id/editTextLongName"
+         style="@style/editext_graybg"
+         android:layout_width="fill_parent"
+-        android:layout_height="179dp"
++        android:layout_height="@dimen/pad_50dp"
+         android:layout_marginTop="@dimen/pad_5dp"
+         android:ems="10"
+         android:gravity="left|top"
+@@ -24,8 +24,21 @@
+         android:maxLength="255"
+         android:enabled="false"
+         android:focusable="false"
+-        android:padding="@dimen/pad_15dp">
++        android:padding="@dimen/pad_15dp"/>
+ 
+-        <requestFocus />
+-    </EditText>
++    <EditText
++        android:id="@+id/editTextAgencyDetails"
++        android:layout_below="@+id/editTextLongName"
++        style="@style/editext_graybg"
++        android:layout_width="fill_parent"
++        android:layout_height="179dp"
++        android:layout_marginTop="@dimen/pad_5dp"
++        android:ems="10"
++        android:gravity="left|top"
++        android:hint="@string/agency_details"
++        android:inputType="textMultiLine"
++        android:maxLength="255"
++        android:enabled="false"
++        android:focusable="false"
++        android:padding="@dimen/pad_15dp"/>
+ </RelativeLayout>
+Index: app/src/main/java/pupccb/solutionsresource/com/adapter/FileAttachmentAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/adapter/FileAttachmentAdapter.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/adapter/FileAttachmentAdapter.java	(revision )
+@@ -1,6 +1,7 @@
+ package pupccb.solutionsresource.com.adapter;
+ 
+ import android.app.Activity;
++import android.net.Uri;
+ import android.support.v7.widget.CardView;
+ import android.support.v7.widget.RecyclerView;
+ import android.view.LayoutInflater;
+@@ -9,40 +10,71 @@
+ import android.widget.ImageView;
+ import android.widget.TextView;
+ 
++import com.squareup.picasso.Picasso;
++
++import java.io.File;
+ import java.util.ArrayList;
++import java.util.Collections;
+ import java.util.List;
+ 
+ import pupccb.solutionsresource.com.R;
+ import pupccb.solutionsresource.com.model.FileAttachment;
++import pupccb.solutionsresource.com.model.RecyclerItem;
+ 
+ /**
+  * Created by User on 8/25/2015.
+  */
+ public class FileAttachmentAdapter extends RecyclerView.Adapter<FileAttachmentAdapter.FileAttachmentViewHolder> {
+ 
+-    private int layoutResourcceId;
+-    private ArrayList<FileAttachment> fileAttachmentsArrayList;
++    private ArrayList<FileAttachment> fileAttachments = new ArrayList<>();
++    private Activity activity;
++    private Communicator communicator;
+ 
++    public FileAttachmentAdapter(Activity activity, ArrayList<FileAttachment> fileAttachments) {
++        this.activity = activity;
++        this.fileAttachments = fileAttachments;
++    }
+ 
+-    public FileAttachmentAdapter(Activity activity, ArrayList<FileAttachment> fileAttachmentsArrayList) {
+-        fileAttachmentsArrayList = new ArrayList<FileAttachment>();
+-        fileAttachmentsArrayList.addAll(fileAttachmentsArrayList);
++    public void updateList(ArrayList<FileAttachment> fileAttachments){
++        this.fileAttachments = fileAttachments;
++        notifyDataSetChanged();
+     }
+ 
++    public void addItem(int position, FileAttachment fileAttachment) {
++        fileAttachments.add(fileAttachment);
++        notifyItemInserted(position);
++    }
++
++    public void removeItem(int position) {
++        fileAttachments.remove(position);
++        notifyItemRemoved(position);
++    }
++
+     @Override
+     public FileAttachmentViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_attachment, viewGroup, false);
+         final FileAttachmentViewHolder fileAttachmentViewHolder = new FileAttachmentViewHolder(view);
+ 
++        communicator = (Communicator) activity;
++
++        fileAttachmentViewHolder.imageViewDelete.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                communicator.adapterSelectedTicket(view, fileAttachmentViewHolder.getAdapterPosition());
++            }
++        });
++
+         return fileAttachmentViewHolder;
+     }
+ 
+     @Override
+     public void onBindViewHolder(FileAttachmentViewHolder fileAttachmentViewHolder, final int i) {
+ 
+-        FileAttachment selectedItem = fileAttachmentsArrayList.get(i);
++        FileAttachment selectedItem = fileAttachments.get(i);
+         fileAttachmentViewHolder.file.setText(selectedItem.getFile_name());
+-        fileAttachmentViewHolder.size.setText(selectedItem.getFile_size());
++        fileAttachmentViewHolder.size.setText(humanReadableByteCount(Long.parseLong(selectedItem.getFile_size()), true));
++        Uri uri = Uri.fromFile(new File(selectedItem.getFile_attachment_path()));
++        Picasso.with(activity).load(uri).into(fileAttachmentViewHolder.imageView);
+ 
+     }
+ 
+@@ -53,11 +85,11 @@
+ 
+     @Override
+     public int getItemCount() {
+-        return fileAttachmentsArrayList != null ? fileAttachmentsArrayList.size() : 0;
++        return fileAttachments != null ? fileAttachments.size() : 0;
+     }
+ 
+     public List<FileAttachment> getItems() {
+-        return fileAttachmentsArrayList;
++        return fileAttachments;
+     }
+ 
+     private String humanReadableByteCount(long bytes, boolean si) {
+@@ -68,15 +100,20 @@
+         return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
+     }
+ 
++    public interface Communicator {
++        void adapterSelectedTicket(View view, int position);
++    }
++
+     public class FileAttachmentViewHolder extends RecyclerView.ViewHolder {
+         TextView file, size;
+         CardView cardView;
+-        ImageView imageView;
++        ImageView imageView, imageViewDelete;
+ 
+         FileAttachmentViewHolder(View itemView) {
+             super(itemView);
+             cardView = (CardView) itemView.findViewById(R.id.card_attachment);
+-            imageView = (ImageView)itemView.findViewById(R.id.attachmentImage);
++            imageView = (ImageView) itemView.findViewById(R.id.attachmentImage);
++            imageViewDelete = (ImageView) itemView.findViewById(R.id.imageViewDelete);
+             file = (TextView) itemView.findViewById(R.id.filename);
+             size = (TextView) itemView.findViewById(R.id.filesize);
+         }
+Index: app/src/main/java/pupccb/solutionsresource/com/activity/NewTicket.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/pupccb/solutionsresource/com/activity/NewTicket.java	(revision d4a220cee29416887fd26bcf4ee26988ab5880dd)
++++ app/src/main/java/pupccb/solutionsresource/com/activity/NewTicket.java	(revision )
+@@ -1,21 +1,20 @@
+ package pupccb.solutionsresource.com.activity;
+ 
+ import android.app.Activity;
++import android.app.ProgressDialog;
+ import android.content.DialogInterface;
+ import android.content.Intent;
+ import android.content.SharedPreferences;
+ import android.os.Bundle;
+ import android.support.annotation.Nullable;
+-import android.support.v4.app.ActivityCompat;
+-import android.support.v4.app.ActivityOptionsCompat;
+ import android.support.v4.app.DialogFragment;
+ import android.support.v7.app.ActionBar;
+ import android.support.v7.app.AppCompatActivity;
+-import android.support.v7.widget.GridLayoutManager;
+ import android.support.v7.widget.RecyclerView;
+ import android.support.v7.widget.StaggeredGridLayoutManager;
+ import android.support.v7.widget.Toolbar;
+ import android.util.Log;
++import android.view.LayoutInflater;
+ import android.view.Menu;
+ import android.view.MenuItem;
+ import android.view.View;
+@@ -29,13 +28,16 @@
+ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+ 
++import java.text.ParseException;
++import java.text.SimpleDateFormat;
+ import java.util.ArrayList;
+ import java.util.Calendar;
++import java.util.Collections;
++import java.util.Date;
+ import java.util.List;
+ 
+ import pupccb.solutionsresource.com.R;
+ import pupccb.solutionsresource.com.adapter.AgencyAdapter;
+-import pupccb.solutionsresource.com.adapter.CardAdapter;
+ import pupccb.solutionsresource.com.adapter.FileAttachmentAdapter;
+ import pupccb.solutionsresource.com.fragment.AgencyDialogFragment;
+ import pupccb.solutionsresource.com.fragment.AttachmentDialogFragment;
+@@ -43,10 +45,15 @@
+ import pupccb.solutionsresource.com.helper.BaseHelper;
+ import pupccb.solutionsresource.com.helper.Controller;
+ import pupccb.solutionsresource.com.helper.OfflineHelper;
++import pupccb.solutionsresource.com.helper.OnlineHelper;
+ import pupccb.solutionsresource.com.helper.communicator.OfflineCommunicator;
+-import pupccb.solutionsresource.com.model.Agency;
++import pupccb.solutionsresource.com.model.Agencies;
+ import pupccb.solutionsresource.com.model.FileAttachment;
++import pupccb.solutionsresource.com.model.Ticket;
++import pupccb.solutionsresource.com.model.TicketResponse;
++import pupccb.solutionsresource.com.util.CreateYesNoDialog;
+ import pupccb.solutionsresource.com.util.Dialog;
++import pupccb.solutionsresource.com.util.ErrorHandler;
+ import pupccb.solutionsresource.com.util.RequestCodes;
+ import pupccb.solutionsresource.com.util.ToastMessage;
+ import pupccb.solutionsresource.com.util.TouchEffect;
+@@ -55,56 +62,55 @@
+  * Created by User on 8/6/2015.
+  */
+ public class NewTicket extends AppCompatActivity implements OfflineCommunicator, AttachmentDialogFragment.Communicator,
+-        View.OnClickListener,
+-        Validator.ValidationListener,
+-        TimePickerDialog.OnTimeSetListener,
+-        DatePickerDialog.OnDateSetListener,
+-        AgencyDialogFragment.Communicator,
+-        AgencyAdapter.Communicator {
++        View.OnClickListener, Validator.ValidationListener, TimePickerDialog.OnTimeSetListener,
++        DatePickerDialog.OnDateSetListener, AgencyDialogFragment.Communicator, AgencyAdapter.Communicator,
++        FileAttachmentAdapter.Communicator, CreateYesNoDialog.Communicator {
+ 
+     public static final TouchEffect TOUCH = new TouchEffect();
++
+     private StringBuilder stringBuilder;
+     private Toolbar toolbar;
+-    private View view;
++    private View view, connectionProblemView, preview;
+     private Validator validator;
+-    private SharedPreferences sharedPreferences;
+     private FileAttachment fileAttachment;
+-    private Controller controller;
++    private Controller controller, onlineController;
+     private RecyclerView recyclerView;
+-    private GridLayoutManager gridLayoutManager;
+-    private CardAdapter cardAdapter;
+-    private List<Agency> agencyList;
+-
++    private FileAttachmentAdapter fileAttachmentAdapter;
++    private List<Agencies> agencyList;
++    private ArrayList<FileAttachment> fileAttachments = new ArrayList<>();
++    private ProgressDialog progressDialog;
++    private boolean isProgressBarVisible, isProblemViewShown;
++    private Controller.MethodTypes methodTypes;
++    private TextView textViewErrorMessage;
++    private SharedPreferences sharedPreferences;
++    private int position;
++    private Agencies agencies;
+     @NotEmpty
+-    private EditText editTextComplainee, editTextIncidentDetails;
++    private EditText editTextIncidentDetails;
++    private EditText editTextComplainee;
+     @NotEmpty
+-    private TextView editTextDate, editTextTime, textViewAddAttachment, editTextSubject;
++    private TextView editTextDate, editTextTime, editTextSubject;
+     @NotEmpty(message = "Agency field is required")
+     private TextView editTextAgency;
+-    private OfflineCommunicator offlineCommunicator;
+ 
+-    public static void launch(AppCompatActivity activity) {
+-        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity);
+-        Intent intent = new Intent(activity, NewTicket.class);
+-        ActivityCompat.startActivity(activity, intent, options.toBundle());
+-
+-    }
+-
+     @Nullable
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         view = getLayoutInflater().inflate(R.layout.activity_ticket_with_attachment, null);
++        connectionProblemView = getLayoutInflater().inflate(R.layout.activity_connection_problem, null);
+         setContentView(view);
+         toolBar();
+         findViewById(view);
++        findViewByIdConnectionLayout(connectionProblemView);
+         startController();
+     }
++
+     private void startController() {
+         controller = new Controller(new OfflineHelper());
++        onlineController = new Controller(new OnlineHelper());
+     }
+ 
+-
+     private void toolBar() {
+         toolbar = (Toolbar) view.findViewById(R.id.toolbar_actionbar);
+         setSupportActionBar(toolbar);
+@@ -112,18 +118,33 @@
+         actionBar.setDisplayHomeAsUpEnabled(true);
+     }
+ 
++    private void findViewByIdConnectionLayout(View view) {
++        textViewErrorMessage = (TextView) view.findViewById(R.id.textViewErrorMessage);
++        TextView textViewRetry = (TextView) view.findViewById(R.id.textViewRetry);
++        textViewRetry.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View view) {
++                setContentView(view);
++                retryMethod(methodTypes);
++            }
++        });
++    }
++
+     private void findViewById(View view) {
+         validator = new Validator(this);
+         validator.setValidationListener(this);
+         sharedPreferences = BaseHelper.getSharedPreference(NewTicket.this);
+ 
++        progressDialog = new ProgressDialog(this);
++        progressDialog.setIndeterminate(true);
++        progressDialog.setCancelable(false);
++
+         editTextDate = (TextView) view.findViewById(R.id.editTextDate);
+         editTextTime = (TextView) view.findViewById(R.id.editTextTime);
+         editTextAgency = (TextView) view.findViewById(R.id.editTextAgency);
+         editTextComplainee = (EditText) view.findViewById(R.id.editTextComplainee);
+         editTextSubject = (EditText) view.findViewById(R.id.editTextSubject);
+         editTextIncidentDetails = (EditText) view.findViewById(R.id.editTextIncidentDetails);
+-        textViewAddAttachment = (TextView) view.findViewById(R.id.textViewAddAttachment);
+         setTouchNClick(R.id.textViewAddAttachment);
+ 
+         editTextDate.setText(BaseHelper.getDateNow());
+@@ -132,19 +153,32 @@
+         setTouchNClick(R.id.editTextDate);
+         setTouchNClick(R.id.editTextTime);
+         setTouchNClick(R.id.editTextAgency);
+-        setAttachmentCard(view);
+-        initializeAgencyList();
+ 
++        setAttachmentCard(view);
+     }
+ 
+     public void setAttachmentCard(View view) {
+         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewAttachment);
+-        cardAdapter = new CardAdapter(this, null);
++        fileAttachmentAdapter = new FileAttachmentAdapter(this, fileAttachments);
+         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
+         recyclerView.setHasFixedSize(true);
+-        recyclerView.setAdapter(cardAdapter);
++        recyclerView.setAdapter(fileAttachmentAdapter);
+     }
+ 
++
++    public void setError(ErrorHandler.Error error, Controller.MethodTypes methodTypes) {
++        this.methodTypes = methodTypes;
++        new BaseHelper().toastMessage(this, 2000, ToastMessage.MessageType.DANGER, error.getErrorMessage());
++    }
++
++    public void retryMethod(Controller.MethodTypes methodTypes) {
++        switch (methodTypes) {
++            case POST_FILE_ATTACHMENT: {
++                break;
++            }
++        }
++    }
++
+     @Override
+     public boolean onCreateOptionsMenu(Menu menu) {
+         getMenuInflater().inflate(R.menu.menu_add_ticket, menu);
+@@ -160,7 +194,7 @@
+             case R.id.send_ticket:
+                 validator.validate();
+                 break;
+-            case R.id.cancel_action:
++            case R.id.action_cancel:
+                 onBackPressed();
+                 break;
+         }
+@@ -169,9 +203,16 @@
+ 
+     @Override
+     public void onBackPressed() {
++        if(fileAttachmentAdapter.getItemCount() > 0 || !editTextIncidentDetails.getText().toString().matches("") ){
++            new CreateYesNoDialog(this, null, "New Ticket", "Are you sure you want to discard this ticket?",
++                    false, false, getResources().getString(R.string.action_ok), getResources().getString(R.string.cancel),
++                    RequestCodes.CANCEL_TICKET_CREATION);
++        }else{
+-        super.onBackPressed();
+-    }
++            super.onBackPressed();
++        }
+ 
++    }
++
+     @Override
+     public void showBrowseFileDialog() {
+         BrowseFileDialogFragment dialogFragment = new BrowseFileDialogFragment(sharedPreferences.getBoolean("logged_in", false));
+@@ -181,16 +222,60 @@
+     @Override
+     public void showBrowseFileDialogResult(FileAttachment fileAttachment) {
+         this.fileAttachment = fileAttachment;
+-        int ticket_id = 0, user_id = 0;
+-        controller.postFileAttachment(this, ++ticket_id + "", ++user_id +"", fileAttachment);
++        showProgressDialog("Attaching file...");
++        addItem(fileAttachment);
++        //controller.postFileAttachment(this, ++ticket_id + "", sharedPreferences.getString("user_id", null), fileAttachment);
+     }
+ 
++
++    private void addItem(FileAttachment fileAttachment) {
++        int i = 0;
++        this.fileAttachmentAdapter.addItem(++i, fileAttachment);
++        dismissProgressObjects(false);
++        new BaseHelper().toastMessage(this, 2000, ToastMessage.MessageType.SUCCESS, "Add Attachment Success!");
++    }
++
+     public void postFileAttachmentResult(Boolean value, FileAttachmentAdapter fileAttachmentAdapter) {
++        dismissProgressObjects(value);
+         new BaseHelper().toastMessage(this, 2000, ToastMessage.MessageType.SUCCESS, "Add Attachment Success!");
+-        //consultationTabPagerAdapter.setConsultationDocumentsTabData(fileAttachmentAdapter);
+     }
+ 
++    //<-- FILE ATTACHMENT -->
++    public void getFileAttachmentList() {
++        //showProgressBarIndeterminate();
++        controller.getFileAttachmentList(this, "", "");
++    }
++
++    public void getFileAttachmentListResult(Boolean value, FileAttachmentAdapter fileAttachmentAdapter) {
++        this.fileAttachmentAdapter = fileAttachmentAdapter;
++        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
++        recyclerView.setHasFixedSize(true);
++        recyclerView.setAdapter(fileAttachmentAdapter);
++        //dismissProgressObjects(value);
++    }
++
+     @Override
++    public void deleteFile(FileAttachment fileAttachment) {
++        controller.deleteFile(this, fileAttachment);
++    }
++
++    public void deleteFileResult() {
++        new BaseHelper().toastMessage(this, 8000, ToastMessage.MessageType.SUCCESS, "Attachment has been removed");
++    }
++
++    public void createTicket(Ticket ticket) {
++        showProgressDialog("Processing ticket...");
++        onlineController.createTicket(this, ticket);
++    }
++
++    public void createTicketResult(TicketResponse ticketResponse, Ticket ticket) {
++        progressDialog.dismiss();
++        new BaseHelper().toastMessage(this, 8000, ToastMessage.MessageType.SUCCESS, ticketResponse.getMsg());
++        startActivity(new Intent(this, NavigationDrawer.class));
++        //finish();
++    }
++
++    @Override
+     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+         super.onActivityResult(requestCode, resultCode, data);
+         if (resultCode == Activity.RESULT_OK && requestCode == RequestCodes.FILE_SELECT) {
+@@ -199,10 +284,64 @@
+         }
+     }
+ 
++    @Override
++    public void adapterSelectedTicket(View view, int position) {
++        FileAttachment selectedItem = fileAttachmentAdapter.getItems().get(position);
++        this.position = position;
++        if (view.getId() == R.id.imageViewDelete) {
++            new CreateYesNoDialog(this, null, "Remove Attachment", "Are you sure you want to remove this attachment?",
++                    false, false, getResources().getString(R.string.remove), getResources().getString(R.string.cancel),
++                    RequestCodes.DELETE_ATTACHMMENT);
++        }
++    }
++
++    @Override
++    public void yesNoDialogPositiveResponse(int requestCode) {
++        if (RequestCodes.DELETE_ATTACHMMENT == requestCode) {
++            fileAttachmentAdapter.removeItem(position);
++        }else if( RequestCodes.CANCEL_TICKET_CREATION == requestCode){
++            super.onBackPressed();
++        }
++    }
++
++    private void showProgressDialog(String message) {
++        progressDialog.setMessage(message);
++        progressDialog.setProgress(0);
++        progressDialog.setMax(50);
++        progressDialog.show();
++    }
++
++    private void showProgressBarIndeterminate() {
++        if (!isProgressBarVisible) {
++            NewTicket.this.setProgressBarIndeterminateVisibility(true);
++            isProgressBarVisible = true;
++        }
++    }
++
++    private void dismissProgressObjects(Boolean value) {
++        if (!value) {
++            if (isProgressBarVisible) {
++                NewTicket.this.setProgressBarIndeterminateVisibility(false);
++                isProgressBarVisible = false;
++            }
++            if (progressDialog.isShowing()) {
++                progressDialog.dismiss();
++            }
++            if (isProblemViewShown) {
++                setContentView(view);
++                isProblemViewShown = false;
++            }
++        }
++    }
++
+     public void onClick(View view) {
+         switch (view.getId()) {
+             case R.id.textViewAddAttachment:
++                if(fileAttachmentAdapter.getItemCount() < 2){
+-                showBrowseFileDialog();
++                    showBrowseFileDialog();
++                }else{
++                    new BaseHelper().toastMessage(this, 3000,ToastMessage.MessageType.WARNING, "The attachments size exceeds the allowable limit");
++                }
+                 break;
+             case R.id.editTextDate:
+                 datePicker();
+@@ -213,28 +352,26 @@
+                 editTextTime.setClickable(false);
+                 break;
+             case R.id.editTextAgency:
+-                getAgency(agencyList);
++                agencies();
+                 break;
+         }
+     }
+ 
+-    public void initializeAgencyList() {
+-        agencyList = new ArrayList<Agency>();
+-        agencyList.add(new Agency("1", "CSC"));
+-        agencyList.add(new Agency("2", "NCC"));
+-        agencyList.add(new Agency("3", "BIR"));
+-        agencyList.add(new Agency("4", "PHILHEALTH"));
+-        agencyList.add(new Agency("5", "DOH"));
+-        agencyList.add(new Agency("5", "DTI"));
++    public void agencies() {
++        showProgressDialog("Loading list...");
++        onlineController.agencies(this);
+     }
+ 
+-    public void getAgency(List<Agency> list) {
++    public void agenciesResult(boolean value, List<Agencies> list) {
++        if (list != null && list.size() > 0) {
+-        showAgencyListDialog("Select Agency",
+-                new AgencyAdapter(this, R.layout.two_line_list_item,
+-                        null,
++            showAgencyListDialog("Select Agency",
++                    new AgencyAdapter(this, R.layout.two_line_list_item,
++                            null,
+-                        (ArrayList<Agency>) list,
++                            (ArrayList<Agencies>) list,
+-                        AgencyAdapter.MethodTypes.READ));
+-    }
++                            AgencyAdapter.MethodTypes.READ));
++        }
++        progressDialog.dismiss();
++    }
+ 
+     public void showAgencyListDialog(String title, AgencyAdapter adapter) {
+         DialogFragment dialogFragment = new AgencyDialogFragment(adapter, 0);
+@@ -245,20 +382,23 @@
+     }
+ 
+     @Override
+-    public void dialogSelectedAgency(Agency agency, int requestCode) {
+-        editTextAgency.setText(agency.getAgencyname());
++    public void dialogSelectedAgency(Agencies agency, int requestCode) {
++        this.agencies = agency;
++        editTextAgency.setText(agency.getName());
+     }
+ 
+     @Override
+-    public void adapterSelectedAgency(Agency agency) {
+-        dialogAgencyDetail(agency.getAgencyname());
++    public void adapterSelectedAgency(Agencies agencies) {
++        dialogAgencyDetail(agencies);
+     }
+ 
+-    private void dialogAgencyDetail(String message) {
++    private void dialogAgencyDetail(Agencies agencies) {
+ 
++        View viewAgency = LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialog_content, null);
++
+         Dialog.Builder uvaBuilder = new Dialog.Builder(NewTicket.this);
+         uvaBuilder.setSecondaryHeaderImageResource(R.mipmap.ic_launcher)
+-                .setTitle(message)
++                .setTitle(agencies.getName())
+                 .setOnPrimaryButtonClickListener(new View.OnClickListener() {
+ 
+                     @Override
+@@ -267,11 +407,13 @@
+                     }
+ 
+                 }, true)
+-                .setContentView(R.layout.dialog_content)
++                .setContentView(viewAgency)
+                 .create().show();
++        ((TextView) viewAgency.findViewById(R.id.editTextLongName)).setText(agencies.getDescription());
+     }
+ 
+     private void dialogPreviewTicket(String message) {
++        View myContent = LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialog_preview_ticket, null);
+ 
+         Dialog.Builder uvaBuilder = new Dialog.Builder(NewTicket.this);
+         uvaBuilder.setSecondaryHeaderImageResource(R.mipmap.ic_launcher)
+@@ -280,8 +422,26 @@
+ 
+                     @Override
+                     public void onClick(View v) {
++                        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
++                        String dateInString = editTextDate.getText().toString();
++                        try {
++                            Date date = formatter.parse(dateInString);
++                            System.out.println(date);
++                            System.out.println(formatter.format(date));
+ 
++                        } catch (ParseException e) {
++                            e.printStackTrace();
+-                    }
++                        }
++                        createTicket(new Ticket(
++                                        sharedPreferences.getString("user_id", null),
++                                        dateInString + " " + editTextTime.getText().toString(),
++                                        agencies.getId(),
++                                        editTextComplainee.getText().toString(),
++                                        editTextSubject.getText().toString(),
++                                        editTextIncidentDetails.getText().toString()
++                                )
++                        );
++                    }
+ 
+                 }, true)
+                 .setOnSecondaryButtonClickListener(new View.OnClickListener() {
+@@ -292,8 +452,15 @@
+                     }
+ 
+                 }, true)
+-                .setContentView(R.layout.dialog_preview_ticket)
++
++                .setContentView(myContent)
+                 .create().show();
++        ((TextView) myContent.findViewById(R.id.editTextDate)).setText(editTextDate.getText());
++        ((TextView) myContent.findViewById(R.id.editTextTime)).setText(editTextTime.getText());
++        ((TextView) myContent.findViewById(R.id.editTextAgency)).setText(editTextAgency.getText());
++        ((EditText) myContent.findViewById(R.id.editTextComplainee)).setText(editTextComplainee.getText());
++        ((TextView) myContent.findViewById(R.id.editTextSubject)).setText(editTextSubject.getText());
++        ((EditText) myContent.findViewById(R.id.editTextIncidentDetails)).setText(editTextIncidentDetails.getText());
+     }
+ 
+     public View setClick(int btn) {
+@@ -364,12 +531,14 @@
+ 
+     private void datePicker() {
+         Calendar now = Calendar.getInstance();
++
+         DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
+                 NewTicket.this,
+                 now.get(Calendar.YEAR),
+                 now.get(Calendar.MONTH),
+                 now.get(Calendar.DAY_OF_MONTH)
+         );
++        datePickerDialog.setMaxDate(now);
+         datePickerDialog.setThemeDark(false);
+         datePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+             @Override
+@@ -383,7 +552,7 @@
+ 
+     @Override
+     public void onValidationSucceeded() {
+-        dialogPreviewTicket("Ticket Number");
++        dialogPreviewTicket("Ticket Confirmation");
+     }
+ 
+     @Override

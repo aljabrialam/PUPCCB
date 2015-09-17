@@ -57,7 +57,6 @@ public class Note {
     }
 
     public static Note randomNote(Context context) {
-        double rand = Math.random();
         String title = "";
         String note = "";
         NoteInfo info = new NoteInfo("", 0);

@@ -4,27 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/toolbar_actionbar"
-        layout="@layout/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar_actionbar"
-        android:layout_marginTop="@dimen/pad_5dp"
-        card_view:cardElevation="4dp">
-
+        card_view:cardElevation="2dp">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/pad_10dp"
+            android:padding="@dimen/pad_5dp"
             android:paddingLeft="@dimen/pad_10dp"
             android:paddingRight="@dimen/pad_10dp">
 
@@ -49,11 +40,11 @@
                 <EditText
                     android:id="@+id/editTextDate"
                     style="@style/editext_graybg"
-                    android:layout_weight="1"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/pad_40dp"
                     android:layout_marginBottom="@dimen/pad_5dp"
                     android:layout_marginRight="@dimen/pad_5dp"
+                    android:layout_weight="1"
                     android:clickable="true"
                     android:editable="false"
                     android:focusableInTouchMode="false"
@@ -63,9 +54,9 @@
                 <EditText
                     android:id="@+id/editTextTime"
                     style="@style/editext_graybg"
-                    android:layout_weight="1"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/pad_40dp"
+                    android:layout_weight="1"
                     android:clickable="true"
                     android:editable="false"
                     android:focusableInTouchMode="false"
@@ -109,7 +100,7 @@
                 android:id="@+id/editTextIncidentDetails"
                 style="@style/editext_graybg"
                 android:layout_width="fill_parent"
-                android:layout_height="200dp"
+                android:layout_height="230dp"
                 android:layout_marginTop="@dimen/pad_5dp"
                 android:ems="10"
                 android:gravity="left|top"
@@ -118,16 +109,28 @@
                 android:maxLength="255"
                 android:padding="@dimen/pad_10dp" />
 
+            <LinearLayout
+                android:id="@+id/attachmentLinearLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textViewAddAttachment"
-                style="@style/button_inner_tab"
-                android:layout_gravity="right|bottom"
-                android:clickable="true"
-                android:drawableLeft="@drawable/hs_add_attachment_img"
-                android:text="@string/add_attachment" />
+                <TextView
+                    android:id="@+id/textViewCounter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:text="@string/character_counter" />
 
+                <TextView
+                    android:id="@+id/textViewAddAttachment"
+                    style="@style/button_inner_tab"
 
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/hs_add_attachment_img"
+                    android:text="@string/add_attachment" />
+            </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

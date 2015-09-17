@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
@@ -37,22 +38,17 @@ import pupccb.solutionsresource.com.util.TouchEffect;
  */
 public class Registration extends AppCompatActivity implements View.OnClickListener, Validator.ValidationListener {
 
-
     public static final TouchEffect TOUCH = new TouchEffect();
 
     private ProgressBar progressBar;
-    private boolean isProgressBarVisible, isProblemViewShown;
     private Controller controller;
     private Validator validator;
-    private SharedPreferences sharedPreferences;
-    private Toolbar toolbar;
-    private ToastMessage toastMessage;
     private View view;
-    @NotEmpty
+    @NotEmpty(trim = true)
     private EditText editTextFname;
-    @NotEmpty
+    @NotEmpty(trim = true)
     private EditText editTextLname;
-    @NotEmpty
+    @NotEmpty(trim = true)
     private EditText editTextContactNumber;
     @Email
     private EditText editTextEmail;
@@ -60,21 +56,20 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     private EditText editTextPassword;
     @ConfirmPassword
     private EditText editTextConfirmPassword;
+    private Button btnSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = getLayoutInflater().inflate(R.layout.activity_registration, null);
         setContentView(view);
-        toolBar(view);
+        toolBar();
         findViewById(view);
         startController();
     }
 
-    private void toolBar(View view) {
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar_actionbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
+    private void toolBar() {
+        if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -100,16 +95,19 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         editTextEmail = (EditText) view.findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) view.findViewById(R.id.editTextPassword);
         editTextConfirmPassword = (EditText) view.findViewById(R.id.editTextConfirmPassword);
+        btnSignUp = (Button) view.findViewById(R.id.btnSignUp);
 
     }
 
     public void setError(ErrorHandler.Error error, Controller.MethodTypes methodTypes) {
         progressBar.setVisibility(View.INVISIBLE);
+        btnSignUp.setEnabled(true);
         new BaseHelper().toastMessage(this, 2000, ToastMessage.MessageType.DANGER, error.getErrorMessage());
     }
 
     public void register(RegistrationDetails registrationDetails) {
         progressBar.setVisibility(View.VISIBLE);
+        btnSignUp.setEnabled(false);
         controller.register(this, registrationDetails);
     }
 
@@ -120,11 +118,14 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         } else {
             new BaseHelper().toastMessage(this, 2000, ToastMessage.MessageType.DANGER, registrationResponse.getMsg());
         }
+        btnSignUp.setEnabled(true);
     }
 
     private void dialog(String message) {
         Dialog.Builder defaultBuilder = new Dialog.Builder(Registration.this);
         defaultBuilder.setSecondaryHeaderImageResource(R.mipmap.ic_launcher)
+                .setPrimaryButtonDefaultColor(R.color.main_color_green)
+                .setPrimaryButtonPressedColor(R.color.success)
                 .setOnPrimaryButtonClickListener(new View.OnClickListener() {
 
                     @Override
@@ -191,4 +192,8 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         super.onBackPressed();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

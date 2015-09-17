@@ -15,7 +15,7 @@ import android.widget.SearchView;
 
 import pupccb.solutionsresource.com.R;
 import pupccb.solutionsresource.com.adapter.AgencyAdapter;
-import pupccb.solutionsresource.com.model.Agency;
+import pupccb.solutionsresource.com.model.Agencies;
 
 /**
  * Created by User on 8/27/2015.
@@ -99,6 +99,6 @@ public class AgencyDialogFragment extends DialogFragment {
     };
 
     public interface Communicator{
-        void dialogSelectedAgency(Agency agency, int requestCode);
+        void dialogSelectedAgency(Agencies agency, int requestCode);
     }
 }

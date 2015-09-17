@@ -19,10 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pupccb.solutionsresource.com.R;
-import pupccb.solutionsresource.com.activity.TicketDetails;
 import pupccb.solutionsresource.com.model.NavigationItem;
 
-public class NavigationDrawerFragment extends Fragment implements TicketDetails.NavigationDrawerCommunicator, NavigationDrawerAdapter.NavigationDrawerCommunicator {
+public class NavigationDrawerFragment extends Fragment implements NavigationDrawerAdapter.NavigationDrawerCommunicator {
 
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
@@ -72,14 +71,6 @@ public class NavigationDrawerFragment extends Fragment implements TicketDetails.
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
     }
 
-    public ActionBarDrawerToggle getActionBarDrawerToggle() {
-        return mActionBarDrawerToggle;
-    }
-
-    public DrawerLayout getDrawerLayout() {
-        return mDrawerLayout;
-    }
-
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         selectItem(position);
@@ -90,7 +81,7 @@ public class NavigationDrawerFragment extends Fragment implements TicketDetails.
 
         items.add(new NavigationItem("ADD TICKET", getResources().getDrawable(R.drawable.ic_add_circle_black_36dp)));
         items.add(new NavigationItem("HOME", getResources().getDrawable(R.drawable.ic_home_black_36dp)));
-        items.add(new NavigationItem("MY TICKET", getResources().getDrawable(R.drawable.ic_message_black_36dp)));
+        items.add(new NavigationItem("MY TICKETS", getResources().getDrawable(R.drawable.ic_message_black_36dp)));
         items.add(new NavigationItem("CALL CCB AGENT", getResources().getDrawable(R.drawable.ic_call_white_36dp)));
         items.add(new NavigationItem("LOGOUT", getResources().getDrawable(R.drawable.ic_exit_to_app_black_36dp)));
         return items;

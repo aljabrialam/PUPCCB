@@ -17,6 +17,9 @@
             android:id="@+id/note_text"
             style="@style/TextAppearance.MaterialSheetFab.Note"
             android:layout_below="@id/note_title"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:textAlignment="center"
             android:paddingTop="@dimen/note_content_spacing" />
 
         <LinearLayout

@@ -119,7 +119,7 @@ public class AttachmentDialogFragment extends DialogFragment {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private Intent setAllIntentType(Intent allIntent, boolean isKitKat) {
-        allIntent.setType("*/*");
+        allIntent.setType("image/*");
         String[] mimetypes = {"image/*"};
         allIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
         return allIntent;

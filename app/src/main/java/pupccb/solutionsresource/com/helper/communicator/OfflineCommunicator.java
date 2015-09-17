@@ -8,4 +8,5 @@ import pupccb.solutionsresource.com.model.FileAttachment;
 public interface OfflineCommunicator {
     void showBrowseFileDialog();
     void showBrowseFileDialogResult(FileAttachment fileAttachment);
+    void deleteFile(FileAttachment fileAttachment);
 }

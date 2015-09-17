@@ -22,10 +22,6 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         mData = data;
     }
 
-    public NavigationDrawerCommunicator getNavigationDrawerCommunicator() {
-        return navigationDrawerCommunicator;
-    }
-
     public void setNavigationDrawerCommunicator(NavigationDrawerCommunicator navigationDrawerCommunicator) {
         this.navigationDrawerCommunicator = navigationDrawerCommunicator;
     }

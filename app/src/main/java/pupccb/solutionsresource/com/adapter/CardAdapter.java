@@ -22,7 +22,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder> {
     private final List<RecyclerItem> items;
     private final Communicator communicator;
 
-    public CardAdapter(Context context, Communicator communicator) {//, List<RecyclerItem> recyclerItems
+    public CardAdapter(Context context, Communicator communicator) {
         this.context = context;
         this.items = getDefaultItems();
         this.communicator = communicator;
@@ -30,18 +30,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_attachment, viewGroup, false);
-
-        final CardViewHolder viewholder = new CardViewHolder(v);
-
-        viewholder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                communicator.onItemImageClick(viewholder.getAdapterPosition());
-            }
-        });
-
-        return viewholder;
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_attachment, viewGroup, false);
+        return new CardViewHolder(view);
     }
 
     @Override
@@ -65,7 +55,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder> {
         List<RecyclerItem> items = new ArrayList<>();
 
         Random random = new Random();
-
         for (int i = 0; i < 3; i++) {
             RecyclerItem recyclerItem = new RecyclerItem("http://lorempixel.com/800/600/sports/" + String.valueOf(i + 1), String.valueOf(random.nextInt(800 - 0)),
                     String.valueOf(random.nextInt(300 - 0)), String.valueOf(random.nextInt(100 - 0)));

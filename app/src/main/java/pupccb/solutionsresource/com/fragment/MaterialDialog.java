@@ -1,5 +1,6 @@
 package pupccb.solutionsresource.com.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
@@ -11,8 +12,8 @@ import pupccb.solutionsresource.com.util.Dialog;
 /**
  * Created by User on 8/28/2015.
  */
+@SuppressLint("ValidFragment")
 public class MaterialDialog extends DialogFragment {
-
 
     public Dialog.Builder materialDialog;
     private OfflineCommunicator offlineCommunicator;

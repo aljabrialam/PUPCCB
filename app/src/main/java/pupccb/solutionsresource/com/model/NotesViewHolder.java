@@ -14,10 +14,8 @@ import pupccb.solutionsresource.com.R;
  */
 public class NotesViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView titleTextView;
-    public TextView noteTextView;
+    public TextView titleTextView,noteTextView, infoTextView;
     public LinearLayout infoLayout;
-    public TextView infoTextView;
     public ImageView infoImageView;
     public CardView noteCardView;
 
@@ -31,7 +29,4 @@ public class NotesViewHolder extends RecyclerView.ViewHolder {
         infoImageView = (ImageView) itemView.findViewById(R.id.note_info_image);
     }
 
-    public void bind(Search model) {
-        titleTextView.setText(model.getSearch());
-    }
 }

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-
+    android:background="@drawable/portrait_bg"
+    android:id="@+id/lin_lay"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingLeft="@dimen/pad_20dp"
@@ -12,25 +13,16 @@
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/pad_5dp"
         android:layout_weight="1.0"
         android:src="@drawable/ccb" />
 
-    <FrameLayout
+    <ProgressBar
+        android:id="@+id/progressBarLogin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ProgressBar
-            android:id="@+id/progressBarLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:indeterminate="true"
-            android:rotation="1"
-            android:visibility="invisible"
-            android:layout_margin="@dimen/pad_5dp"
-            style="@style/Widget.MaterialProgressBar.ProgressBar"/>
-        
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        style="@style/CustomProgressBarHorizontal" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -59,7 +51,7 @@
         style="@style/btn_white_large"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/pad_60dp"
-        android:layout_marginBottom="@dimen/pad_15dp"
+        android:layout_marginBottom="@dimen/pad_10dp"
         android:text="@string/log_in"
         android:textColor="@color/white" />
 
@@ -79,10 +71,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/pad_20dp"
+        android:layout_marginBottom="@dimen/pad_10dp"
         android:layout_marginTop="@dimen/pad_5dp"
         android:clickable="true"
-        android:text="@string/forgot_my_pwd"
+        android:text="@string/copyright"
         android:textColor="@color/white"
-        android:textSize="@dimen/txt_12sp" />
+        android:textSize="@dimen/txt_8sp" />
 </LinearLayout>

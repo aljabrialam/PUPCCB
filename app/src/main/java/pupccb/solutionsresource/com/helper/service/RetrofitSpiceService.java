@@ -2,9 +2,15 @@ package pupccb.solutionsresource.com.helper.service;
 
 import android.content.SharedPreferences;
 
+import com.squareup.okhttp.OkHttpClient;
+
+import java.util.concurrent.TimeUnit;
+
 import pupccb.solutionsresource.com.helper.BaseHelper;
+import pupccb.solutionsresource.com.util.RetrofitHttpClient;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.client.OkClient;
 
 /**
  * Created by User on 7/16/2015.
@@ -24,6 +30,9 @@ public class RetrofitSpiceService extends BaseRetrofitSpiceService {
             }
         };
 
-        return super.createRestAdapterBuilder().setRequestInterceptor(requestInterceptor).setLogLevel(RestAdapter.LogLevel.FULL);
+        return super.createRestAdapterBuilder()
+                .setRequestInterceptor(requestInterceptor)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setClient(new RetrofitHttpClient());
     }
 }

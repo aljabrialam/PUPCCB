@@ -8,6 +8,7 @@
     <dimen name="pad_20dp">40.0dip</dimen>
     <dimen name="pad_30dp">30.0dip</dimen>
     <dimen name="pad_50dp">50.0dip</dimen>
+    <dimen name="pad_100dp">150.0dp</dimen>
     <dimen name="pad_chat_item">60.0dip</dimen>
     <dimen name="pad_chat_item1">160.0dip</dimen>
     <dimen name="txt_7sp">12.0sp</dimen>

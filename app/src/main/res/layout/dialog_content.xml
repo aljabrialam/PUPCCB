@@ -1,31 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="ccb.solutionsresource.com.activity.DetailActivity">
-
-    <!--<include-->
-        <!--android:id="@+id/toolbar"-->
-        <!--layout="@layout/toolbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content" />-->
-
+    android:layout_height="wrap_content">
+    <ScrollView android:layout_height="wrap_content"
+        android:layout_width="match_parent">
     <EditText
-        android:id="@+id/editTextIncidentDetails"
+        android:id="@+id/editTextAgencyDetails"
         style="@style/editext_graybg"
         android:layout_width="fill_parent"
-        android:layout_height="179dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/pad_5dp"
         android:ems="10"
-        android:gravity="left|top"
-        android:hint="@string/agency_details"
-        android:inputType="textMultiLine"
-        android:maxLength="255"
         android:enabled="false"
         android:focusable="false"
-        android:padding="@dimen/pad_15dp">
-
-        <requestFocus />
-    </EditText>
+        android:inputType="textMultiLine"
+        android:padding="@dimen/pad_15dp"
+        android:visibility="gone" />
+    </ScrollView>
 </RelativeLayout>

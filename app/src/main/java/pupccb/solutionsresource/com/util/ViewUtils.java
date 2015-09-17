@@ -22,9 +22,8 @@ import android.view.View;
 
 /**
  * Utils class to avoid deprecation warnings in the main code.
- *
  * @author Aljabri Alam
- * @version 1.0.1
+ *
  */
 public class ViewUtils {
 

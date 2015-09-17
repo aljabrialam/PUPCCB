@@ -10,6 +10,7 @@ public class RegistrationResponse {
     public String getMsg() {
         return msg != null ? msg.trim() : "";
     }
+
     public void setMsg(String msg) {
         this.msg = msg != null ? msg.trim() : "";
     }
