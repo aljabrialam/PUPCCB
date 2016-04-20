@@ -17,7 +17,8 @@
             android:id="@+id/message"
             style="@style/TextAppearance.MaterialSheetFab.Note"
             android:layout_below="@id/note_title"
-            android:paddingTop="@dimen/note_content_spacing" />
+            android:paddingTop="@dimen/note_content_spacing"
+            android:paddingLeft="@dimen/pad_10dp"/>
 
         <LinearLayout
             android:id="@+id/note_info_layout"

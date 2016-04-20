@@ -28,7 +28,8 @@ public class RegistrationRequest extends RetrofitSpiceRequest<RegistrationRespon
                     register.getLast_name(),
                     register.getContact_number(),
                     register.getEmail(),
-                    register.getPassword()
+                    register.getPassword(),
+                    register.getGender()
             );
     }
 

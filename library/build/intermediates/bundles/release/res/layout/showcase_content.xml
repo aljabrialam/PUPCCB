@@ -30,4 +30,4 @@
         android:textSize="22dp"
         android:visibility="gone" />
 
-</LinearLayout><!-- From: file:/C:/Users/User/AndroidStudioProjects/PUPCCB/library/src/main/res/layout/showcase_content.xml -->
+</LinearLayout>

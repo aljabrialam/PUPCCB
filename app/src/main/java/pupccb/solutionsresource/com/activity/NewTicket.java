@@ -164,6 +164,7 @@ public class NewTicket extends AppCompatActivity implements OfflineCommunicator,
         editTextComplainee = (EditText) view.findViewById(R.id.editTextComplainee);
         editTextSubject = (EditText) view.findViewById(R.id.editTextSubject);
         editTextIncidentDetails = (EditText) view.findViewById(R.id.editTextIncidentDetails);
+        //editTextIncidentDetails.max;
         textViewCounter = (TextView) view.findViewById(R.id.textViewCounter);
         textViewAddAttachment = (TextView) view.findViewById(R.id.textViewAddAttachment);
         editTextIncidentDetails.addTextChangedListener(new TextWatcher() {
@@ -173,7 +174,8 @@ public class NewTicket extends AppCompatActivity implements OfflineCommunicator,
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                textViewCounter.setText(charSequence.length() + "/255");
+                //textViewCounter.setText(charSequence.length() + "/255");
+                //textViewCounter.setText(charSequence.length());
             }
 
             @Override

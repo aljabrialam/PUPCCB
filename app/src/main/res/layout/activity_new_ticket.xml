@@ -106,14 +106,22 @@
                 android:gravity="left|top"
                 android:hint="@string/details_about_incident"
                 android:inputType="textMultiLine"
-                android:maxLength="255"
-                android:padding="@dimen/pad_10dp" />
+                android:padding="@dimen/pad_10dp"
+                android:maxLength="999999" />
 
             <LinearLayout
                 android:id="@+id/attachmentLinearLayout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Make me Anonymous"
+                    android:id="@+id/checkBoxAnonymous"
+                    android:layout_weight="1"
+                    android:checked="false" />
 
                 <TextView
                     android:id="@+id/textViewCounter"
@@ -131,6 +139,7 @@
                     android:drawableLeft="@drawable/hs_add_attachment_img"
                     android:text="@string/add_attachment" />
             </LinearLayout>
+
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

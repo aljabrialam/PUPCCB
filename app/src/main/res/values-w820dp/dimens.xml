@@ -21,4 +21,5 @@
     <dimen name="txt_16sp">24.0sp</dimen>
     <dimen name="txt_18sp">27.0sp</dimen>
     <dimen name="txt_20sp">30.0sp</dimen>
+
 </resources>

@@ -68,6 +68,27 @@
                 android:hint="@string/last_name"
                 android:inputType="textCapSentences" />
 
+            <RadioGroup
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/pad_40dp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/pad_5dp">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:id="@+id/radioMale"
+                    android:checked="false" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    android:id="@+id/radioFemale"
+                    android:checked="false" />
+            </RadioGroup>
+
             <EditText
                 android:id="@+id/editTextContactNumber"
                 style="@style/editext_graybg"
@@ -75,7 +96,10 @@
                 android:layout_height="@dimen/pad_40dp"
                 android:layout_marginBottom="@dimen/pad_5dp"
                 android:hint="@string/contact_number"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:paddingLeft="@dimen/pad_10dp"
+                android:ems="10"
+                android:drawablePadding="@dimen/pad_10dp" />
 
 
             <EditText

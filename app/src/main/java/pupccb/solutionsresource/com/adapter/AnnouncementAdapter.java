@@ -150,7 +150,7 @@ public class AnnouncementAdapter extends RecyclerView.Adapter<AnnouncementAdapte
     }
 
     public void CreateMaterialDialog(String title, String cancel, String confirm,
-                                     Holder holder, int gravity, boolean expanded, boolean cancelable) {
+                                      Holder holder, int gravity, boolean expanded, boolean cancelable) {
         TextView textViewTitle, textViewClose, textViewConfirm;
         final DialogPlus dialog = DialogPlus.newDialog(activity)
                 .setContentHolder(holder)

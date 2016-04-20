@@ -57,7 +57,8 @@ public class CreateMaterialDialog {
         textViewConfirm.setText(confirm);
         dialog.show();
 
-        if(RequestCodes.PREVIEW_ATTACHMENT == requestCode || RequestCodes.ANNOUNCEMENT_DETAIL == requestCode){
+        if(RequestCodes.PREVIEW_ATTACHMENT == requestCode || RequestCodes.ANNOUNCEMENT_DETAIL == requestCode
+                || RequestCodes.TICKET_DETAILS == requestCode){
             headerClose.setVisibility(View.VISIBLE);
             textViewConfirm.setVisibility(View.GONE);
             textViewClose.setVisibility(View.GONE);

@@ -31,7 +31,7 @@ import pupccb.solutionsresource.com.util.ToastMessage;
 public class BaseHelper {
 
     // < -- BASE URL -- >
-    protected static final String BaseUrl = "http://ccb.solutionsresource.com";
+    protected static final String BaseUrl = "http://ccb.apps.solutionsresource.com";
     // < -- SHARED PREFERENCE -- >
     protected static final String SharedPreference = "pup_ccb_preference";
     private static AtomicInteger nextId = new AtomicInteger(0);

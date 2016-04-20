@@ -14,5 +14,6 @@ public class RequestCodes {
     public static final int PREVIEW_ATTACHMENT = 108;
     public static final int ANNOUNCEMENT_DETAIL = 109;
     public static final int TEXT_COUNTER = 110;
+    public static final int TICKET_DETAILS = 111;
     public static final String SHOWCASE_ID = "CCB";
 }

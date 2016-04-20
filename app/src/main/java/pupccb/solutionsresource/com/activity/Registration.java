@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -57,7 +58,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     @ConfirmPassword
     private EditText editTextConfirmPassword;
     private Button btnSignUp;
-
+    private RadioButton radioMale, radioFemale;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +97,8 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         editTextPassword = (EditText) view.findViewById(R.id.editTextPassword);
         editTextConfirmPassword = (EditText) view.findViewById(R.id.editTextConfirmPassword);
         btnSignUp = (Button) view.findViewById(R.id.btnSignUp);
-
+        radioFemale = (RadioButton) view.findViewById(R.id.radioFemale);
+        radioMale = (RadioButton) view.findViewById(R.id.radioMale);
     }
 
     public void setError(ErrorHandler.Error error, Controller.MethodTypes methodTypes) {
@@ -156,7 +158,8 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                         editTextLname.getText().toString(),
                         editTextContactNumber.getText().toString(),
                         editTextEmail.getText().toString(),
-                        editTextPassword.getText().toString()
+                        editTextPassword.getText().toString(),
+                        (radioMale.isChecked()) ? "Male" : "Female"
                 )
         );
     }

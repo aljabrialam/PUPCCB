@@ -17,16 +17,22 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.Holder;
+import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -38,10 +44,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pupccb.solutionsresource.com.R;
+import pupccb.solutionsresource.com.adapter.AnnouncementAdapter;
 import pupccb.solutionsresource.com.adapter.CardAdapter;
 import pupccb.solutionsresource.com.adapter.FileAttachmentAdapter;
 import pupccb.solutionsresource.com.fragment.AttachmentDialogFragment;
 import pupccb.solutionsresource.com.fragment.BrowseFileDialogFragment;
+import pupccb.solutionsresource.com.fragment.MaterialDialog;
 import pupccb.solutionsresource.com.helper.BaseHelper;
 import pupccb.solutionsresource.com.helper.Controller;
 import pupccb.solutionsresource.com.helper.OfflineHelper;
@@ -112,6 +120,8 @@ public class TicketDetails extends AppCompatActivity implements Validator.Valida
     private FileAttachmentAdapter fileAttachmentAdapter;
     private int position;
     private EditText editTextComment;
+    private AnnouncementAdapter announcementAdapter;
+    private RelativeLayout ticket_details_container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +150,14 @@ public class TicketDetails extends AppCompatActivity implements Validator.Valida
         } else if (view.getId() == R.id.empty_text) {
             commentsList.invalidate();
             commentList();
+        }
+          else if (view.getId() == R.id.subject || view.getId() == R.id.textViewPersonToAddress ||
+                view.getId() == R.id.textViewIncidentDetails || view.getId() == R.id.ticket_details_container){
+            //fullTicketDetailsDialog();
+            //Toast.makeText(this, ticketInfo.incident_details, Toast.LENGTH_LONG).show();
+            //new CreateMaterialDialog(this, ticketInfo.getSubject(), "Back", "", holder,
+              //      Gravity.CENTER, false, true, RequestCodes.TICKET_DETAILS, "");
+            fullTicketDetailsDialog();
         }
     }
 
@@ -177,7 +195,8 @@ public class TicketDetails extends AppCompatActivity implements Validator.Valida
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(this);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-
+        ticket_details_container = (RelativeLayout) view.findViewById(R.id.ticket_details_container);
+        ticket_details_container.setOnClickListener(this);
 //        List<Comment> tempComment = new ArrayList<>();
 //        tempComment.add(new Comment(
 //                ticketInfo.getId(),
@@ -249,6 +268,49 @@ public class TicketDetails extends AppCompatActivity implements Validator.Valida
         );
     }
 
+    private void fullTicketDetailsDialog(){
+        CreateMaterialDialog(ticketInfo.getSubject(), "Back", ""
+                , new ViewHolder(R.layout.dialog_home_content)
+                , Gravity.CENTER
+                , false
+                , true);
+    }
+
+
+    public void CreateMaterialDialog(String title, String cancel, String confirm,
+                                     Holder holder, int gravity, boolean expanded, boolean cancelable) {
+        TextView textViewTitle, textViewClose, textViewConfirm;
+        final DialogPlus dialog = DialogPlus.newDialog(activity)
+                .setContentHolder(holder)
+                .setHeader(R.layout.header)
+                .setCancelable(cancelable)
+                .setGravity(gravity)
+                .setExpanded(expanded)
+                .setContentWidth(ViewGroup.LayoutParams.MATCH_PARENT)
+                .setContentHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setOnClickListener(newCommentDialogListener)
+                .create();
+        textViewTitle = (TextView) holder.getHeader().findViewById(R.id.title);
+        textViewClose = (TextView) holder.getHeader().findViewById(R.id.close);
+        WebView webView = (WebView) holder.getInflatedView().findViewById(R.id.webView);
+        webView.loadData("<p align =\"justify\">" + ticketInfo.getIncident_details() + "</p>", "text/html", null);
+        textViewTitle.setText(title);
+        textViewClose.setVisibility(View.VISIBLE);
+        dialog.show();
+    }
+
+    OnClickListener newCommentDialogListener = new OnClickListener() {
+        @Override
+        public void onClick(DialogPlus dialog, View view) {
+            switch (view.getId()) {
+                case R.id.close:
+                    dialog.dismiss();
+                    break;
+            }
+            dialog.dismiss();
+        }
+    };
+
     @Override
     public void MaterialDialogResponse(int requestCode, Holder holder, String filePath) {
         this.holder = holder;
@@ -288,7 +350,7 @@ public class TicketDetails extends AppCompatActivity implements Validator.Valida
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                textViewCounter.setText(charSequence.length() + "/255");
+                //textViewCounter.setText(charSequence.length() + "/255");
             }
 
             @Override

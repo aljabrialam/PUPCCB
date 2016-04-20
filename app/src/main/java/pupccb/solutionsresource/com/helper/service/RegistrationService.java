@@ -18,6 +18,7 @@ public interface RegistrationService {
             @Field("last_name") String last_name,
             @Field("contact_number") String contact_number,
             @Field("email") String email,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("gender") String gender
     );
 }

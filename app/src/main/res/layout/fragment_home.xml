@@ -19,7 +19,8 @@
         android:text="@string/list_is_empty"
         android:textSize="@dimen/txt_18sp"
         android:textStyle="bold"
-        android:visibility="gone" />
+        android:visibility="gone"
+        />
 
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipeRefreshLayout"

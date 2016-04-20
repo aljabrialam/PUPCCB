@@ -12,13 +12,13 @@
     <dimen name="step_pager_tab_spacing">4dp</dimen>
 
 
+
     <dimen name="pad_5dp">5.0dp</dimen>
     <dimen name="pad_10dp">10.0dp</dimen>
     <dimen name="pad_15dp">15.0dp</dimen>
     <dimen name="pad_20dp">20.0dp</dimen>
     <dimen name="pad_30dp">30.0dp</dimen>
     <dimen name="pad_40dp">40.0dp</dimen>
-    <dimen name="pad_50dp">50.0dp</dimen>
     <dimen name="pad_100dp">100.0dp</dimen>
     <dimen name="pad_60dp">60.0dp</dimen>
     <dimen name="pad_chat_item">45.0dp</dimen>

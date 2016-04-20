@@ -102,11 +102,11 @@ public class NavigationDrawer extends AppCompatActivity implements FragmentCommu
                 myTicket = new MyTicket();
                 setFragment(myTicket);
                 break;
-            case 3:
+            /*case 3:
                 callCCB();
                 MaterialShowcaseView.resetSingleUse(this, RequestCodes.SHOWCASE_ID);
-                break;
-            case 4:
+                break;*/
+            case 3:
                 new BaseHelper().logout(NavigationDrawer.this, false);
                 break;
             default:

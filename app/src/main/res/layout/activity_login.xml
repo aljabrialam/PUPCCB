@@ -65,7 +65,6 @@
         android:textColor="@color/white"
         android:textSize="@dimen/txt_15sp"
         android:textStyle="bold" />
-
     <TextView
         android:id="@id/btnForgot"
         android:layout_width="wrap_content"

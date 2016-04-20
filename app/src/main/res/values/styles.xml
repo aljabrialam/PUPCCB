@@ -48,6 +48,7 @@
         <item name="android:drawablePadding">@dimen/pad_10dp</item>
     </style>
 
+
     <style name="btn_white_large" parent="@style/btn">
         <item name="android:textSize">@dimen/txt_16sp</item>
         <item name="android:textColor">@color/myPrimaryColor</item>v
@@ -255,4 +256,8 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <!--
+    Added by Joshua Signey at 4/20/2016
+    -->
+   
 </resources>

@@ -5,14 +5,16 @@ package pupccb.solutionsresource.com.model;
  */
 public class RegistrationDetails {
 
-    private String first_name, last_name, contact_number, email, password;
+    private String first_name, last_name, contact_number, email, password, gender;
 
-    public RegistrationDetails(String first_name, String last_name, String contact_number, String email, String password) {
+    public RegistrationDetails(String first_name, String last_name, String contact_number, String email, String password,
+                               String gender) {
         setFirst_name(first_name);
         setLast_name(last_name);
         setContact_number(contact_number);
         setEmail(email);
         setPassword(password);
+        setGender(gender);
     }
 
     public String getFirst_name() {
@@ -21,7 +23,7 @@ public class RegistrationDetails {
 
     public void setFirst_name(String first_name) {
         this.first_name = first_name != null ? first_name.trim() : "";
-        ;
+
     }
 
     public String getLast_name() {
@@ -54,5 +56,11 @@ public class RegistrationDetails {
 
     public void setPassword(String password) {
         this.password = password != null ? password.trim() : "";
+    }
+    public void setGender(String gender){
+        this.gender = gender != null ? gender.trim() : "";
+    }
+    public String getGender(){
+        return gender != null? gender.trim() : "";
     }
 }
