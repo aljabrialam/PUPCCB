@@ -20,9 +20,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -41,6 +43,7 @@ import java.util.List;
 import pupccb.solutionsresource.com.R;
 import pupccb.solutionsresource.com.adapter.AgencyAdapter;
 import pupccb.solutionsresource.com.adapter.FileAttachmentAdapter;
+import pupccb.solutionsresource.com.fragment.AddAgencyDialogFragment;
 import pupccb.solutionsresource.com.fragment.AgencyDialogFragment;
 import pupccb.solutionsresource.com.fragment.AttachmentDialogFragment;
 import pupccb.solutionsresource.com.fragment.BrowseFileDialogFragment;
@@ -69,7 +72,7 @@ import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 public class NewTicket extends AppCompatActivity implements OfflineCommunicator, AttachmentDialogFragment.Communicator,
         View.OnClickListener, Validator.ValidationListener, TimePickerDialog.OnTimeSetListener,
         DatePickerDialog.OnDateSetListener, AgencyDialogFragment.Communicator, AgencyAdapter.Communicator,
-        FileAttachmentAdapter.Communicator, CreateYesNoDialog.Communicator {
+        FileAttachmentAdapter.Communicator, CreateYesNoDialog.Communicator, AddAgencyDialogFragment.Communicator {
 
     public static final TouchEffect TOUCH = new TouchEffect();
 
@@ -102,7 +105,8 @@ public class NewTicket extends AppCompatActivity implements OfflineCommunicator,
     private LoadToast loadToast;
     private boolean isGoing;
     private ToastMessage toastMessage;
-    private TextView textViewAddAttachment;
+    private TextView textViewAddAttachment, textViewLocation;
+    private CheckBox checkBoxAnonymous;
 
     @Nullable
     @Override
@@ -164,24 +168,12 @@ public class NewTicket extends AppCompatActivity implements OfflineCommunicator,
         editTextComplainee = (EditText) view.findViewById(R.id.editTextComplainee);
         editTextSubject = (EditText) view.findViewById(R.id.editTextSubject);
         editTextIncidentDetails = (EditText) view.findViewById(R.id.editTextIncidentDetails);
-        //editTextIncidentDetails.max;
+
         textViewCounter = (TextView) view.findViewById(R.id.textViewCounter);
         textViewAddAttachment = (TextView) view.findViewById(R.id.textViewAddAttachment);
-        editTextIncidentDetails.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            }
+        checkBoxAnonymous = (CheckBox) view.findViewById(R.id.checkBoxAnonymous);
+        textViewLocation = (TextView) view.findViewById(R.id.textViewLocation);
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                //textViewCounter.setText(charSequence.length() + "/255");
-                //textViewCounter.setText(charSequence.length());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
         setTouchNClick(R.id.textViewAddAttachment);
 
         editTextDate.setText(BaseHelper.getDateNow());
@@ -209,6 +201,7 @@ public class NewTicket extends AppCompatActivity implements OfflineCommunicator,
         sequence.addSequenceItem(presentShowcaseView(editTextSubject, "Enter the subject, this will serve as a title of the ticket."));
         sequence.addSequenceItem(presentShowcaseView(editTextIncidentDetails, "Enter the details of you comment, feedback or complain here."));
         sequence.addSequenceItem(presentShowcaseView(textViewAddAttachment, "Tap this to add an image attachment from your gallery or capture via camera then attach the image."));
+        sequence.addSequenceItem(presentShowcaseView(checkBoxAnonymous, "Tap this to change your anonymity. If checked, your personal details will be hidden"));
         sequence.start();
     }
 
@@ -247,6 +240,9 @@ public class NewTicket extends AppCompatActivity implements OfflineCommunicator,
     public void retryMethod(Controller.MethodTypes methodTypes) {
         switch (methodTypes) {
             case POST_FILE_ATTACHMENT: {
+                break;
+            }
+            case CREATE_AGENCY: {
                 break;
             }
         }
@@ -447,8 +443,16 @@ public class NewTicket extends AppCompatActivity implements OfflineCommunicator,
                             null,
                             (ArrayList<Agencies>) list,
                             AgencyAdapter.MethodTypes.READ));
+
+            loadToast.success();
+        } else {
+            showAgencyListDialog("Select Agency",
+                    new AgencyAdapter(this, R.layout.two_line_list_item,
+                            null,
+                            (ArrayList<Agencies>) list,
+                            AgencyAdapter.MethodTypes.READ));
+            loadToast.error();
         }
-        loadToast.success();
         isGoing = false;
     }
 
@@ -472,6 +476,7 @@ public class NewTicket extends AppCompatActivity implements OfflineCommunicator,
     public void dialogSelectedAgency(Agencies agency, int requestCode) {
         this.agencies = agency;
         editTextAgency.setText(agency.getName());
+        textViewLocation.setText(agency.getLocation());
     }
 
     @Override
@@ -497,7 +502,7 @@ public class NewTicket extends AppCompatActivity implements OfflineCommunicator,
                 .create().show();
         textViewAgency.setVisibility(View.VISIBLE);
         textViewAgency.setGravity(Gravity.CENTER);
-        textViewAgency.setText(agencies.getName() + "\n" + agencies.getRegion() + "\n" + agencies.getProvince());
+        textViewAgency.setText(agencies.getName() + "\n" + agencies.getLocation() + "\n" + agencies.getRegion() + "\n" + agencies.getProvince());
     }
 
     private void dialogPreviewTicket(String message) {
@@ -519,7 +524,8 @@ public class NewTicket extends AppCompatActivity implements OfflineCommunicator,
                                         editTextComplainee.getText().toString(),
                                         editTextSubject.getText().toString(),
                                         editTextIncidentDetails.getText().toString(),
-                                        fileAttachmentAdapter.getItemCount() > 0 ? fileAttachmentAdapter.getItems().get(0).getFile() : null
+                                        fileAttachmentAdapter.getItemCount() > 0 ? fileAttachmentAdapter.getItems().get(0).getFile() : null,
+                                        checkBoxAnonymous.isChecked()
                                 )
                         );
                     }
@@ -542,6 +548,7 @@ public class NewTicket extends AppCompatActivity implements OfflineCommunicator,
         ((EditText) myContent.findViewById(R.id.editTextComplainee)).setText(editTextComplainee.getText());
         ((TextView) myContent.findViewById(R.id.editTextSubject)).setText(editTextSubject.getText());
         ((EditText) myContent.findViewById(R.id.editTextIncidentDetails)).setText(editTextIncidentDetails.getText());
+        ((CheckBox) myContent.findViewById(R.id.checkBoxAnonymous)).setChecked(checkBoxAnonymous.isChecked());
     }
 
     public View setClick(int btn) {
@@ -663,5 +670,30 @@ public class NewTicket extends AppCompatActivity implements OfflineCommunicator,
     protected void onPause() {
         super.onPause();
         toastMessage.hide();
+    }
+
+    @Override
+    public void createdAgency(Agencies agency) {
+        //textViewLocation.setText(agency.getLocation());
+        //editTextAgency.setText(agency.getName());
+        createAgency(agency);
+    }
+
+    @Override
+    public void dismissAgencyList() {
+        agencies();
+    }
+
+    public void createAgency(Agencies agency) {
+        isGoing = false;
+        loadToast("Creating Agency...");
+        onlineController.createAgency(this, agency);
+    }
+
+    public void createAgencyResult(boolean value, Agencies agency) {
+        toast(2000, "SUCCESS", ToastMessage.MessageType.SUCCESS);
+        loadToast.success();
+        this.agencies = agency;
+        Toast.makeText(this, agencies.getId().toString(), Toast.LENGTH_LONG).show();
     }
 }

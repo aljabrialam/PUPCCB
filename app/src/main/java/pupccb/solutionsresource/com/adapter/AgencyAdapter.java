@@ -1,5 +1,6 @@
 package pupccb.solutionsresource.com.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,8 +32,8 @@ public class AgencyAdapter extends ArrayAdapter<Agencies> {
         super(context, layoutResourceId, onlineList != null ? onlineList : offlineList);
         this.communicator = (Communicator) context;
         this.layoutResourceId = layoutResourceId;
-        this.agencies = new ArrayList<Agencies>();
-        this.originalList = new ArrayList<Agencies>();
+        this.agencies = new ArrayList<>();
+        this.originalList = new ArrayList<>();
         this.methodTypes = methodTypes;
         if (MethodTypes.READ == methodTypes && onlineList != null) {
             for (Agencies offline : offlineList) {
@@ -75,6 +76,7 @@ public class AgencyAdapter extends ArrayAdapter<Agencies> {
         return null;
     }
 
+    @SuppressLint({"NewApi", "SetTextI18n"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final Agencies child = getItem(position);
@@ -84,6 +86,7 @@ public class AgencyAdapter extends ArrayAdapter<Agencies> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layoutResourceId, null);
             viewHolder.textAgencyName = (TextView) convertView.findViewById(R.id.text1);
+            viewHolder.textViewLocation = (TextView) convertView.findViewById(R.id.text2);
             viewHolder.image1 = (ImageView) convertView.findViewById(R.id.image1);
             convertView.setTag(viewHolder);
         } else {
@@ -91,6 +94,7 @@ public class AgencyAdapter extends ArrayAdapter<Agencies> {
         }
 
         viewHolder.textAgencyName.setText(child.getName());
+        viewHolder.textViewLocation.setText(child.getLocation());
 
         if (MethodTypes.READ == methodTypes) {
             viewHolder.image1.setVisibility(View.VISIBLE);
@@ -123,7 +127,7 @@ public class AgencyAdapter extends ArrayAdapter<Agencies> {
     }
 
     private static class ViewHolder {
-        TextView textAgencyName;
+        TextView textAgencyName, textViewLocation;
         ImageView image1;
     }
 

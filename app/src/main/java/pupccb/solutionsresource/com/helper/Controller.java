@@ -13,6 +13,7 @@ import pupccb.solutionsresource.com.activity.TicketDetails;
 import pupccb.solutionsresource.com.adapter.FileAttachmentAdapter;
 import pupccb.solutionsresource.com.helper.communicator.AttachmentCommunicator;
 import pupccb.solutionsresource.com.helper.communicator.OnlineCommunicator;
+import pupccb.solutionsresource.com.helper.service.AgencyService;
 import pupccb.solutionsresource.com.model.Agencies;
 import pupccb.solutionsresource.com.model.Announcement;
 import pupccb.solutionsresource.com.model.Comment;
@@ -40,6 +41,7 @@ public class Controller {
     private Login login;
     private RegistrationDetails registrationDetails;
     private Ticket ticket;
+    private Agencies agency;
 
     public Controller(OnlineCommunicator onlineCommunicator) {
         this.onlineCommunicator = onlineCommunicator;
@@ -110,6 +112,19 @@ public class Controller {
     public void agenciesResult(ArrayList<Agencies> agencyList) {
         if (activity instanceof NewTicket) {
             ((NewTicket) activity).agenciesResult(false, agencyList);
+        }
+    }
+
+    //Added by Joshua
+    public void createAgency(Activity activity, Agencies agency ){
+        this.activity = activity;
+        this.agency = agency;
+        onlineCommunicator.createAgency(this, activity, agency, MethodTypes.CREATE_AGENCY);
+    }
+
+    public void createAgencyResult(Agencies agency){
+        if (activity instanceof NewTicket){
+            ((NewTicket) activity).createAgencyResult(false, agency);
         }
     }
 
@@ -229,7 +244,7 @@ public class Controller {
     public enum MethodTypes {
         LOGIN, REGISTER, CREATE_TICKET, POST_FILE_ATTACHMENT, GET_FILE_ATTACHMENT_LIST,
         DELETE_FILE_ATTACHMENT, USER_INFO, AGENCIES, TICKET_LIST, CANCEL_TICKET, ADD_COMMENT,
-        COMMENT_LIST, ANNOUNCEMENT_LIST
+        COMMENT_LIST, ANNOUNCEMENT_LIST, CREATE_AGENCY
     }
 }
 

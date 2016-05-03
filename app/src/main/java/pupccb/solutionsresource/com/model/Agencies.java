@@ -5,14 +5,19 @@ package pupccb.solutionsresource.com.model;
  */
 public class Agencies {
 
-    String id, name, is_member, region, province;
+    String id, name, is_member, region, province, location;
 
-    public Agencies(String id, String name, String region, String province, String is_member) {
+    public Agencies(String id, String name, String region, String province, String location, String is_member) {
         setId(id);
         setName(name);
         setId(is_member);
         setRegion(region);
         setProvince(province);
+    }
+
+    public Agencies(String name, String location) {
+        setName(name);
+        setLocation(location);
     }
 
     public String getId() {
@@ -54,4 +59,8 @@ public class Agencies {
     public void setProvince(String province) {
         this.province = province != null ? province.trim() : "";
     }
+
+    public String getLocation() { return location != null ? location.trim() : ""; }
+
+    public void setLocation(String location) { this.location = location != null ? location.trim() : ""; }
 }

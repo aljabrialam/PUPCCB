@@ -48,9 +48,23 @@
         <item name="android:drawablePadding">@dimen/pad_10dp</item>
     </style>
 
+    <style name="autocompletetextview_graybg" parent="@android:style/Widget.AutoCompleteTextView">
+        <item name="android:textSize">@dimen/txt_14sp</item>
+        <item name="android:background">@drawable/button_use_light_gray</item>
+        <item name="android:paddingLeft">@dimen/pad_10dp</item>
+        <item name="android:paddingRight">@dimen/pad_10dp</item>
+        <item name="android:ems">10</item>
+        <item name="android:drawablePadding">@dimen/pad_10dp</item>
+    </style>
 
     <style name="btn_white_large" parent="@style/btn">
         <item name="android:textSize">@dimen/txt_16sp</item>
+        <item name="android:textColor">@color/myPrimaryColor</item>v
+        <item name="android:background">@drawable/button_use_dark_gray</item>
+    </style>
+
+    <style name="btn_white_small" parent="@style/btn">
+        <item name="android:textSize">@dimen/txt_12sp</item>
         <item name="android:textColor">@color/myPrimaryColor</item>v
         <item name="android:background">@drawable/button_use_dark_gray</item>
     </style>

@@ -9,7 +9,7 @@ public class TicketInfo implements Serializable {
 
     public String id, ticket_id, incident_date_time, agency, complainee, subject, incident_details, status, date, attachment, assignee, updated_at;
 
-    public TicketInfo(String id, String ticket_id, String incident_date_time, String agency, String complainee, String subject, String incident_details, String status, String date, String attachment, String assignee, String updated_at) {
+    public TicketInfo(String id, String ticket_id, String incident_date_time, String agency, String complainee, String subject, String incident_details, String status, String date, String attachment, String assignee, String updated_at, Boolean anonymous) {
         setId(id);
         setTicket_id(ticket_id);
         setIncident_date_time(incident_date_time);
@@ -105,7 +105,7 @@ public class TicketInfo implements Serializable {
     }
 
     public String getAttachment() {
-        return attachment != null ? attachment.trim() : "" ;
+        return attachment != null ? attachment.trim() : "";
     }
 
     public void setAttachment(String attachment) {

@@ -72,9 +72,20 @@
                 android:layout_height="@dimen/pad_40dp"
                 android:layout_marginBottom="@dimen/pad_5dp"
                 android:clickable="true"
-                android:editable="false"
+                android:editable="true"
                 android:focusableInTouchMode="false"
                 android:hint="@string/what_agency" />
+
+            <TextView
+                style="@style/editext_graybg"
+                android:id="@+id/textViewLocation"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/pad_40dp"
+                android:layout_marginBottom="@dimen/pad_5dp"
+                android:clickable="true"
+                android:editable="true"
+                android:focusableInTouchMode="false"
+                android:hint="@string/agency_location" />
 
             <EditText
                 android:id="@+id/editTextComplainee"
@@ -138,6 +149,7 @@
                     android:clickable="true"
                     android:drawableLeft="@drawable/hs_add_attachment_img"
                     android:text="@string/add_attachment" />
+
             </LinearLayout>
 
         </LinearLayout>

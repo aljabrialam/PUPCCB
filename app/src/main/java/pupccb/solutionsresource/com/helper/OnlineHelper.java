@@ -17,6 +17,7 @@ import pupccb.solutionsresource.com.helper.request.AnnouncementListRequest;
 import pupccb.solutionsresource.com.helper.request.CancelTicketRequest;
 import pupccb.solutionsresource.com.helper.request.CommentListRequest;
 import pupccb.solutionsresource.com.helper.request.CommentRequest;
+import pupccb.solutionsresource.com.helper.request.CreateAgencyRequest;
 import pupccb.solutionsresource.com.helper.request.CreateTicketRequest;
 import pupccb.solutionsresource.com.helper.request.RegistrationRequest;
 import pupccb.solutionsresource.com.helper.request.SessionRequest;
@@ -97,6 +98,18 @@ public class OnlineHelper extends BaseHelper implements OnlineCommunicator {
     public void addComment(Controller controller, Activity activity, String ticket_id, String user_id, String ticket_comment, TypedFile file, Controller.MethodTypes methodTypes) {
         this.controller = controller;
         performCommentRequest(activity, ticket_id, user_id, ticket_comment, file, methodTypes);
+    }
+
+    @Override
+    public void createAgency(Controller controller, Activity activity, Agencies agency, Controller.MethodTypes methodTypes) {
+        this.controller = controller;
+        performCreateAgency(activity, agency, methodTypes);
+    }
+
+    private void performCreateAgency(Activity activity, Agencies agency, Controller.MethodTypes methodTypes){
+        startSpiceManager(activity);
+        CreateAgencyRequest createAgencyRequest = new CreateAgencyRequest(agency);
+        spiceManager.execute(createAgencyRequest, createAgencyRequest.createCacheKey(), DurationInMillis.ALWAYS_EXPIRED, new createAgencyListener(activity, agency, methodTypes));
     }
 
     private void performLoginRequest(Activity activity, Login login, Controller.MethodTypes methodTypes) {
@@ -418,4 +431,26 @@ public class OnlineHelper extends BaseHelper implements OnlineCommunicator {
         }
     }
 
+    private class createAgencyListener implements RequestListener<Agencies> {
+        private Activity activity;
+        private Agencies agencies;
+        private Controller.MethodTypes methodTypes;
+        public createAgencyListener(Activity activity, Agencies agency, Controller.MethodTypes methodTypes) {
+            this.activity = activity;
+            this.agencies = agency;
+            this.methodTypes = methodTypes;
+        }
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            stopSpiceManager();
+            controller.setError(new ErrorHandler().onRequestFailure(spiceException), methodTypes);
+        }
+
+        @Override
+        public void onRequestSuccess(Agencies agencies) {
+            stopSpiceManager();
+            controller.createAgencyResult(agencies);
+        }
+    }
 }

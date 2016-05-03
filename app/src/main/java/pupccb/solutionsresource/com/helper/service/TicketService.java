@@ -21,7 +21,8 @@ public interface TicketService {
             @Part("complainee") String complainee,
             @Part("incident_details") String incident_details,
             @Part("user_id") String user_id,
-            @Part("file") TypedFile file
+            @Part("file") TypedFile file,
+            @Part("anonymous") Boolean anonymous
     );
 }
 

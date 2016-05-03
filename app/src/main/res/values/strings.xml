@@ -28,6 +28,7 @@
     <string name="delete">Delete</string>
     <string name="remove">Remove</string>
     <string name="cancel">Cancel</string>
+    <string name="add">Add</string>
     <string name="cancel_ticket">Cancel this ticket</string>
     <string name="edit">Edit</string>
     <string name="already_have_an_account">I already have an account</string>
@@ -46,7 +47,7 @@
     <string name="what_agency">Agency (Ahensiya)</string>
     <string name="subject">Subject (Paksa)</string>
     <string name="who_to_complaint">Person Reported (Optional)</string>
-
+    <string name="agency_location">Location (Lugar)</string>
     <string name="tab">Tab</string>
     <string name="current_ticket">Current Ticket</string>
     <string name="past_ticket">Past Ticket</string>
@@ -89,4 +90,9 @@
     <string name="footer_button_close">CLOSE</string>
     <string name="footer_button_confirm">CONFIRM</string>
     <string name="footer_sample">SAMPLE FOOTER</string>
+
+
+    <string name="agency_name">Agency Name</string>
+    <string name="agencylocation">Agency Location</string>
+    <string name="add_new">Add New</string>
 </resources>

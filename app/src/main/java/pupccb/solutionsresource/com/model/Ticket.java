@@ -9,8 +9,9 @@ public class Ticket {
 
     private String user_id, incident_date_time, agency, complainee, subject, incident_details;
     private TypedFile file;
+    private boolean anonymous;
 
-    public Ticket(String user_id, String incident_date_time, String agency, String complainee, String subject, String incident_details, TypedFile file) {
+    public Ticket(String user_id, String incident_date_time, String agency, String complainee, String subject, String incident_details, TypedFile file, Boolean anonymous) {
         setUser_id(user_id);
         setIncident_date_time(incident_date_time);
         setSubject(subject);
@@ -18,6 +19,7 @@ public class Ticket {
         setComplainee(complainee);
         setIncident_details(incident_details);
         setFile(file);
+        setAnonymous(anonymous);
     }
 
     public String getUser_id() {
@@ -75,4 +77,8 @@ public class Ticket {
     public void setFile(TypedFile file) {
         this.file = file;
     }
+
+    public Boolean getAnonymous() {return anonymous; }
+
+    public void setAnonymous(Boolean anonymous) { this.anonymous = anonymous; }
 }
