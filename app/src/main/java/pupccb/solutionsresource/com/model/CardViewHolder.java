@@ -11,24 +11,14 @@ import pupccb.solutionsresource.com.R;
 public class CardViewHolder extends RecyclerView.ViewHolder
 {
     public ImageView imageView;
-    public TextView nameView;
-    public TextView likeButton;
-    public TextView likeCount;
-    public ImageView commentButton;
-    public TextView commentCount;
-    public ImageView shareButton;
-    public TextView shareCount;
+    public TextView filename;
+    public TextView filesize;
 
     public CardViewHolder(View itemView)
     {
         super(itemView);
-        imageView = (ImageView) itemView.findViewById(R.id.icon);
-        nameView = (TextView) itemView.findViewById(R.id.item_name);
-        likeButton = (TextView) itemView.findViewById(R.id.like);
-        likeCount = (TextView) itemView.findViewById(R.id.likeCount);
-        commentButton = (ImageView) itemView.findViewById(R.id.comment);
-        commentCount = (TextView) itemView.findViewById(R.id.commentCount);
-        shareButton = (ImageView) itemView.findViewById(R.id.share);
-        shareCount = (TextView) itemView.findViewById(R.id.shareCount);
+        imageView = (ImageView) itemView.findViewById(R.id.attachmentImage);
+        filename = (TextView) itemView.findViewById(R.id.filename);
+        filesize = (TextView) itemView.findViewById(R.id.filesize);
     }
 }

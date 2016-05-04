@@ -9,8 +9,8 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="4dp">
+        card_view:cardElevation="4dp"
+        >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -28,10 +28,17 @@
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/pad_40dp"
                 android:layout_marginTop="@dimen/pad_5dp"
-                android:gravity="start|center_vertical"
+                android:gravity="left|center_vertical"
                 android:paddingLeft="@dimen/pad_10dp"
-                android:text="@string/registration"
+                android:text="Registration"
                 android:textColor="@color/white" />
+            <ProgressBar
+                android:id="@+id/registrationProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="invisible"
+                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal" />
 
             <EditText
                 android:id="@+id/editTextFname"
@@ -40,15 +47,17 @@
                 android:layout_height="@dimen/pad_40dp"
                 android:layout_marginBottom="@dimen/pad_5dp"
                 android:layout_marginTop="@dimen/pad_5dp"
-                android:hint="@string/first_name" />
+                android:hint="@string/first_name"
+                android:inputType="textCapSentences" />
 
-            <EditText
-                android:id="@+id/editTextMname"
-                style="@style/editext_graybg"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/pad_40dp"
-                android:layout_marginBottom="@dimen/pad_5dp"
-                android:hint="@string/middle_name" />
+            <!--<EditText-->
+            <!--android:id="@+id/editTextMname"-->
+            <!--style="@style/editext_graybg"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="@dimen/pad_40dp"-->
+            <!--android:hint="@string/middle_name"-->
+            <!--android:layout_marginBottom="@dimen/pad_5dp">-->
+            <!--</EditText>-->
 
             <EditText
                 android:id="@+id/editTextLname"
@@ -56,7 +65,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/pad_40dp"
                 android:layout_marginBottom="@dimen/pad_5dp"
-                android:hint="@string/last_name" />
+                android:hint="@string/last_name"
+                android:inputType="textCapSentences" />
 
             <EditText
                 android:id="@+id/editTextContactNumber"
@@ -65,7 +75,8 @@
                 android:layout_height="@dimen/pad_40dp"
                 android:layout_marginBottom="@dimen/pad_5dp"
                 android:hint="@string/contact_number"
-                android:inputType="number" />
+                android:inputType="phone" />
+
 
             <EditText
                 android:id="@+id/editTextEmail"
@@ -73,10 +84,13 @@
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/pad_60dp"
                 android:layout_marginTop="@dimen/pad_5dp"
-                android:hint="@string/email">
+                android:drawableLeft="@mipmap/ic_username"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress">
 
                 <requestFocus />
             </EditText>
+
 
             <EditText
                 android:id="@+id/editTextPassword"
@@ -85,8 +99,10 @@
                 android:layout_height="@dimen/pad_60dp"
                 android:layout_marginBottom="@dimen/pad_5dp"
                 android:layout_marginTop="@dimen/pad_5dp"
+                android:drawableLeft="@mipmap/ic_pwd"
                 android:hint="@string/password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:fontFamily="sans-serif"/>
 
             <EditText
                 android:id="@+id/editTextConfirmPassword"
@@ -94,8 +110,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/pad_60dp"
                 android:layout_marginBottom="@dimen/pad_10dp"
+                android:drawableLeft="@mipmap/ic_pwd"
                 android:hint="@string/confirm_password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:fontFamily="sans-serif"/>
+
 
             <Button
                 android:id="@+id/btnSignUp"

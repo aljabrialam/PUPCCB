@@ -8,43 +8,69 @@
     <string name="hint_your_name">e.g. Larry</string>
     <string name="hint_your_email">Optional</string>
     <string name="menu_item_one">Menu Item</string>
+    <string name="more_info">More Info</string>
+    <string name="by_text">%1$s %2$s</string>
 
+    <string name="ccb_long_name">Contact Center ng Bayan</string>
 
+    <string name="copyright">Powered by: SOLUTIONS RESOURCE INC.</string>
     <string name="forgot_my_pwd">Forgot your password?</string>
     <string name="already_have_account">Already have an account? Sign In</string>
     <string name="client_secret">Client Secret</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="confirm_password"> Confirm Password</string>
-    <string name="register">Register</string>
+    <string name="register">Register </string>
     <string name="sign_up">Sign Up</string>
+    <string name="send">Send</string>
     <string name="learn_more">Learn More</string>
     <string name="log_in">Log In</string>
+    <string name="delete">Delete</string>
+    <string name="remove">Remove</string>
     <string name="cancel">Cancel</string>
+    <string name="cancel_ticket">Cancel this ticket</string>
+    <string name="edit">Edit</string>
     <string name="already_have_an_account">I already have an account</string>
-    <string name="landing_page_details"><a href="http://www.sample.org/">www.sample.org</a> | <a href="http://www.iom.int/">www.iom.int</a> | <a href="https://www.kintera.org/site/c.dnJOKRNkFiG/b.837337/k.F96D/IOM__Make_a_Donation/apps/ka/sd/donor.asp?c=dnJOKRNkFiG&amp;b=837337&amp;en=4dLxFFOfG3KGLPPiH2IDJLMsEnIKKJNpHfLFLIPqFfKLLSOtErG">Donate</a> \n sample</string>
     <string name="first_name">First Name</string>
     <string name="middle_name">Middle Name</string>
     <string name="last_name">Last Name</string>
     <string name="email">Email</string>
-    <string name="details_about_incident">Please provide details about the incident.</string>
     <string name="contact_number">Contact Number</string>
     <string name="confirm_email">Confirm Email</string>
     <string name="secret">Client Secret</string>
+
     <string name="date">Date</string>
     <string name="time">Time</string>
+    <string name="details_about_incident">Comment/Feedback/Suggestion \n(Puna/Katugunan/Suhestiyon)</string>
+    <string name="agency_details">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="what_agency">Agency (Ahensiya)</string>
+    <string name="subject">Subject (Paksa)</string>
+    <string name="who_to_complaint">Person to address (Optional)</string>
 
-    <string name="what_agency">What agency are you complaining about?</string>
-    <string name="who_to_complaint">who are you complaining about?</string>
-
-    <string name="share_label">Share</string>
-    <string name="comment_label">Comment</string>
-    <string name="like_label">Like</string>
     <string name="tab">Tab</string>
     <string name="current_ticket">Current Ticket</string>
     <string name="past_ticket">Past Ticket</string>
     <string name="search">Search</string>
     <string name="title_activity_ticket_info">Ticket Information</string>
+    <string name="add_attachment">Add Attachment</string>
+    <string name="attachment">Attachment</string>
+    <string name="view_attachment">View Attachment</string>
+    <string name="character_counter">0/255</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_ok">OK</string>
+    <string name="action_proceed">Proceed</string>
+    <string name="attachment_title">Complete action using</string>
+    <string name="comment_details">Write a comment&#8230;</string>
+
+    <string name="upload">Upload</string>
+    <string name="browse">Choose File</string>
+    <string name="attach_file">Attach File</string>
+    <string name="list_is_empty">List is empty \nPull to refresh.</string>
+    <string name="comment_is_empty">List is empty\nTap to refresh.</string>
+    <string name="help">Help</string>
+
+    <string name="assign_to">Assigned To</string>
+    <string name="ticket_no">Ticket No.</string>
 
     <string-array name="sliding_tab_items">
         <item>Current Ticket</item>
@@ -54,4 +80,13 @@
     <string name="profile">Profile - Not implemented</string>
     <string name="floating_button">Make it to do anything you want!</string>
     <string name="registration">Registration</string>
+
+    <string name="dialog_title">Dialog setup:</string>
+    <string name="footer">Footer</string>
+    <string name="header">Header</string>
+    <string name="header_title">Your title</string>
+    <string name="header_sample">SAMPLE HEADER</string>
+    <string name="footer_button_close">CLOSE</string>
+    <string name="footer_button_confirm">CONFIRM</string>
+    <string name="footer_sample">SAMPLE FOOTER</string>
 </resources>

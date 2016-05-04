@@ -1,112 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    tools:context="ccb.solutionsresource.com.activity.AddTicket">
-
-    <include
-        android:id="@+id/toolbar_actionbar"
-        layout="@layout/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fillViewport="true"
-    android:layout_below="@+id/toolbar_actionbar">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
-    android:id="@+id/card_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/pad_5dp"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="4dp"
-        >
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        card_view:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/pad_5dp"
+            android:paddingLeft="@dimen/pad_10dp"
+            android:paddingRight="@dimen/pad_10dp">
+
+            <Button
+                android:id="@+id/btnHeader"
+                style="@style/btn_black_header"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/pad_40dp"
+                android:layout_marginBottom="@dimen/pad_5dp"
+                android:layout_marginTop="@dimen/pad_5dp"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="@dimen/pad_10dp"
+                android:text="Incident Details"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:id="@+id/informationLinearLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editTextDate"
+                    style="@style/editext_graybg"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/pad_40dp"
+                    android:layout_marginBottom="@dimen/pad_5dp"
+                    android:layout_marginRight="@dimen/pad_5dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:editable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/date"
+                    android:inputType="date" />
+
+                <EditText
+                    android:id="@+id/editTextTime"
+                    style="@style/editext_graybg"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/pad_40dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:editable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/time"
+                    android:inputType="time" />
+            </LinearLayout>
 
 
-    <LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/pad_10dp"
-    android:paddingLeft="@dimen/pad_10dp"
-    android:paddingRight="@dimen/pad_10dp"
-    >
+            <TextView
+                android:id="@+id/editTextAgency"
+                style="@style/editext_graybg"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/pad_40dp"
+                android:layout_marginBottom="@dimen/pad_5dp"
+                android:clickable="true"
+                android:editable="false"
+                android:focusableInTouchMode="false"
+                android:hint="@string/what_agency" />
 
-    <Button
-    android:id="@+id/btnHeader"
-    style="@style/btn_black_header"
-    android:layout_width="fill_parent"
-    android:layout_height="@dimen/pad_40dp"
-    android:gravity="left|center_vertical"
-    android:paddingLeft="@dimen/pad_10dp"
-    android:text="Incident Details"
-    android:textColor="@color/white"
-        android:layout_marginTop="@dimen/pad_5dp"/>
+            <EditText
+                android:id="@+id/editTextComplainee"
+                style="@style/editext_graybg"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/pad_40dp"
+                android:layout_marginBottom="@dimen/pad_5dp"
+                android:hint="@string/who_to_complaint"
+                android:inputType="textCapSentences">
 
+                <requestFocus />
+            </EditText>
 
-    <EditText
-    android:id="@+id/editTextDate"
-    style="@style/editext_graybg"
-    android:layout_width="fill_parent"
-    android:layout_height="@dimen/pad_40dp"
-    android:layout_marginBottom="@dimen/pad_5dp"
-    android:layout_marginTop="@dimen/pad_5dp"
-    android:hint="@string/date"></EditText>
+            <EditText
+                android:id="@+id/editTextSubject"
+                style="@style/editext_graybg"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/pad_40dp"
+                android:hint="@string/subject"
+                android:inputType="textCapSentences" />
 
+            <EditText
+                android:id="@+id/editTextIncidentDetails"
+                style="@style/editext_graybg"
+                android:layout_width="fill_parent"
+                android:layout_height="230dp"
+                android:layout_marginTop="@dimen/pad_5dp"
+                android:ems="10"
+                android:gravity="left|top"
+                android:hint="@string/details_about_incident"
+                android:inputType="textMultiLine"
+                android:maxLength="255"
+                android:padding="@dimen/pad_10dp" />
 
-    <EditText
-    android:id="@+id/editTextTime"
-    style="@style/editext_graybg"
-    android:layout_width="fill_parent"
-    android:layout_height="@dimen/pad_40dp"
-    android:layout_marginBottom="@dimen/pad_5dp"
-    android:hint="@string/time"
+            <LinearLayout
+                android:id="@+id/attachmentLinearLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    ></EditText>
+                <TextView
+                    android:id="@+id/textViewCounter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:text="@string/character_counter" />
 
+                <TextView
+                    android:id="@+id/textViewAddAttachment"
+                    style="@style/button_inner_tab"
 
-    <EditText
-    android:id="@+id/editTextAgency"
-    style="@style/editext_graybg"
-    android:layout_width="fill_parent"
-    android:layout_height="@dimen/pad_40dp"
-    android:layout_marginBottom="@dimen/pad_5dp"
-    android:hint="@string/what_agency"></EditText>
-
-    <EditText
-    android:id="@+id/editTextConactNumber"
-    style="@style/editext_graybg"
-    android:layout_width="fill_parent"
-    android:layout_height="@dimen/pad_40dp"
-    android:layout_marginBottom="@dimen/pad_5dp"
-    android:hint="@string/who_to_complaint"></EditText>
-
-
-    <EditText
-    android:id="@+id/editTextEmail"
-    style="@style/editext_graybg"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_marginTop="@dimen/pad_5dp"
-    android:ems="10"
-    android:gravity="left|top"
-    android:hint="@string/details_about_incident"
-    android:inputType="textMultiLine"
-    android:padding="@dimen/pad_10dp">
-
-    <requestFocus />
-    </EditText>
-
-    </LinearLayout>
+                    android:clickable="true"
+                    android:drawableLeft="@drawable/hs_add_attachment_img"
+                    android:text="@string/add_attachment" />
+            </LinearLayout>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
-    </ScrollView>
-
 </RelativeLayout>
 

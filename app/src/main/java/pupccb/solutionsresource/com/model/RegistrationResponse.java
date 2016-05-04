@@ -5,16 +5,14 @@ package pupccb.solutionsresource.com.model;
  */
 public class RegistrationResponse {
 
-    private String message, description;
+    private String msg;
 
-    public String getMessage() {
-        return message != null ? message.trim() : "";
+    public String getMsg() {
+        return msg != null ? msg.trim() : "";
     }
-    public String getDescription() {
-        return description != null ? description.trim() : "";
-    }
-    public void setDescription(String description) {
-        this.description = description != null ? description.trim() : "";;
+
+    public void setMsg(String msg) {
+        this.msg = msg != null ? msg.trim() : "";
     }
 
 }
