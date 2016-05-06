@@ -116,7 +116,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Make me Anonymous"
+                    android:text="@string/anonymous"
                     android:id="@+id/checkBoxAnonymous"
                     android:layout_weight="1"
                     android:checked="false"
