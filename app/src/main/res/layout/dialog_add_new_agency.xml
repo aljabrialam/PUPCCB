@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/pad_10dp"
+    android:paddingLeft="@dimen/pad_20dp"
+    android:paddingRight="@dimen/pad_20dp">
+
+    <EditText
+        android:id="@+id/editTextNewAgencyName"
+        style="@style/editext_graybg"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/pad_40dp"
+        android:layout_marginBottom="@dimen/pad_5dp"
+        android:hint="@string/agency_name"
+        android:inputType="textCapSentences" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextViewLocation"
+        style="@style/autocompletetextview_graybg"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/pad_40dp"
+        android:layout_marginBottom="@dimen/pad_5dp"
+        android:hint="Enter location here" />
+
+</LinearLayout>
