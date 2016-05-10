@@ -1,8 +1,10 @@
 package pupccb.solutionsresource.com.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -126,7 +128,8 @@ public class NavigationDrawer extends AppCompatActivity implements FragmentCommu
     }
 
     private void newTicket() {
-        startActivity(new Intent(this, NewTicket.class));
+        //startActivity(new Intent(this, NewTicket.class));
+        startActivityForResult(new Intent(this, NewTicket.class), RequestCodes.TICKET_CREATION_SUCCESS);
     }
 
     private void callCCB() {
@@ -142,8 +145,14 @@ public class NavigationDrawer extends AppCompatActivity implements FragmentCommu
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RequestCodes.CANCEL_TICKET) {
             getTicketList();
+        }
+        if (requestCode == RequestCodes.TICKET_CREATION_SUCCESS) {
+            if (resultCode == Activity.RESULT_OK) {
+                NavigationDrawer.this.onNavigationDrawerItemSelected(2);
+            }
         }
     }
 

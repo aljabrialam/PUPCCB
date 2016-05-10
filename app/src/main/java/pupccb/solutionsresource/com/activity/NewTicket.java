@@ -347,7 +347,8 @@ public class NewTicket extends AppCompatActivity implements OfflineCommunicator,
     public void createTicketResult(TicketResponse ticketResponse, Ticket ticket) {
         toast(2000, ticketResponse.getMsg(), ToastMessage.MessageType.SUCCESS);
         loadToast.success();
-        startActivity(new Intent(this, NavigationDrawer.class));
+        //startActivity(new Intent(this, NavigationDrawer.class));
+        setResult(Activity.RESULT_OK);
         finish();
     }
 
